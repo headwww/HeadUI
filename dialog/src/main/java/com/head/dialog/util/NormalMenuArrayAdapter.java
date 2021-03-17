@@ -1,0 +1,193 @@
+package com.head.dialog.util;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Typeface;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+
+import com.head.dialog.HeadDialog;
+import com.head.dialog.R;
+import com.head.dialog.dialogs.BottomMenu;
+
+import java.util.List;
+
+/**
+*
+* 类名称：NormalMenuArrayAdapter.java <br/>
+* 类描述：默认的菜单适配器<br/>
+* 创建人：舒文 <br/>
+* 创建时间：3/8/21 9:06 PM <br/>
+* @version
+*/
+public class NormalMenuArrayAdapter extends BaseAdapter {
+    
+    private BottomMenu bottomMenu;
+    public List<CharSequence> objects;
+    public Context context;
+    
+    public NormalMenuArrayAdapter(BottomMenu bottomMenu, Context context, List<CharSequence> objects) {
+        this.objects = objects;
+        this.context = context;
+        this.bottomMenu = bottomMenu;
+    }
+    
+    class ViewHolder {
+        ImageView imgDialogMenuIcon;
+        TextView txtDialogMenuText;
+        ImageView imgDialogMenuSelection;
+    }
+    
+    @Override
+    public int getCount() {
+        return objects.size();
+    }
+    
+    @Override
+    public CharSequence getItem(int position) {
+        return objects.get(position);
+    }
+    
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+    
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater mInflater = LayoutInflater.from(context);
+            
+            int resourceId = R.layout.item_dialog_material_bottom_menu_normal_text;
+            int overrideSelectionBackgroundColorRes = 0;
+            if (bottomMenu.getStyle().overrideBottomDialogRes() != null) {
+                resourceId = bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuItemLayout(bottomMenu.isLightTheme(), position, getCount(), false);
+                if (resourceId == 0) {
+                    resourceId = R.layout.item_dialog_material_bottom_menu_normal_text;
+                } else {
+                    if (bottomMenu.getDialogImpl().txtDialogTitle.getVisibility() == View.VISIBLE ||
+                            bottomMenu.getDialogImpl().txtDialogTip.getVisibility() == View.VISIBLE ||
+                            bottomMenu.getCustomView() != null) {
+                        if (position == 0) {
+                            resourceId = bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuItemLayout(bottomMenu.isLightTheme(), position, getCount(), true);
+                        }
+                    }
+                }
+                
+                overrideSelectionBackgroundColorRes = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionMenuBackgroundColor(bottomMenu.isLightTheme());
+            }
+            convertView = mInflater.inflate(resourceId, null);
+            
+            viewHolder.imgDialogMenuIcon = convertView.findViewById(R.id.img_dialogmenu_icon);
+            viewHolder.txtDialogMenuText = convertView.findViewById(R.id.txt_dialogmenu_text);
+            viewHolder.imgDialogMenuSelection = convertView.findViewById(R.id.img_dialogmenu_selection);
+            
+            if (bottomMenu.getSelection() >= 0) {
+                if (viewHolder.imgDialogMenuSelection != null) {
+                    if (bottomMenu.getSelection() == position) {
+                        viewHolder.imgDialogMenuSelection.setVisibility(View.VISIBLE);
+                        int overrideSelectionImageResId = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionImage(bottomMenu.isLightTheme(), true);
+                        if (overrideSelectionImageResId != 0) {
+                            viewHolder.imgDialogMenuSelection.setImageResource(overrideSelectionImageResId);
+                        }
+                    } else {
+                        int overrideSelectionImageResId = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionImage(bottomMenu.isLightTheme(), false);
+                        if (overrideSelectionImageResId != 0) {
+                            viewHolder.imgDialogMenuSelection.setVisibility(View.VISIBLE);
+                            viewHolder.imgDialogMenuSelection.setImageResource(overrideSelectionImageResId);
+                        }else{
+                            viewHolder.imgDialogMenuSelection.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            } else {
+                viewHolder.imgDialogMenuSelection.setVisibility(View.GONE);
+            }
+            if (bottomMenu.getSelection() == position) {
+                if (overrideSelectionBackgroundColorRes != 0) {
+                    convertView.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(overrideSelectionBackgroundColorRes)));
+                    final View finalRootView = convertView;
+                    convertView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            finalRootView.setPressed(true);
+                        }
+                    });
+                }
+            } else {
+                convertView.setBackgroundTintList(null);
+            }
+            
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+        CharSequence text = objects.get(position);
+        
+        int textColor = bottomMenu.isLightTheme() ? R.color.black90 : R.color.white90;
+        if (bottomMenu.getStyle().overrideBottomDialogRes() != null) {
+            if (bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuTextColor(bottomMenu.isLightTheme()) != 0) {
+                textColor = bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuTextColor(bottomMenu.isLightTheme());
+            }
+        }
+        
+        if (null != text) {
+            viewHolder.txtDialogMenuText.setText(text);
+            viewHolder.txtDialogMenuText.setTextColor(context.getResources().getColor(textColor));
+            if (HeadDialog.menuTextInfo != null) {
+                useTextInfo(viewHolder.txtDialogMenuText, HeadDialog.menuTextInfo);
+            }
+            if (viewHolder.imgDialogMenuSelection != null) {
+                if (bottomMenu.getStyle().overrideBottomDialogRes() != null && bottomMenu.getStyle().overrideBottomDialogRes().selectionImageTint(bottomMenu.isLightTheme())) {
+                    viewHolder.imgDialogMenuSelection.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
+                } else {
+                    viewHolder.imgDialogMenuSelection.setImageTintList(null);
+                }
+            }
+            
+            if (bottomMenu.getOnIconChangeCallBack() != null) {
+                int resId = bottomMenu.getOnIconChangeCallBack().getIcon(bottomMenu, position, text.toString());
+                boolean autoTintIconInLightOrDarkMode = bottomMenu.getOnIconChangeCallBack().isAutoTintIconInLightOrDarkMode();
+                
+                if (resId != 0) {
+                    viewHolder.imgDialogMenuIcon.setVisibility(View.VISIBLE);
+                    viewHolder.imgDialogMenuIcon.setImageResource(resId);
+                    
+                    if (autoTintIconInLightOrDarkMode) {
+                        viewHolder.imgDialogMenuIcon.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
+                    }
+                } else {
+                    viewHolder.imgDialogMenuIcon.setVisibility(View.GONE);
+                }
+            } else {
+                viewHolder.imgDialogMenuIcon.setVisibility(View.GONE);
+            }
+        }
+        
+        return convertView;
+    }
+    
+    protected void useTextInfo(TextView textView, TextInfo textInfo) {
+        if (textInfo == null) return;
+        if (textView == null) return;
+        if (textInfo.getFontSize() > 0) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textInfo.getFontSize());
+        }
+        if (textInfo.getFontColor() != 1) {
+            textView.setTextColor(textInfo.getFontColor());
+        }
+        if (textInfo.getGravity() != -1) {
+            textView.setGravity(textInfo.getGravity());
+        }
+        Typeface font = Typeface.create(Typeface.SANS_SERIF, textInfo.isBold() ? Typeface.BOLD : Typeface.NORMAL);
+        textView.setTypeface(font);
+    }
+}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <com.head.tabbar.HeadTabBar
+        android:id="@+id/tab1"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:head_badge_gravity="top"
+        app:head_badge_position="right"
+        app:head_badged="true"
+        app:head_scaled="true"
+        app:head_tinted="true"
+        app:head_title_mode="all"
+        app:head_titled="true"
+        app:head_swiped="true"/>
+    <com.head.tabbar.HeadTabBar
+        android:id="@+id/tab2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        app:head_badge_size="12sp"
+        app:head_badge_bg_color="#ffff0000"
+        app:head_badge_gravity="top"
+        app:head_badge_position="left"
+        app:head_badge_title_color="#ffffffff"
+        app:head_badge_use_typeface="true"
+        app:head_badged="true"
+        app:head_typeface="fonts/agency.ttf"/>
+
+    <com.head.tabbar.HeadTabBar
+        android:id="@+id/head_sample_3"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        app:head_corners_radius="10dp"
+        app:head_inactive_color="#000"
+        app:head_preview_colors="@array/default_preview"/>
+
+    <com.head.tabbar.HeadTabBar
+        android:id="@+id/head_sample_5"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        app:head_animation_duration="400"
+        app:head_preview_colors="@array/default_preview"
+        app:head_corners_radius="25dp"
+        app:head_scaled="false"
+        app:head_active_color="#8d88e4"
+        app:head_inactive_color="#dddfec"
+        app:head_bg_color="#8d88e4"/>
+
+
+</LinearLayout>

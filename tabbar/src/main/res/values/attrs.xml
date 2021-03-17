@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HeadTabBar">
+        <attr name="head_titled" format="boolean"/>
+        <attr name="head_badged" format="boolean"/>
+        <attr name="head_scaled" format="boolean"/>
+        <attr name="head_tinted" format="boolean"/>
+        <attr name="head_swiped" format="boolean"/>
+        <attr name="head_badge_use_typeface" format="boolean"/>
+
+        <attr name="head_title_size" format="dimension"/>
+        <attr name="head_title_mode" format="enum">
+            <enum name="all" value="0"/>
+            <enum name="active" value="1"/>
+        </attr>
+
+        <attr name="head_badge_size" format="dimension"/>
+        <attr name="head_badge_position" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+        <attr name="head_badge_gravity" format="enum">
+            <enum name="top" value="0"/>
+            <enum name="bottom" value="1"/>
+        </attr>
+        <attr name="head_badge_bg_color" format="color"/>
+        <attr name="head_badge_title_color" format="color"/>
+
+        <attr name="head_typeface" format="string"/>
+        <attr name="head_corners_radius" format="dimension"/>
+        <attr name="head_icon_size_fraction" format="float"/>
+        <attr name="head_animation_duration" format="integer"/>
+
+        <attr name="head_inactive_color" format="color"/>
+        <attr name="head_active_color" format="color"/>
+        <attr name="head_bg_color" format="color"/>
+
+        <attr name="head_preview_colors" format="reference"/>
+    </declare-styleable>
+
+</resources>

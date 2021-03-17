@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HeadEditTexts">
+        <!--左侧的图片资源-->
+        <attr name="left_drawables" format="reference"/>
+        <!--右侧的图片按钮是否可以显示-->
+        <attr name="right_drawables_visibility" format="boolean"/>
+        <!--文本是否支持编辑-->
+        <attr name="is_enabled" format="boolean"/>
+        <!--是否是密码框-->
+        <attr name="is_password" format="boolean"/>
+
+
+    </declare-styleable>
+</resources>

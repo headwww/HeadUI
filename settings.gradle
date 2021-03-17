@@ -1,0 +1,2 @@
+include ':app', ':dialog', ':titlebar', ':tabbar', ':views'
+rootProject.name='HeadUI'

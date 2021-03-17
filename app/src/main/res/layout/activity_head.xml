@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:titlebar="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.head.titlebar.HeadTitleBar
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        titlebar:bottomShadowHeight="0dp"
+        titlebar:centerText="Dialog"
+        titlebar:centerTextColor="#fff"
+        titlebar:centerType="textView"
+        titlebar:showBottomLine="false"
+        titlebar:statusBarColor="@drawable/shape_gradient"
+        titlebar:statusBarMode="light"
+        titlebar:titleBarColor="@drawable/shape_gradient" />
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent"/>
+
+
+    <com.head.tabbar.HeadTabBar
+        android:id="@+id/tabBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:head_tinted="false"
+        app:head_title_mode="all"
+        app:head_bg_color="#ffffff"
+        app:head_animation_duration="400"
+        app:head_titled="true"
+        app:head_scaled="false"
+        app:head_swiped="true"
+        />
+
+</LinearLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.head.dialog.util.views.DialogBaseRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/box_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black40"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.head.dialog.util.views.MaxRelativeLayout
+            android:id="@+id/bkg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="27dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/rect_dialog_material_bottom_bkg_night"
+            android:clickable="true"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:background="@drawable/button_dialog_material_night"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:tag="cancel"
+                        android:text="取消"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="17sp" />
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                         />
+
+                    <TextView
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:background="@drawable/button_dialog_material_night"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:text="确定"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/timepicker"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rect_dialog_material_bottom_bkg_night"
+                    android:gravity="center"
+                    android:minHeight="150dp"
+                    android:orientation="horizontal">
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/year"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.96" />
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/month"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/day"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/hour"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/min"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.head.dialog.util.views.wheelview.view.WheelView
+                        android:id="@+id/second"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </com.head.dialog.util.views.MaxRelativeLayout>
+
+    </RelativeLayout>
+
+</com.head.dialog.util.views.DialogBaseRelativeLayout>

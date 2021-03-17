@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:titlebar="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerText="左边TextView + 中间文字"
+            titlebar:centerType="textView"
+            titlebar:leftDrawable="@drawable/comm_titlebar_back_normal"
+            titlebar:leftDrawablePadding="0dp"
+            titlebar:leftText="返回"
+            titlebar:leftType="textView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerText="左边ImageButton + 中间文字(带进度条)"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerText="左边自定义Layout + 中间文字"
+            titlebar:centerType="textView"
+            titlebar:leftCustomView="@layout/layout_custom_left"
+            titlebar:leftType="customView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerCustomView="@layout/layout_custom_left"
+            titlebar:centerText="中间文字 + 右边TextView"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:rightText="确定"
+            titlebar:rightType="textView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerCustomView="@layout/layout_custom_left"
+            titlebar:centerText="中间文字 + 右边ImageButton"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:rightImageResource="@mipmap/ic_launcher"
+            titlebar:rightType="imageButton"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerText="中间文字 + 右边自定义Layout"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:rightCustomView="@layout/layout_custom_left"
+            titlebar:rightType="customView"
+            titlebar:statusBarMode="light" />
+
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerText="中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie中间跑马灯效果 + 右边TextVie"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:rightText="确定"
+            titlebar:rightType="textView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerSubText="副标题"
+            titlebar:centerText="中间添加副标题"
+            titlebar:centerType="textView"
+            titlebar:leftType="imageButton"
+            titlebar:rightText="确定"
+            titlebar:rightType="textView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerCustomView="@layout/layout_custom_left"
+            titlebar:centerType="customView"
+            titlebar:leftType="imageButton"
+            titlebar:rightCustomView="@layout/layout_custom_left"
+            titlebar:rightType="customView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerType="searchView"
+            titlebar:leftType="imageButton"
+            titlebar:rightText="确定"
+            titlebar:rightType="textView"
+            titlebar:statusBarMode="light" />
+
+        <com.head.titlebar.HeadTitleBar
+            android:id="@+id/titlebar11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            titlebar:centerType="searchView"
+            titlebar:leftCustomView="@layout/layout_custom_left"
+            titlebar:leftType="customView"
+            titlebar:rightCustomView="@layout/layout_custom_left"
+            android:layout_marginBottom="55dp"
+            titlebar:rightType="customView"
+            titlebar:statusBarMode="light" />
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>
