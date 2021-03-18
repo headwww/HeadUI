@@ -2,47 +2,102 @@
 <resources>
     <declare-styleable name="HeadEditTexts">
         <!--左侧的图片资源-->
-        <attr name="left_drawables" format="reference"/>
+        <attr name="leftDrawables" format="reference" />
         <!--右侧的图片按钮是否可以显示-->
-        <attr name="right_drawables_visibility" format="boolean"/>
+        <attr name="rightDrawablesVisibility" format="boolean" />
         <!--文本是否支持编辑-->
-        <attr name="is_enabled" format="boolean"/>
+        <attr name="isEnabled" format="boolean" />
         <!--是否是密码框-->
-        <attr name="is_password" format="boolean"/>
+        <attr name="isPassword" format="boolean" />
     </declare-styleable>
 
 
     <declare-styleable name="HeadButtons">
         <!--text color-->
         <!--默认的文本颜色-->
-        <attr name="normalTextColor" format="color|reference"/>
+        <attr name="normalTextColor" format="color|reference" />
         <!--按下的文本颜色-->
-        <attr name="pressedTextColor" format="color|reference"/>
+        <attr name="pressedTextColor" format="color|reference" />
         <!--按钮设置成isEnabled=false时点击之后颜色变为该色-->
-        <attr name="unableTextColor" format="color|reference"/>
+        <attr name="unableTextColor" format="color|reference" />
         <!--动画时间-->
-        <attr name="animationDuration" format="integer|reference"/>
+        <attr name="animationDuration" format="integer|reference" />
 
         <!--背景颜色-->
-        <attr name="normalBackgroundColor" format="color|reference"/>
-        <attr name="pressedBackgroundColor" format="color|reference"/>
-        <attr name="unableBackgroundColor" format="color|reference"/>
+        <attr name="normalBackgroundColor" format="color|reference" />
+        <attr name="pressedBackgroundColor" format="color|reference" />
+        <attr name="unableBackgroundColor" format="color|reference" />
 
 
         <!--background radius-->
         <!--设置弧度-->
-        <attr name="radius" format="dimension|reference"/>
+        <attr name="radius" format="dimension|reference" />
         <!--是否是半圆角-->
-        <attr name="round" format="boolean|reference"/>
+        <attr name="round" format="boolean|reference" />
 
         <!--stroke width and color, dash width, dash gap-->
-        <attr name="strokeDashWidth" format="dimension|reference"/>
-        <attr name="strokeDashGap" format="dimension|reference"/>
-        <attr name="normalStrokeWidth" format="dimension|reference"/>
-        <attr name="pressedStrokeWidth" format="dimension|reference"/>
-        <attr name="unableStrokeWidth" format="dimension|reference"/>
-        <attr name="normalStrokeColor" format="color|reference"/>
-        <attr name="pressedStrokeColor" format="color|reference"/>
-        <attr name="unableStrokeColor" format="color|reference"/>
+        <attr name="strokeDashWidth" format="dimension|reference" />
+        <attr name="strokeDashGap" format="dimension|reference" />
+        <attr name="normalStrokeWidth" format="dimension|reference" />
+        <attr name="pressedStrokeWidth" format="dimension|reference" />
+        <attr name="unableStrokeWidth" format="dimension|reference" />
+        <attr name="normalStrokeColor" format="color|reference" />
+        <attr name="pressedStrokeColor" format="color|reference" />
+        <attr name="unableStrokeColor" format="color|reference" />
     </declare-styleable>
+
+
+    <declare-styleable name="HeadProgressBar">
+        <!--背景与进度之间的内间距大小-->
+        <attr name="pbPadding" format="dimension" />
+        <!--背景颜色-->
+        <attr name="pbBgColor" format="color|reference" />
+        <!--进度颜色-->
+        <attr name="pbColor" format="color|reference" />
+        <!--二级进度背景颜色	-->
+        <attr name="pbSecondPbColor" format="color|reference" />
+        <!--进度最大值	-->
+        <attr name="pbMax" format="integer" />
+        <!--默认进度值-->
+        <attr name="pbProgress" format="integer" />
+        <!--进度为0时是否显示圆点-->
+        <attr name="pbShowZeroPoint" format="boolean" />
+        <!--显示进度的模式(round,rect,round_rect)	-->
+        <attr name="pbShowMode" format="enum">
+            <enum name="round" value="0" />
+            <enum name="rect" value="1" />
+            <enum name="round_rect" value="2" />
+        </attr>
+        <!--二级进度是否显示-->
+        <attr name="pbShowSecondProgress" format="boolean" />
+        <!--二级进度默认进度值-->
+        <attr name="pbSecondProgress" format="integer" />
+        <!--是否使用渐变色-->
+        <attr name="pbOpenGradient" format="boolean" />
+        <!--开始渐变颜色-->
+        <attr name="pbGradientFrom" format="color|reference" />
+        <!--结束渐变颜色-->
+        <attr name="pbGradientTo" format="color|reference" />
+        <!--二级进度是否使用渐变色-->
+        <attr name="pbOpenSecondGradient" format="boolean" />
+        <!--二级进度开始渐变颜色-->
+        <attr name="pbSecondGradientFrom" format="color|reference" />
+        <!--二级进度结束渐变颜色-->
+        <attr name="pbSecondGradientTo" format="color|reference" />
+        <!--二级进度形状（point,line）-->
+        <attr name="pbShowSecondPointShape" format="enum">
+            <enum name="point" value="0" />
+            <enum name="line" value="1" />
+        </attr>
+        <!--round_rect模式下圆角的半径-->
+        <attr name="pbRoundRectRadius" format="dimension|reference" />
+        <!--是否画边框-->
+        <attr name="pbDrawBorder" format="boolean" />
+        <!--边框的线宽-->
+        <attr name="pbBorderWidth" format="dimension|reference" />
+        <!--边框的颜色-->
+        <attr name="pbBorderColor" format="color|reference" />
+
+    </declare-styleable>
+
 </resources>

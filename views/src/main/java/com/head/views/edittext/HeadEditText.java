@@ -75,11 +75,11 @@ public class HeadEditText extends AppCompatEditText {
             rightDrawables.setBounds(0, 0, 32 * (screenHeight / screenWidth), 32 * (screenHeight / screenWidth));
 
             //是否是密码框
-            isPassword = typedArray.getBoolean(R.styleable.HeadEditTexts_is_password, false);
+            isPassword = typedArray.getBoolean(R.styleable.HeadEditTexts_isPassword, false);
 
 
             //左边提示按钮
-            leftDrawablesID = typedArray.getResourceId(R.styleable.HeadEditTexts_left_drawables, -1);
+            leftDrawablesID = typedArray.getResourceId(R.styleable.HeadEditTexts_leftDrawables, -1);
             if (leftDrawablesID != -1) {
                 leftDrawables = getResources().getDrawable(leftDrawablesID);
                 leftDrawables.setBounds(0, 0, 40 * (screenHeight / screenWidth), 40 * (screenHeight / screenWidth));
@@ -94,10 +94,10 @@ public class HeadEditText extends AppCompatEditText {
             }
 
             //是否显示删除功能
-            rightDrawablesVisibility = typedArray.getBoolean(R.styleable.HeadEditTexts_right_drawables_visibility, true);
+            rightDrawablesVisibility = typedArray.getBoolean(R.styleable.HeadEditTexts_rightDrawablesVisibility, true);
 
             //是否开启文本编辑功能
-            isEnabled = typedArray.getBoolean(R.styleable.HeadEditTexts_is_enabled, true);
+            isEnabled = typedArray.getBoolean(R.styleable.HeadEditTexts_isEnabled, true);
             super.setEnabled(isEnabled);
 
             setDeleteIconVisible(isEnabled == false && rightDrawablesVisibility && super.getText().toString().length() > 0, leftDrawablesID != -1);

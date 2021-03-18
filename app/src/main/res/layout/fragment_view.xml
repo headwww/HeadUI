@@ -18,7 +18,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:inputType="textPassword"
-            app:right_drawables_visibility="false" />
+            app:rightDrawablesVisibility="false" />
 
         <com.head.views.edittext.HeadEditText
             android:id="@+id/edit"
@@ -28,41 +28,41 @@
             android:gravity="center"
             android:text="12312"
             android:textColor="#000"
-            app:is_enabled="true"
-            app:left_drawables="@mipmap/tab_equipment_blue"
-            app:right_drawables_visibility="true" />
+            app:isEnabled="true"
+            app:leftDrawables="@mipmap/tab_equipment_blue"
+            app:rightDrawablesVisibility="true" />
 
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:is_password="true"
-            app:right_drawables_visibility="true" />
+            app:isPassword="true"
+            app:rightDrawablesVisibility="true" />
 
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:right_drawables_visibility="true" />
+            app:rightDrawablesVisibility="true" />
 
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:right_drawables_visibility="true" />
+            app:rightDrawablesVisibility="true" />
 
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            app:right_drawables_visibility="true" />
+            app:rightDrawablesVisibility="true" />
 
         <com.head.views.button.HeadButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设置文本变化"
-            app:normalTextColor="#FFF"
-            app:pressedTextColor="#000" />
+            app:normalTextColor="#000"
+            app:pressedTextColor="#FFF111" />
 
         <com.head.views.button.HeadButton
             android:layout_width="wrap_content"
@@ -72,19 +72,163 @@
             app:normalTextColor="#FFF"
             app:pressedBackgroundColor="#BD4747"
             app:pressedTextColor="#000"
-            app:radius="5dp"/>
+            app:radius="5dp" />
+
 
         <com.head.views.button.HeadButton
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:text="shuwen"
             app:normalBackgroundColor="#FFF111"
             app:normalTextColor="#FFF"
             app:pressedBackgroundColor="#B9B04A"
             app:pressedTextColor="#000"
-            app:round="true"
-             />
+            app:round="true" />
+
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="2dp" />
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbBgColor="#d8d8d8"
+            app:pbGradientFrom="#429321"
+            app:pbGradientTo="#b4ec51"
+            app:pbMax="100"
+            app:pbOpenGradient="true"
+            app:pbPadding="5px"
+            app:pbProgress="50"
+            app:pbSecondPbColor="#f5a623"
+            app:pbSecondProgress="100"
+            app:pbShowSecondPointShape="point"
+            app:pbShowSecondProgress="true" />
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbBgColor="#d8d8d8"
+            app:pbGradientFrom="#429321"
+            app:pbGradientTo="#b4ec51"
+            app:pbMax="100"
+            app:pbOpenGradient="true"
+            app:pbOpenSecondGradient="true"
+            app:pbPadding="1px"
+            app:pbProgress="50"
+            app:pbSecondGradientFrom="#f76b1c"
+            app:pbSecondGradientTo="#fad961"
+            app:pbSecondPbColor="#f5a623"
+            app:pbShowSecondPointShape="line"
+            app:pbShowSecondProgress="true" />
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb3"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbPadding="0dp"
+            app:pbColor="@android:color/holo_green_dark"
+            app:pbShowMode="rect" />
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbBgColor="#dbdbdb"
+            app:pbGradientFrom="#419120"
+            app:pbGradientTo="#b3eb50"
+            app:pbMax="100"
+            app:pbOpenGradient="true"
+            app:pbPadding="1dp"
+            app:pbShowMode="rect" />
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb5"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbBgColor="#0000"
+            app:pbBorderColor="#85ff00"
+            app:pbBorderWidth="2dp"
+            app:pbDrawBorder="true"
+            app:pbGradientFrom="#7f58A800"
+            app:pbGradientTo="#7fa8e600"
+            app:pbMax="100"
+            app:pbOpenGradient="true"
+            app:pbPadding="0px"
+            app:pbRoundRectRadius="4dp"
+            app:pbShowMode="round_rect" />
+
+
+        <com.head.views.progressbar.HeadProgressBar
+            android:id="@+id/pb6"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            app:pbBgColor="#0000"
+            app:pbBorderColor="#85ff00"
+            app:pbBorderWidth="2dp"
+            app:pbDrawBorder="false"
+            app:pbGradientFrom="#7ff5515f"
+            app:pbGradientTo="#7f9f041b"
+            app:pbMax="100"
+            app:pbOpenGradient="false"
+            app:pbPadding="0px"
+            app:pbProgress="0"
+            app:pbRoundRectRadius="30px"
+            app:pbSecondProgress="0"
+            app:pbShowMode="round_rect"
+            app:pbShowSecondProgress="true" />
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="拖动试试?" />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:max="100"
+            android:progress="0" />
 
     </LinearLayout>
 </ScrollView>
