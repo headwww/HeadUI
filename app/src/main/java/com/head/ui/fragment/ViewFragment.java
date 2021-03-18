@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.head.ui.R;
-import com.head.views.HeadEditText;
-import com.head.views.OnEditTextClickListener;
+import com.head.views.edittext.HeadEditText;
+import com.head.views.edittext.OnEditTextClickListener;
 
 public class ViewFragment extends Fragment {
 

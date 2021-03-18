@@ -1,4 +1,4 @@
-package com.head.views;
+package com.head.views.edittext;
 
 public abstract class OnEditTextClickListener {
     public void left() {

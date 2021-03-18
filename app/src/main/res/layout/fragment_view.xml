@@ -9,9 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -19,7 +20,7 @@
             android:inputType="textPassword"
             app:right_drawables_visibility="false" />
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:id="@+id/edit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -31,30 +32,59 @@
             app:left_drawables="@mipmap/tab_equipment_blue"
             app:right_drawables_visibility="true" />
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             app:is_password="true"
             app:right_drawables_visibility="true" />
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             app:right_drawables_visibility="true" />
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             app:right_drawables_visibility="true" />
 
-        <com.head.views.HeadEditText
+        <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             app:right_drawables_visibility="true" />
+
+        <com.head.views.button.HeadButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置文本变化"
+            app:normalTextColor="#FFF"
+            app:pressedTextColor="#000" />
+
+        <com.head.views.button.HeadButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="shuwen"
+            app:normalBackgroundColor="#FFF111"
+            app:normalTextColor="#FFF"
+            app:pressedBackgroundColor="#BD4747"
+            app:pressedTextColor="#000"
+            app:radius="5dp"/>
+
+        <com.head.views.button.HeadButton
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:text="shuwen"
+            app:normalBackgroundColor="#FFF111"
+            app:normalTextColor="#FFF"
+            app:pressedBackgroundColor="#B9B04A"
+            app:pressedTextColor="#000"
+            app:round="true"
+             />
 
     </LinearLayout>
 </ScrollView>
