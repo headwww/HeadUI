@@ -9,35 +9,35 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 public class RoundView extends RelativeLayout {
-    
+
     private float mRadius = 0;
     private Path mBoundPath = null;
-    
+
     public RoundView(Context context) {
         this(context, null);
     }
-    
+
     public RoundView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-    
+
     public RoundView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setWillNotDraw(false);
         mRadius = 50;
     }
-    
+
     public void setRadius(float radius) {
         if (mRadius == radius)
             return;
         this.mRadius = radius;
         postInvalidate();
     }
-    
+
     public float getRadius() {
         return mRadius;
     }
-    
+
     public void draw(Canvas canvas) {
         Rect rect = new Rect();
         getLocalVisibleRect(rect);
@@ -45,7 +45,7 @@ public class RoundView extends RelativeLayout {
         canvas.clipPath(mBoundPath);
         super.draw(canvas);
     }
-    
+
     private Path caculateRoundRectPath(Rect r) {
         Path path = new Path();
         float radius = getRadius();

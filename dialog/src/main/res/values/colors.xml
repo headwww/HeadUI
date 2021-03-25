@@ -39,6 +39,7 @@
     <color name="dialogPopButtonBlueDark">#86B3D6</color>
 
 
+
     <color name="dialogButtonIOSLightPress">#0f000000</color>
     <color name="dialogIOSSplitLight">#2c000000</color>
     <color name="dialogIOSSplitDark">#99777878</color>
@@ -49,7 +50,8 @@
     <color name="dialogIOSTipTextDark">#9AA8B9</color>
     <color name="dialogIOSBlueDark">#8AB4F8</color>
     <color name="dialogIOSDarkDialogBkgColor">#262727</color>
-
+    <color name="dialogIOSWaitBkgLight">#CCF4F5F6</color>
+    <color name="dialogIOSWaitBkgDark">#D1161616</color>
 
     <color name="pickerViewTimeBtnNor">#057dff</color>
     <color name="pickerViewTimeBtnPre">#c2daf5</color>
@@ -62,7 +64,6 @@
     <color name="pickerViewWheelViewTextColorDivider">#d5d5d5</color>
     <color name="pickerViewBgColorOverlay">#60000000</color>
     <color name="pickerViewBgColorDefault">#FFFFFFFF</color>
-
 
 
 </resources>

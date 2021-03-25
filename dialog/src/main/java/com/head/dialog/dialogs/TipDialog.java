@@ -14,11 +14,11 @@ import java.lang.ref.WeakReference;
 * @version
 */
 public class TipDialog extends WaitDialog {
-    
+
     protected TipDialog() {
         super();
     }
-    
+
     public static WaitDialog show(int messageResId) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -29,7 +29,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, int messageResId) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -40,7 +40,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(CharSequence message) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -51,7 +51,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, CharSequence message) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -62,7 +62,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(int messageResId, TYPE tip) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -73,7 +73,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, int messageResId, TYPE tip) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -84,7 +84,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(CharSequence message, TYPE tip) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -95,7 +95,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, CharSequence message, TYPE tip) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -106,7 +106,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(int messageResId, TYPE tip, long duration) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -118,7 +118,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, int messageResId, TYPE tip, long duration) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -130,7 +130,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(CharSequence message, TYPE tip, long duration) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -142,7 +142,7 @@ public class TipDialog extends WaitDialog {
         }
         return me();
     }
-    
+
     public static WaitDialog show(Activity activity, CharSequence message, TYPE tip, long duration) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(message);
@@ -153,5 +153,10 @@ public class TipDialog extends WaitDialog {
             me().showTip(activity, message, tip);
         }
         return me();
+    }
+
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
     }
 }

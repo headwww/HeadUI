@@ -12,82 +12,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:inputType="textPassword"
-            app:rightDrawablesVisibility="false" />
-
-        <com.head.views.edittext.HeadEditText
-            android:id="@+id/edit"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="12312"
-            android:textColor="#000"
-            app:isEnabled="true"
-            app:leftDrawables="@mipmap/tab_equipment_blue"
-            app:rightDrawablesVisibility="true" />
-
-        <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:isPassword="true"
-            app:rightDrawablesVisibility="true" />
-
-        <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:rightDrawablesVisibility="true" />
-
-        <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:rightDrawablesVisibility="true" />
-
-        <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            app:rightDrawablesVisibility="true" />
-
-        <com.head.views.button.HeadButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设置文本变化"
-            app:normalTextColor="#000"
-            app:pressedTextColor="#FFF111" />
-
-        <com.head.views.button.HeadButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="shuwen"
-            app:normalBackgroundColor="#FFF111"
-            app:normalTextColor="#FFF"
-            app:pressedBackgroundColor="#BD4747"
-            app:pressedTextColor="#000"
-            app:radius="5dp" />
-
-
-        <com.head.views.button.HeadButton
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="shuwen"
-            app:normalBackgroundColor="#FFF111"
-            app:normalTextColor="#FFF"
-            app:pressedBackgroundColor="#B9B04A"
-            app:pressedTextColor="#000"
-            app:round="true" />
-
-
         <com.head.views.progressbar.HeadProgressBar
             android:id="@+id/pb"
             android:layout_width="match_parent"
@@ -229,6 +153,82 @@
             android:layout_marginRight="20dp"
             android:max="100"
             android:progress="0" />
+        <com.head.views.edittext.HeadEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:inputType="textPassword"
+            app:rightDrawablesVisibility="false" />
+
+        <com.head.views.edittext.HeadEditText
+            android:id="@+id/edit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="12312"
+            android:textColor="#000"
+            app:isEnabled="true"
+            app:leftDrawables="@mipmap/tab_equipment_blue"
+            app:rightDrawablesVisibility="true" />
+
+        <com.head.views.edittext.HeadEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:isPassword="true"
+            app:rightDrawablesVisibility="true" />
+
+        <com.head.views.edittext.HeadEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:rightDrawablesVisibility="true" />
+
+        <com.head.views.edittext.HeadEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:rightDrawablesVisibility="true" />
+
+        <com.head.views.edittext.HeadEditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:rightDrawablesVisibility="true" />
+
+        <com.head.views.button.HeadButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置文本变化"
+            app:normalTextColor="#000"
+            app:pressedTextColor="#FFF111" />
+
+        <com.head.views.button.HeadButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="shuwen"
+            app:normalBackgroundColor="#FFF111"
+            app:normalTextColor="#FFF"
+            app:pressedBackgroundColor="#BD4747"
+            app:pressedTextColor="#000"
+            app:radius="5dp" />
+
+
+        <com.head.views.button.HeadButton
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="shuwen"
+            app:normalBackgroundColor="#FFF111"
+            app:normalTextColor="#FFF"
+            app:pressedBackgroundColor="#B9B04A"
+            app:pressedTextColor="#000"
+            app:round="true" />
+
+
 
     </LinearLayout>
 </ScrollView>

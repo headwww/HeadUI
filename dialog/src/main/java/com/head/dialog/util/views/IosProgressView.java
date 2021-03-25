@@ -5,9 +5,13 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.HapticFeedbackConstants;
@@ -16,20 +20,17 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
-import androidx.annotation.Nullable;
-
 import com.head.dialog.R;
 import com.head.dialog.interfaces.ProgressViewInterface;
-
 /**
 *
 * 类名称：ProgressView.java <br/>
-* 类描述：<br/>
+* 类描述：IOS的进度<br/>
 * 创建人：舒文 <br/>
-* 创建时间：3/8/21 8:58 PM <br/>
+* 创建时间：3/9/21 1:50 PM <br/>
 * @version
 */
-public class MaterialProgressView extends View implements ProgressViewInterface {
+public class IosProgressView extends View implements ProgressViewInterface {
 
     public static final int STATUS_LOADING = 0;
     public static final int STATUS_SUCCESS = 1;
@@ -37,29 +38,40 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
     public static final int STATUS_ERROR = 3;
     public static final int STATUS_PROGRESSING = 4;
 
+    private boolean isLightMode;
+
     private int status = STATUS_LOADING;
 
     private int width = dip2px(2);
     private int color = Color.WHITE;
 
-    public MaterialProgressView(Context context) {
+    public IosProgressView(Context context) {
         super(context);
         init(null);
     }
 
-    public MaterialProgressView(Context context, @Nullable AttributeSet attrs) {
+    public IosProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public MaterialProgressView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public IosProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
-    public MaterialProgressView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public IosProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
+    }
+
+    public boolean isLightMode() {
+        return isLightMode;
+    }
+
+    public IosProgressView setLightMode(boolean lightMode) {
+        isLightMode = lightMode;
+        return this;
     }
 
     private ValueAnimator rotateAnimator;
@@ -79,7 +91,7 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
     private boolean isInited = false;
 
     private void init(AttributeSet attrs) {
-        synchronized (MaterialProgressView.class) {
+        synchronized (IosProgressView.class) {
             if (isInited) {
                 return;
             }
@@ -97,11 +109,12 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
             mPaint.setStrokeWidth(width);
             mPaint.setStrokeCap(Paint.Cap.ROUND);
             mPaint.setColor(color);
+            isLightMode = color != Color.WHITE;
 
             if (!isInEditMode()) {
                 halfSweepA = (halfSweepAMaxValue - halfSweepAMinValue) / 2;
 
-                rotateAnimator = ValueAnimator.ofFloat(0, 365);
+                rotateAnimator = ValueAnimator.ofFloat(0, 8);
                 rotateAnimator.setDuration(1000);
                 rotateAnimator.setInterpolator(new LinearInterpolator());
                 rotateAnimator.setRepeatCount(-1);
@@ -136,14 +149,19 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
     //半径
     private float mRadius = 100;
     private RectF oval;
+    private Rect ovalInt;
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
+
+        int drawWidth = dip2px(30);
+
         mCenterX = w * 1f / 2;
         mCenterY = h * 1f / 2;
-        mRadius = Math.min(getWidth(), getHeight()) / 2 - width / 2;
+        mRadius = drawWidth / 2 - width / 2;
         oval = new RectF(mCenterX - mRadius, mCenterY - mRadius, mCenterX + mRadius, mCenterY + mRadius);
+        ovalInt = new Rect((int) (mCenterX - mRadius), (int) (mCenterY - mRadius), (int) (mCenterX + mRadius), (int) (mCenterY + mRadius));
     }
 
     protected float oldAnimAngle;
@@ -156,7 +174,6 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
             return;
         }
         if (noShowLoading) {
-            canvas.drawArc(oval, 0, 365, false, mPaint);
             successStep = 2;
             drawDoneMark(status, canvas);
             return;
@@ -165,33 +182,13 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
         float sweepAngle = (float) (halfSweepA * Math.sin(Math.toRadians(followRotateDegrees))) + halfSweepA + halfSweepAMinValue / 2;
         switch (status) {
             case STATUS_LOADING:
-                canvas.drawArc(oval, currentRotateDegrees, -sweepAngle, false, mPaint);
+                Bitmap loadingBmp = getLoadingBitmap();
+                canvas.drawBitmap(getLoadingBitmap(), new Rect(0, 0, loadingBmp.getWidth(), loadingBmp.getHeight()), ovalInt, null);
                 break;
             case STATUS_SUCCESS:
             case STATUS_WARNING:
             case STATUS_ERROR:
-                switch (successStep) {
-                    case 0:
-                        canvas.drawArc(oval, currentRotateDegrees, -sweepAngle, false, mPaint);
-                        if ((currentRotateDegrees - sweepAngle) > 270) {
-                            successStep = 1;
-                        }
-                        break;
-                    case 1:
-                        float aimAngle = currentRotateDegrees > 270 ? currentRotateDegrees - 270 : 90 + currentRotateDegrees;
-                        canvas.drawArc(oval, 270, aimAngle, false, mPaint);
-                        if (oldAnimAngle > aimAngle && oldAnimAngle > 300) {
-                            successStep = 2;
-                            canvas.drawArc(oval, 0, 360, false, mPaint);
-                            break;
-                        }
-                        oldAnimAngle = aimAngle;
-                        break;
-                    case 2:
-                        canvas.drawArc(oval, 0, 360, false, mPaint);
-                        drawDoneMark(status, canvas);
-                        break;
-                }
+                drawDoneMark(status, canvas);
                 break;
             case STATUS_PROGRESSING:
                 canvas.drawArc(oval, -90, currentRotateDegrees, false, mPaint);
@@ -201,6 +198,14 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
                 }
                 break;
         }
+    }
+
+    private Bitmap getLoadingBitmap() {
+        Bitmap origin = BitmapFactory.decodeResource(getResources(), isLightMode ? R.mipmap.img_progress_ios_dark : R.mipmap.img_progress_ios_light);
+        Matrix matrix = new Matrix();
+        matrix.setRotate(45 * ((int) currentRotateDegrees));
+        Bitmap rotatedBitmap = Bitmap.createBitmap(origin, 0, 0, origin.getWidth(), origin.getHeight(), matrix, false);
+        return Bitmap.createBitmap(rotatedBitmap, rotatedBitmap.getWidth() / 2 - origin.getWidth() / 2, rotatedBitmap.getHeight() / 2 - origin.getHeight() / 2, origin.getWidth(), origin.getHeight(), null, false);
     }
 
     private void drawDoneMark(int status, Canvas canvas) {
@@ -234,9 +239,9 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
 
     //绘制对号
     private void showSuccessTick(Canvas canvas) {
-        int tickLeftPoint = (int) (mCenterX - mRadius * 1 / 2);
-        int tickTurnLeftPoint = (int) (mCenterX - mRadius / 10);
-        int tickRightPoint = (int) (mRadius * 0.99f);
+        int tickLeftPoint = (int) (mCenterX - (mRadius * 1.5) * 1 / 2);
+        int tickTurnLeftPoint = (int) (mCenterX - (mRadius * 1.5) / 10);
+        int tickRightPoint = (int) ((mRadius * 1.5) * 0.99f);
         int speed = 2;
         switch (tickStep) {
             case 0:
@@ -265,9 +270,9 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
     //绘制感叹号
     private void showWarningTick(Canvas canvas) {
         int tickLeftPoint = (int) mCenterX;
-        int line1StartY = (int) (mCenterY - mRadius * 1 / 2);
-        int line1EndY = (int) (mCenterY + mRadius * 1 / 8);
-        int line2StartY = (int) (mCenterY + mRadius * 3 / 7);
+        int line1StartY = (int) (mCenterY - (mRadius * 1.5) * 1 / 2);
+        int line1EndY = (int) (mCenterY + (mRadius * 1.5) * 1 / 8);
+        int line2StartY = (int) (mCenterY + (mRadius * 1.5) * 3 / 7);
         int speed = 4;
         switch (tickStep) {
             case 0:
@@ -290,9 +295,9 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
 
     //绘制错误符号
     private void showErrorTick(Canvas canvas) {
-        int tickLeftPoint = (int) (mCenterX - mRadius * 4 / 10);
-        int tickRightPoint = (int) (mCenterX + mRadius * 4 / 10);
-        int tickTopPoint = (int) (mCenterY - mRadius * 4 / 10);
+        int tickLeftPoint = (int) (mCenterX - (mRadius * 1.5) * 4 / 10);
+        int tickRightPoint = (int) (mCenterX + (mRadius * 1.5) * 4 / 10);
+        int tickTopPoint = (int) (mCenterY - (mRadius * 1.5) * 4 / 10);
         int speed = 4;
 
         switch (tickStep) {
@@ -323,60 +328,33 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
     private Runnable waitProgressingRunnable;
 
     public void success() {
-        if (status == STATUS_PROGRESSING) {
-            progress(1f);
-            waitProgressingRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    tickStep = 0;
-                    successStep = 2;
-                    interpolator = new AccelerateDecelerateInterpolator();
-                    status = STATUS_SUCCESS;
-                }
-            };
-            return;
-        }
         tickStep = 0;
+        line1X = 0;
+        line1Y = 0;
+        line2X = 0;
+        line2Y = 0;
         interpolator = new AccelerateDecelerateInterpolator();
         status = STATUS_SUCCESS;
         invalidate();
     }
 
     public void warning() {
-        if (status == STATUS_PROGRESSING) {
-            progress(1f);
-            waitProgressingRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    tickStep = 0;
-                    successStep = 2;
-                    interpolator = new DecelerateInterpolator(2);
-                    status = STATUS_WARNING;
-                }
-            };
-            return;
-        }
         tickStep = 0;
+        line1X = 0;
+        line1Y = 0;
+        line2X = 0;
+        line2Y = 0;
         interpolator = new DecelerateInterpolator(2);
         status = STATUS_WARNING;
         invalidate();
     }
 
     public void error() {
-        if (status == STATUS_PROGRESSING) {
-            progress(1f);
-            waitProgressingRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    tickStep = 0;
-                    successStep = 2;
-                    interpolator = new DecelerateInterpolator(2);
-                    status = STATUS_ERROR;
-                }
-            };
-            return;
-        }
         tickStep = 0;
+        line1X = 0;
+        line1Y = 0;
+        line2X = 0;
+        line2Y = 0;
         interpolator = new DecelerateInterpolator(2);
         status = STATUS_ERROR;
         invalidate();
@@ -405,7 +383,7 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
 
     private Runnable tickShowRunnable;
 
-    public MaterialProgressView whenShowTick(Runnable runnable) {
+    public IosProgressView whenShowTick(Runnable runnable) {
         tickShowRunnable = runnable;
         return this;
     }
@@ -444,7 +422,7 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
         return width;
     }
 
-    public MaterialProgressView setStrokeWidth(int width) {
+    public IosProgressView setStrokeWidth(int width) {
         this.width = width;
         if (mPaint != null) mPaint.setStrokeWidth(width);
         return this;
@@ -454,7 +432,7 @@ public class MaterialProgressView extends View implements ProgressViewInterface 
         return color;
     }
 
-    public MaterialProgressView setColor(int color) {
+    public IosProgressView setColor(int color) {
         this.color = color;
         if (mPaint != null) mPaint.setColor(color);
         return this;

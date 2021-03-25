@@ -21,7 +21,8 @@ import com.head.dialog.util.TextInfo;
 * @version 
 */
 public class HeadDialog {
-    
+    public static final String ERROR_INIT_TIPS = "HeadDialog.init: 初始化异常，context 为 null 或未初始化。";
+
     //开启日志
     public static boolean DEBUGMODE = true;
     
@@ -84,7 +85,7 @@ public class HeadDialog {
     public static boolean cancelable = true;
     
     //默认提示框及等待框（WaitDialog、TipDialog）默认是否可以关闭
-    public static boolean cancelableTipDialog = false;
+    public static boolean cancelableTipDialog = true;
     
     //默认取消按钮文本文字，影响 BottomDialog
     public static String cancelButtonText;
@@ -109,7 +110,7 @@ public class HeadDialog {
     
     public static void init(Context context) {
         if (context == null) {
-            error("HeadDialog.init: 初始化异常，context 为 null");
+            error(ERROR_INIT_TIPS);
             return;
         }
         BaseDialog.init(context);

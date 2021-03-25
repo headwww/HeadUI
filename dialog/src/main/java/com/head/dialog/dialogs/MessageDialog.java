@@ -50,20 +50,20 @@ import com.head.dialog.util.TextInfo;
 * @version 
 */
 public class MessageDialog extends BaseDialog {
-    
-    public static BaseDialog.BOOLEAN overrideCancelable;
+
+    public static BOOLEAN overrideCancelable;
     protected OnBindView<MessageDialog> onBindView;
     protected MessageDialog me = this;
     protected BOOLEAN privateCancelable;
-    
+
     private DialogLifecycleCallback<MessageDialog> dialogLifecycleCallback;
-    
+
     protected MessageDialog() {
         super();
     }
-    
+
     protected View dialogView;
-    
+
     protected CharSequence title;
     protected CharSequence message;
     protected CharSequence okText;
@@ -72,96 +72,96 @@ public class MessageDialog extends BaseDialog {
     protected String inputText;
     protected String inputHintText;
     protected int maskColor = -1;
-    
+
     protected TextInfo titleTextInfo;
     protected TextInfo messageTextInfo;
     protected TextInfo okTextInfo;
     protected TextInfo cancelTextInfo;
     protected TextInfo otherTextInfo;
     protected InputInfo inputInfo;
-    
+
     protected BaseOnDialogClickCallback okButtonClickListener;
     protected BaseOnDialogClickCallback cancelButtonClickListener;
     protected BaseOnDialogClickCallback otherButtonClickListener;
-    
+
     protected int buttonOrientation;
-    
+
     public static MessageDialog build() {
         return new MessageDialog();
     }
-    
+
     public MessageDialog(CharSequence title, CharSequence message) {
         this.title = title;
         this.message = message;
     }
-    
+
     public MessageDialog(CharSequence title, CharSequence message, CharSequence okText) {
         this.title = title;
         this.message = message;
         this.okText = okText;
     }
-    
+
     public MessageDialog(int titleResId, int messageResId, int okTextResId) {
         this.title = getString(titleResId);
         this.message = getString(messageResId);
         this.okText = getString(okTextResId);
     }
-    
+
     public MessageDialog(int titleResId, int messageResId) {
         this.title = getString(titleResId);
         this.message = getString(messageResId);
     }
-    
+
     public static MessageDialog show(CharSequence title, CharSequence message, CharSequence okText) {
         MessageDialog messageDialog = new MessageDialog(title, message, okText);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public static MessageDialog show(int titleResId, int messageResId, int okTextResId) {
         MessageDialog messageDialog = new MessageDialog(titleResId, messageResId, okTextResId);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public static MessageDialog show(CharSequence title, CharSequence message) {
         MessageDialog messageDialog = new MessageDialog(title, message);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public static MessageDialog show(int titleResId, int messageResId) {
         MessageDialog messageDialog = new MessageDialog(titleResId, messageResId);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public MessageDialog(CharSequence title, CharSequence message, CharSequence okText, CharSequence cancelText) {
         this.title = title;
         this.message = message;
         this.okText = okText;
         this.cancelText = cancelText;
     }
-    
+
     public MessageDialog(int titleResId, int messageResId, int okTextResId, int cancelTextResId) {
         this.title = getString(titleResId);
         this.message = getString(messageResId);
         this.okText = getString(okTextResId);
         this.cancelText = getString(cancelTextResId);
     }
-    
+
     public static MessageDialog show(CharSequence title, CharSequence message, CharSequence okText, CharSequence cancelText) {
         MessageDialog messageDialog = new MessageDialog(title, message, okText, cancelText);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public static MessageDialog show(int titleResId, int messageResId, int okTextResId, int cancelTextResId) {
         MessageDialog messageDialog = new MessageDialog(titleResId, messageResId, okTextResId, cancelTextResId);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public MessageDialog(CharSequence title, CharSequence message, CharSequence okText, CharSequence cancelText, CharSequence otherText) {
         this.title = title;
         this.message = message;
@@ -169,7 +169,7 @@ public class MessageDialog extends BaseDialog {
         this.cancelText = cancelText;
         this.otherText = otherText;
     }
-    
+
     public MessageDialog(int titleResId, int messageResId, int okTextResId, int cancelTextResId, int otherTextResId) {
         this.title = getString(titleResId);
         this.message = getString(messageResId);
@@ -177,43 +177,43 @@ public class MessageDialog extends BaseDialog {
         this.cancelText = getString(cancelTextResId);
         this.otherText = getString(otherTextResId);
     }
-    
+
     public static MessageDialog show(CharSequence title, CharSequence message, CharSequence okText, CharSequence cancelText, CharSequence otherText) {
         MessageDialog messageDialog = new MessageDialog(title, message, okText, cancelText, otherText);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     public static MessageDialog show(int titleResId, int messageResId, int okTextResId, int cancelTextResId, int otherTextResId) {
         MessageDialog messageDialog = new MessageDialog(titleResId, messageResId, okTextResId, cancelTextResId, otherTextResId);
         messageDialog.show();
         return messageDialog;
     }
-    
+
     protected DialogImpl dialogImpl;
-    
+
     public void show() {
         super.beforeShow();
         int layoutId = style.layout(isLightTheme());
         layoutId = layoutId == 0 ? (isLightTheme() ? R.layout.layout_dialog_material : R.layout.layout_dialog_material_dark) : layoutId;
-        
+
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
-    
+
     public void show(Activity activity) {
         super.beforeShow();
         int layoutId = style.layout(isLightTheme());
         layoutId = layoutId == 0 ? (isLightTheme() ? R.layout.layout_dialog_material : R.layout.layout_dialog_material_dark) : layoutId;
-        
+
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(activity, dialogView);
     }
-    
+
     public void refreshUI() {
         if (getRootFrameLayout() == null) return;
         getRootFrameLayout().post(new Runnable() {
@@ -223,10 +223,10 @@ public class MessageDialog extends BaseDialog {
             }
         });
     }
-    
+
     public class DialogImpl implements DialogConvertViewInterface {
         BlurView blurView;
-        
+
         public DialogBaseRelativeLayout boxRoot;
         public MaxRelativeLayout bkg;
         public TextView txtDialogTitle;
@@ -236,9 +236,10 @@ public class MessageDialog extends BaseDialog {
         public LinearLayout boxButton;
         public TextView btnSelectOther;
         public View spaceOtherButton;
+        public View splitHorizontal;
         public TextView btnSelectNegative;
         public TextView btnSelectPositive;
-        
+
         public DialogImpl(View convertView) {
             boxRoot = convertView.findViewById(R.id.box_root);
             bkg = convertView.findViewById(R.id.bkg);
@@ -249,12 +250,13 @@ public class MessageDialog extends BaseDialog {
             boxButton = convertView.findViewById(R.id.box_button);
             btnSelectOther = convertView.findViewById(R.id.btn_selectOther);
             spaceOtherButton = convertView.findViewById(R.id.space_other_button);
+            splitHorizontal = convertView.findViewWithTag("split");
             btnSelectNegative = convertView.findViewById(R.id.btn_selectNegative);
             btnSelectPositive = convertView.findViewById(R.id.btn_selectPositive);
             init();
             refreshView();
         }
-        
+
         public void init() {
             if (titleTextInfo == null) titleTextInfo = HeadDialog.titleTextInfo;
             if (messageTextInfo == null) messageTextInfo = HeadDialog.messageTextInfo;
@@ -264,12 +266,12 @@ public class MessageDialog extends BaseDialog {
             if (otherTextInfo == null) otherTextInfo = HeadDialog.buttonTextInfo;
             if (inputInfo == null) inputInfo = HeadDialog.inputInfo;
             if (backgroundColor == -1) backgroundColor = HeadDialog.backgroundColor;
-            
+
             txtDialogTitle.getPaint().setFakeBoldText(true);
             btnSelectNegative.getPaint().setFakeBoldText(true);
             btnSelectPositive.getPaint().setFakeBoldText(true);
             btnSelectOther.getPaint().setFakeBoldText(true);
-            
+
             boxRoot.setParentDialog(me);
             boxRoot.setOnLifecycleCallBack(new DialogBaseRelativeLayout.OnLifecycleCallBack() {
                 @Override
@@ -283,15 +285,15 @@ public class MessageDialog extends BaseDialog {
                     }
                     enterAnim.setInterpolator(new DecelerateInterpolator());
                     bkg.startAnimation(enterAnim);
-                    
+
                     boxRoot.animate()
                             .setDuration(enterAnim.getDuration())
                             .alpha(1f)
                             .setInterpolator(new DecelerateInterpolator())
                             .setListener(null);
-                    
+
                     getDialogLifecycleCallback().onShow(me);
-                    
+
                     if (style.messageDialogBlurSettings() != null && style.messageDialogBlurSettings().blurBackground()) {
                         bkg.post(new Runnable() {
                             @Override
@@ -307,7 +309,7 @@ public class MessageDialog extends BaseDialog {
                             }
                         });
                     }
-                    
+
                     if (autoShowInputKeyboard) {
                         txtInput.postDelayed(new Runnable() {
                             @Override
@@ -330,17 +332,17 @@ public class MessageDialog extends BaseDialog {
                             txtInput.selectAll();
                         }
                     }
-                    
+
                     if (onBindView != null) onBindView.onBind(me, onBindView.getCustomView());
                 }
-                
+
                 @Override
                 public void onDismiss() {
                     isShow = false;
                     getDialogLifecycleCallback().onDismiss(me);
                 }
             });
-            
+
             boxRoot.setOnBackPressedListener(new OnBackPressedListener() {
                 @Override
                 public boolean onBackPressed() {
@@ -424,7 +426,7 @@ public class MessageDialog extends BaseDialog {
                 }
             });
         }
-        
+
         public void refreshView() {
             if (backgroundColor != -1) {
                 tintColor(bkg, backgroundColor);
@@ -434,7 +436,7 @@ public class MessageDialog extends BaseDialog {
                     tintColor(btnSelectPositive, backgroundColor);
                 }
             }
-            
+
             bkg.setMaxWidth(HeadDialog.dialogMaxWidth);
             if (me instanceof InputDialog) {
                 txtInput.setVisibility(View.VISIBLE);
@@ -443,13 +445,13 @@ public class MessageDialog extends BaseDialog {
             }
             boxRoot.setClickable(true);
             if (maskColor != -1) boxRoot.setBackgroundColor(maskColor);
-            
+
             showText(txtDialogTitle, title);
             showText(txtDialogTip, message);
             showText(btnSelectPositive, okText);
             showText(btnSelectNegative, cancelText);
             showText(btnSelectOther, otherText);
-            
+
             txtInput.setText(inputText);
             txtInput.setHint(inputHintText);
             if (spaceOtherButton != null) {
@@ -459,7 +461,7 @@ public class MessageDialog extends BaseDialog {
                     spaceOtherButton.setVisibility(View.VISIBLE);
                 }
             }
-            
+
             useTextInfo(txtDialogTitle, titleTextInfo);
             useTextInfo(txtDialogTip, messageTextInfo);
             useTextInfo(btnSelectPositive, okTextInfo);
@@ -477,7 +479,7 @@ public class MessageDialog extends BaseDialog {
                     useTextInfo(txtInput, inputInfo.getTextInfo());
                 }
             }
-            
+
             int visibleButtonCount = 0;
             if (!isNull(okText)) {
                 visibleButtonCount = visibleButtonCount + 1;
@@ -488,7 +490,11 @@ public class MessageDialog extends BaseDialog {
             if (!isNull(otherText)) {
                 visibleButtonCount = visibleButtonCount + 1;
             }
-            
+
+            if (splitHorizontal != null) {
+                splitHorizontal.setBackgroundColor(getColor(style.splitColorRes(isLightTheme())));
+            }
+
             boxButton.setOrientation(buttonOrientation);
             if (buttonOrientation == LinearLayout.VERTICAL) {
                 //纵向
@@ -595,7 +601,7 @@ public class MessageDialog extends BaseDialog {
                     }
                 }
             }
-            
+
             //Events
             if (isCancelable()) {
                 boxRoot.setOnClickListener(new View.OnClickListener() {
@@ -607,7 +613,7 @@ public class MessageDialog extends BaseDialog {
             } else {
                 boxRoot.setOnClickListener(null);
             }
-            
+
             if (onBindView != null && onBindView.getCustomView() != null) {
                 boxCustom.removeView(onBindView.getCustomView());
                 ViewGroup.LayoutParams lp = boxCustom.getLayoutParams();
@@ -620,10 +626,10 @@ public class MessageDialog extends BaseDialog {
                 boxCustom.setVisibility(View.GONE);
             }
         }
-        
+
         public void doDismiss(View v) {
             if (v != null) v.setEnabled(false);
-            
+
             int exitAnimResId = style.exitAnimResId() == 0 ? R.anim.anim_dialog_default_exit : style.exitAnimResId();
             Animation exitAnim = AnimationUtils.loadAnimation(getContext(), exitAnimResId);
             exitAnim.setInterpolator(new AccelerateInterpolator());
@@ -631,7 +637,7 @@ public class MessageDialog extends BaseDialog {
                 exitAnim.setDuration(exitAnimDuration);
             }
             bkg.startAnimation(exitAnim);
-            
+
             boxRoot.animate()
                     .alpha(0f)
                     .setInterpolator(new AccelerateInterpolator())
@@ -644,256 +650,261 @@ public class MessageDialog extends BaseDialog {
                     });
         }
     }
-    
+
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
+    }
+
     public void dismiss() {
         if (dialogImpl == null) return;
         dialogImpl.doDismiss(dialogImpl.bkg);
     }
-    
+
     public DialogLifecycleCallback<MessageDialog> getDialogLifecycleCallback() {
         return dialogLifecycleCallback == null ? new DialogLifecycleCallback<MessageDialog>() {
         } : dialogLifecycleCallback;
     }
-    
+
     public MessageDialog setDialogLifecycleCallback(DialogLifecycleCallback<MessageDialog> dialogLifecycleCallback) {
         this.dialogLifecycleCallback = dialogLifecycleCallback;
         return this;
     }
-    
+
     public MessageDialog setStyle(DialogStyle style) {
         this.style = style;
         return this;
     }
-    
+
     public MessageDialog setTheme(HeadDialog.THEME theme) {
         this.theme = theme;
         return this;
     }
-    
+
     public CharSequence getOkButton() {
         return okText;
     }
-    
+
     public MessageDialog setOkButton(CharSequence okText) {
         this.okText = okText;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOkButton(int okTextRedId) {
         this.okText = getString(okTextRedId);
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOkButton(OnDialogButtonClickListener<MessageDialog> okButtonClickListener) {
         this.okButtonClickListener = okButtonClickListener;
         return this;
     }
-    
+
     public MessageDialog setOkButton(CharSequence okText, OnDialogButtonClickListener<MessageDialog> okButtonClickListener) {
         this.okText = okText;
         this.okButtonClickListener = okButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOkButton(int okTextRedId, OnDialogButtonClickListener<MessageDialog> okButtonClickListener) {
         this.okText = getString(okTextRedId);
         this.okButtonClickListener = okButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public CharSequence getCancelButton() {
         return cancelText;
     }
-    
+
     public MessageDialog setCancelButton(CharSequence cancelText) {
         this.cancelText = cancelText;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setCancelButton(int cancelTextResId) {
         this.cancelText = getString(cancelTextResId);
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setCancelButton(OnDialogButtonClickListener<MessageDialog> cancelButtonClickListener) {
         this.cancelButtonClickListener = cancelButtonClickListener;
         return this;
     }
-    
+
     public MessageDialog setCancelButton(CharSequence cancelText, OnDialogButtonClickListener<MessageDialog> cancelButtonClickListener) {
         this.cancelText = cancelText;
         this.cancelButtonClickListener = cancelButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setCancelButton(int cancelTextResId, OnDialogButtonClickListener<MessageDialog> cancelButtonClickListener) {
         this.cancelText = getString(cancelTextResId);
         this.cancelButtonClickListener = cancelButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public CharSequence getOtherButton() {
         return otherText;
     }
-    
+
     public MessageDialog setOtherButton(CharSequence otherText) {
         this.otherText = otherText;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOtherButton(int otherTextResId) {
         this.otherText = getString(otherTextResId);
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOtherButton(OnDialogButtonClickListener<MessageDialog> otherButtonClickListener) {
         this.otherButtonClickListener = otherButtonClickListener;
         return this;
     }
-    
+
     public MessageDialog setOtherButton(CharSequence otherText, OnDialogButtonClickListener<MessageDialog> otherButtonClickListener) {
         this.otherText = otherText;
         this.otherButtonClickListener = otherButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setOtherButton(int otherTextResId, OnDialogButtonClickListener<MessageDialog> otherButtonClickListener) {
         this.otherText = getString(otherTextResId);
         this.otherButtonClickListener = otherButtonClickListener;
         refreshUI();
         return this;
     }
-    
+
     public OnDialogButtonClickListener<MessageDialog> getOkButtonClickListener() {
         return (OnDialogButtonClickListener<MessageDialog>) okButtonClickListener;
     }
-    
+
     public MessageDialog setOkButtonClickListener(OnDialogButtonClickListener<MessageDialog> okButtonClickListener) {
         this.okButtonClickListener = okButtonClickListener;
         return this;
     }
-    
+
     public OnDialogButtonClickListener<MessageDialog> getCancelButtonClickListener() {
         return (OnDialogButtonClickListener<MessageDialog>) cancelButtonClickListener;
     }
-    
+
     public MessageDialog setCancelButtonClickListener(OnDialogButtonClickListener<MessageDialog> cancelButtonClickListener) {
         this.cancelButtonClickListener = cancelButtonClickListener;
         return this;
     }
-    
+
     public OnDialogButtonClickListener<MessageDialog> getOtherButtonClickListener() {
         return (OnDialogButtonClickListener<MessageDialog>) otherButtonClickListener;
     }
-    
+
     public MessageDialog setOtherButtonClickListener(OnDialogButtonClickListener<MessageDialog> otherButtonClickListener) {
         this.otherButtonClickListener = otherButtonClickListener;
         return this;
     }
-    
+
     public CharSequence getTitle() {
         return title;
     }
-    
+
     public MessageDialog setTitle(CharSequence title) {
         this.title = title;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setTitle(int titleResId) {
         this.title = getString(titleResId);
         refreshUI();
         return this;
     }
-    
+
     public CharSequence getMessage() {
         return message;
     }
-    
+
     public MessageDialog setMessage(CharSequence message) {
         this.message = message;
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setMessage(int messageResId) {
         this.message = getString(messageResId);
         refreshUI();
         return this;
     }
-    
+
     public TextInfo getTitleTextInfo() {
         return titleTextInfo;
     }
-    
+
     public MessageDialog setTitleTextInfo(TextInfo titleTextInfo) {
         this.titleTextInfo = titleTextInfo;
         refreshUI();
         return this;
     }
-    
+
     public TextInfo getMessageTextInfo() {
         return messageTextInfo;
     }
-    
+
     public MessageDialog setMessageTextInfo(TextInfo messageTextInfo) {
         this.messageTextInfo = messageTextInfo;
         refreshUI();
         return this;
     }
-    
+
     public TextInfo getOkTextInfo() {
         return okTextInfo;
     }
-    
+
     public MessageDialog setOkTextInfo(TextInfo okTextInfo) {
         this.okTextInfo = okTextInfo;
         refreshUI();
         return this;
     }
-    
+
     public TextInfo getCancelTextInfo() {
         return cancelTextInfo;
     }
-    
+
     public MessageDialog setCancelTextInfo(TextInfo cancelTextInfo) {
         this.cancelTextInfo = cancelTextInfo;
         refreshUI();
         return this;
     }
-    
+
     public TextInfo getOtherTextInfo() {
         return otherTextInfo;
     }
-    
+
     public MessageDialog setOtherTextInfo(TextInfo otherTextInfo) {
         this.otherTextInfo = otherTextInfo;
         refreshUI();
         return this;
     }
-    
+
     public int getButtonOrientation() {
         return buttonOrientation;
     }
-    
+
     public MessageDialog setButtonOrientation(int buttonOrientation) {
         this.buttonOrientation = buttonOrientation;
         refreshUI();
         return this;
     }
-    
+
     public boolean isCancelable() {
         if (privateCancelable != null) {
             return privateCancelable == BOOLEAN.TRUE;
@@ -903,53 +914,53 @@ public class MessageDialog extends BaseDialog {
         }
         return cancelable;
     }
-    
+
     public MessageDialog setCancelable(boolean cancelable) {
         this.privateCancelable = cancelable ? BOOLEAN.TRUE : BOOLEAN.FALSE;
         refreshUI();
         return this;
     }
-    
+
     public OnBackPressedListener getOnBackPressedListener() {
         return onBackPressedListener;
     }
-    
+
     public MessageDialog setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
         return this;
     }
-    
+
     public DialogImpl getDialogImpl() {
         return dialogImpl;
     }
-    
+
     public MessageDialog setCustomView(OnBindView<MessageDialog> onBindView) {
         this.onBindView = onBindView;
         refreshUI();
         return this;
     }
-    
+
     public View getCustomView() {
         if (onBindView == null) return null;
         return onBindView.getCustomView();
     }
-    
+
     public MessageDialog removeCustomView() {
         this.onBindView.clean();
         refreshUI();
         return this;
     }
-    
+
     public int getBackgroundColor() {
         return backgroundColor;
     }
-    
+
     public MessageDialog setBackgroundColor(@ColorInt int backgroundColor) {
         this.backgroundColor = backgroundColor;
         refreshUI();
         return this;
     }
-    
+
     public String getInputText() {
         if (dialogImpl.txtInput != null) {
             return dialogImpl.txtInput.getText().toString();
@@ -957,43 +968,43 @@ public class MessageDialog extends BaseDialog {
             return "";
         }
     }
-    
+
     public MessageDialog setBackgroundColorRes(@ColorRes int backgroundColorResId) {
         this.backgroundColor = getColor(backgroundColorResId);
         refreshUI();
         return this;
     }
-    
+
     public MessageDialog setMaskColor(@ColorInt int maskColor) {
         this.maskColor = maskColor;
         refreshUI();
         return this;
     }
-    
+
     public long getEnterAnimDuration() {
         return enterAnimDuration;
     }
-    
+
     public MessageDialog setEnterAnimDuration(long enterAnimDuration) {
         this.enterAnimDuration = enterAnimDuration;
         return this;
     }
-    
+
     public long getExitAnimDuration() {
         return exitAnimDuration;
     }
-    
+
     public MessageDialog setExitAnimDuration(long exitAnimDuration) {
         this.exitAnimDuration = exitAnimDuration;
         return this;
     }
-    
+
     @Override
     public void onUIModeChange(Configuration newConfig) {
         if (dialogView != null) {
             dismiss(dialogView);
         }
-        if (getDialogImpl().boxCustom!=null){
+        if (getDialogImpl().boxCustom != null) {
             getDialogImpl().boxCustom.removeAllViews();
         }
         int layoutId = style.layout(isLightTheme());
@@ -1002,7 +1013,7 @@ public class MessageDialog extends BaseDialog {
         enterAnimDuration = 0;
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
 }

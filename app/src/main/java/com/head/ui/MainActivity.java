@@ -269,14 +269,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     PopTip.show("按下返回");
                     return false;
                 }
-            }).setCancelable(true);
+            }).setCancelable(false);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     WaitDialog.dismiss();
                 }
-            }, 2000);
+            }, 5000);
 
         } else if (view.getId() == R.id.btn_waitAndTipDialog) {
             WaitDialog.show("Please Wait!").setOnBackPressedListener(new OnBackPressedListener() {

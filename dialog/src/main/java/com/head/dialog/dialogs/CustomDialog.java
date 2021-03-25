@@ -85,7 +85,7 @@ public class CustomDialog extends BaseDialog {
         super.beforeShow();
         dialogView = createView(R.layout.layout_dialog_custom);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
 
@@ -93,7 +93,7 @@ public class CustomDialog extends BaseDialog {
         super.beforeShow();
         dialogView = createView(R.layout.layout_dialog_custom);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(activity, dialogView);
     }
 
@@ -267,6 +267,11 @@ public class CustomDialog extends BaseDialog {
         }
     }
 
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
+    }
+
     public void refreshUI() {
         if (getRootFrameLayout() == null) return;
         getRootFrameLayout().post(new Runnable() {
@@ -311,6 +316,7 @@ public class CustomDialog extends BaseDialog {
         this.theme = theme;
         return this;
     }
+
 
     public boolean isCancelable() {
         if (privateCancelable != null) {
@@ -434,7 +440,7 @@ public class CustomDialog extends BaseDialog {
         enterAnimDuration = 0;
         dialogView = createView(R.layout.layout_dialog_custom);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
 }

@@ -186,7 +186,6 @@ public class HeadTitleBar extends RelativeLayout
 
     private static final int TYPE_CENTER_SEARCH_RIGHT_DELETE = 1;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public HeadTitleBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         loadAttributes(context, attrs);
@@ -399,7 +398,6 @@ public class HeadTitleBar extends RelativeLayout
      *
      * @param context 上下文
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initMainViews(Context context) {
         if (leftType != TYPE_LEFT_NONE) {
             initMainLeftViews(context);
@@ -526,7 +524,6 @@ public class HeadTitleBar extends RelativeLayout
      *
      * @param context 上下文
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initMainCenterViews(Context context) {
         if (centerType == TYPE_CENTER_TEXTVIEW) {
             // 初始化中间子布局
@@ -566,8 +563,9 @@ public class HeadTitleBar extends RelativeLayout
 
             // 初始化进度条, 显示于标题栏左边
             progressCenter = new ProgressBar(context);
-            progressCenter.setIndeterminateDrawable(getResources()
-                    .getDrawable(R.drawable.comm_titlebar_progress_draw));
+            Drawable drawable=getResources().getDrawable(R.drawable.comm_titlebar_progress_draw,context.getTheme());
+            progressCenter.setIndeterminateDrawable(drawable);
+
             progressCenter.setVisibility(View.GONE);
             int progressWidth = ScreenUtils.dp2PxInt(context, 18);
             LayoutParams progressParams =

@@ -230,7 +230,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                     PopTip.show("按下返回");
                     return false;
                 }
-            }).setCancelable(true);
+            });
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override

@@ -79,6 +79,11 @@ public class BottomDialog extends BaseDialog {
         super();
     }
 
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
+    }
+
     private View dialogView;
 
     public static BottomDialog build() {
@@ -172,7 +177,7 @@ public class BottomDialog extends BaseDialog {
 
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
 
@@ -185,7 +190,7 @@ public class BottomDialog extends BaseDialog {
 
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(activity, dialogView);
     }
 
@@ -857,7 +862,7 @@ public class BottomDialog extends BaseDialog {
         enterAnimDuration = 0;
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
     }
 }

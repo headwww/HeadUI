@@ -33,16 +33,16 @@ import com.head.dialog.util.views.MaxRelativeLayout;
 
 import java.lang.ref.WeakReference;
 
-/**   
-*
-* 类名称：WaitDialog.java <br/>
-* 类描述：等待弹窗<br/>
-* 创建人：舒文 <br/>
-* 创建时间：3/8/21 10:45 PM <br/>
-* @version 
-*/
+/**
+ *
+ * 类名称：WaitDialog.java <br/>
+ * 类描述：等待弹窗<br/>
+ * 创建人：舒文 <br/>
+ * 创建时间：3/8/21 10:45 PM <br/>
+ * @version
+ */
 public class WaitDialog extends BaseDialog {
-    
+
     public static BOOLEAN overrideCancelable;
     protected OnBindView<WaitDialog> onBindView;
 
@@ -52,7 +52,7 @@ public class WaitDialog extends BaseDialog {
         WARNING,
         ERROR
     }
-    
+
     protected static WeakReference<WaitDialog> me;
     protected CharSequence message;
     protected long tipShowDuration = 1500;
@@ -61,16 +61,16 @@ public class WaitDialog extends BaseDialog {
     protected TextInfo messageTextInfo;
     protected int maskColor = -1;
     protected BOOLEAN privateCancelable;
-    
+
     private DialogLifecycleCallback<WaitDialog> dialogLifecycleCallback;
     protected DialogLifecycleCallback<WaitDialog> tipDialogLifecycleCallback;
-    
+
     protected WaitDialog() {
         super();
         me = new WeakReference<>(this);
         cancelable = HeadDialog.cancelableTipDialog;
     }
-    
+
     public static WaitDialog show(CharSequence message) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().message = message;
@@ -86,7 +86,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(Activity activity, CharSequence message) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().message = message;
@@ -102,7 +102,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(int messageResId) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -118,7 +118,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(Activity activity, int messageResId) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().preMessage(messageResId);
@@ -134,7 +134,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(CharSequence message, float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -151,7 +151,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(Activity activity, CharSequence message, float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -168,7 +168,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(int messageResId, float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -185,7 +185,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(Activity activity, int messageResId, float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -202,7 +202,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(Activity activity, float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -216,7 +216,7 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public static WaitDialog show(float progress) {
         DialogImpl dialogImpl = me().dialogImpl;
         me().showType = -1;
@@ -230,39 +230,39 @@ public class WaitDialog extends BaseDialog {
             return waitDialog;
         }
     }
-    
+
     public float getProgress() {
         return waitProgress;
     }
-    
+
     public WaitDialog setProgress(float waitProgress) {
         this.waitProgress = waitProgress;
         refreshUI();
         return this;
     }
-    
+
     private View dialogView;
-    
+
     public WaitDialog show() {
         super.beforeShow();
         dialogView = createView(R.layout.layout_dialog_wait);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey() );
         show(dialogView);
         return this;
     }
-    
+
     public WaitDialog show(Activity activity) {
         super.beforeShow();
         dialogView = createView(R.layout.layout_dialog_wait);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey() );
         show(activity, dialogView);
         return this;
     }
-    
+
     protected DialogImpl dialogImpl;
-    
+
     public class DialogImpl implements DialogConvertViewInterface {
         public DialogBaseRelativeLayout boxRoot;
         public MaxRelativeLayout bkg;
@@ -271,7 +271,7 @@ public class WaitDialog extends BaseDialog {
         public ProgressViewInterface progressView;
         public RelativeLayout boxCustomView;
         public TextView txtInfo;
-        
+
         public DialogImpl(View convertView) {
             boxRoot = convertView.findViewById(R.id.box_root);
             bkg = convertView.findViewById(R.id.bkg);
@@ -288,14 +288,14 @@ public class WaitDialog extends BaseDialog {
             init();
             refreshView();
         }
-        
+
         public void init() {
             if (messageTextInfo == null) messageTextInfo = HeadDialog.tipTextInfo;
             if (backgroundColor == -1) backgroundColor = HeadDialog.tipBackgroundColor;
-            
+
             blurView.setRadiusPx(dip2px(15));
             boxRoot.setClickable(true);
-            
+
             boxRoot.setParentDialog(me.get());
             boxRoot.setOnLifecycleCallBack(new DialogBaseRelativeLayout.OnLifecycleCallBack() {
                 @Override
@@ -312,20 +312,20 @@ public class WaitDialog extends BaseDialog {
                                 enterAnim.setDuration(enterAnimDuration);
                             }
                             bkg.startAnimation(enterAnim);
-                            
+
                             boxRoot.animate()
                                     .setDuration(enterAnimDuration == -1 ? enterAnim.getDuration() : enterAnimDuration)
                                     .alpha(1f)
                                     .setInterpolator(new DecelerateInterpolator())
                                     .setListener(null);
-                            
+
                             getDialogLifecycleCallback().onShow(me());
                         }
                     });
-                    
+
                     if (onBindView != null) onBindView.onBind(me.get(), onBindView.getCustomView());
                 }
-                
+
                 @Override
                 public void onDismiss() {
                     isShow = false;
@@ -334,7 +334,7 @@ public class WaitDialog extends BaseDialog {
                     me.clear();
                 }
             });
-            
+
             if (readyTipType != null) {
                 progressView.noLoading();
                 ((View) progressView).postDelayed(new Runnable() {
@@ -344,7 +344,7 @@ public class WaitDialog extends BaseDialog {
                     }
                 }, 100);
             }
-            
+
             boxRoot.setOnBackPressedListener(new OnBackPressedListener() {
                 @Override
                 public boolean onBackPressed() {
@@ -359,9 +359,9 @@ public class WaitDialog extends BaseDialog {
                 }
             });
         }
-        
+
         private float oldProgress;
-        
+
         public void refreshView() {
             if (style.overrideWaitTipRes() != null) {
                 int overrideBackgroundColorRes = style.overrideWaitTipRes().overrideBackgroundColorRes(isLightTheme());
@@ -388,17 +388,17 @@ public class WaitDialog extends BaseDialog {
                 }
             }
             if (HeadDialog.tipProgressColor != -1) progressView.setColor(HeadDialog.tipProgressColor);
-            
+
             if (waitProgress >= 0 && waitProgress <= 1 && oldProgress != waitProgress) {
                 progressView.progress(waitProgress);
                 oldProgress = waitProgress;
             }
-            
+
             showText(txtInfo, message);
             useTextInfo(txtInfo, messageTextInfo);
-            
+
             if (maskColor != -1) boxRoot.setBackgroundColor(maskColor);
-            
+
             if (onBindView != null && onBindView.getCustomView() != null) {
                 boxCustomView.removeView(onBindView.getCustomView());
                 ViewGroup.LayoutParams lp = boxCustomView.getLayoutParams();
@@ -425,13 +425,13 @@ public class WaitDialog extends BaseDialog {
                 boxRoot.setOnClickListener(null);
             }
         }
-        
+
         public void doDismiss(final View v) {
             boxRoot.post(new Runnable() {
                 @Override
                 public void run() {
                     if (v != null) v.setEnabled(false);
-                    
+
                     int exitAnimResId = R.anim.anim_dialog_default_exit;
                     Animation exitAnim = AnimationUtils.loadAnimation(getContext(), exitAnimResId);
                     if (exitAnimDuration != -1) {
@@ -439,7 +439,7 @@ public class WaitDialog extends BaseDialog {
                     }
                     exitAnim.setInterpolator(new AccelerateInterpolator());
                     bkg.startAnimation(exitAnim);
-                    
+
                     boxRoot.animate()
                             .alpha(0f)
                             .setInterpolator(new AccelerateInterpolator())
@@ -473,7 +473,7 @@ public class WaitDialog extends BaseDialog {
                     progressView.error();
                     break;
             }
-            
+
             //此事件是在完成衔接动画绘制后执行的逻辑
             progressView.whenShowTick(new Runnable() {
                 @Override
@@ -492,7 +492,7 @@ public class WaitDialog extends BaseDialog {
             });
         }
     }
-    
+
     @Override
     public boolean isLightTheme() {
         if (HeadDialog.tipTheme == null) {
@@ -501,7 +501,12 @@ public class WaitDialog extends BaseDialog {
             return HeadDialog.tipTheme == HeadDialog.THEME.LIGHT;
         }
     }
-    
+
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
+    }
+
     public void refreshUI() {
         if (getRootFrameLayout() == null) return;
         getRootFrameLayout().post(new Runnable() {
@@ -511,16 +516,16 @@ public class WaitDialog extends BaseDialog {
             }
         });
     }
-    
+
     public void doDismiss() {
         if (dialogImpl == null) return;
         dialogImpl.doDismiss(null);
     }
-    
+
     public static void dismiss() {
         me().doDismiss();
     }
-    
+
     protected static WaitDialog me() {
         if (me == null || me.get() == null) me = new WeakReference<>(new WaitDialog());
         return me.get();
@@ -528,21 +533,21 @@ public class WaitDialog extends BaseDialog {
 
 
     protected TYPE readyTipType;
-    
+
     protected void showTip(CharSequence message, TYPE type) {
         showType = type.ordinal();
         this.message = message;
         readyTipType = type;
         show();
     }
-    
+
     protected void showTip(Activity activity, CharSequence message, TYPE type) {
         showType = type.ordinal();
         this.message = message;
         readyTipType = type;
         show(activity);
     }
-    
+
     protected void showTip(int messageResId, TYPE type) {
         showType = type.ordinal();
         this.message = getString(messageResId);
@@ -550,7 +555,7 @@ public class WaitDialog extends BaseDialog {
         setDialogLifecycleCallback(tipDialogLifecycleCallback);
         show();
     }
-    
+
     protected void showTip(Activity activity, int messageResId, TYPE type) {
         showType = type.ordinal();
         this.message = getString(messageResId);
@@ -558,23 +563,23 @@ public class WaitDialog extends BaseDialog {
         setDialogLifecycleCallback(tipDialogLifecycleCallback);
         show(activity);
     }
-    
+
     public static CharSequence getMessage() {
         return me().message;
     }
-    
+
     public static WaitDialog setMessage(CharSequence message) {
         me().preMessage(message);
         me().refreshUI();
         return me();
     }
-    
+
     public static WaitDialog setMessage(int messageResId) {
         me().preMessage(messageResId);
         me().refreshUI();
         return me();
     }
-    
+
     public boolean isCancelable() {
         if (privateCancelable != null) {
             return privateCancelable == BOOLEAN.TRUE;
@@ -602,99 +607,99 @@ public class WaitDialog extends BaseDialog {
         me().message = message;
         return me();
     }
-    
+
     protected WaitDialog preMessage(int messageResId) {
         me().message = getString(messageResId);
         return me();
     }
-    
+
     public DialogLifecycleCallback<WaitDialog> getDialogLifecycleCallback() {
         return dialogLifecycleCallback == null ? new DialogLifecycleCallback<WaitDialog>() {
         } : dialogLifecycleCallback;
     }
-    
+
     public WaitDialog setDialogLifecycleCallback(DialogLifecycleCallback<WaitDialog> dialogLifecycleCallback) {
         this.dialogLifecycleCallback = dialogLifecycleCallback;
         return this;
     }
-    
+
     public DialogImpl getDialogImpl() {
         return dialogImpl;
     }
-    
+
     public WaitDialog setCustomView(OnBindView<WaitDialog> onBindView) {
         this.onBindView = onBindView;
         refreshUI();
         return this;
     }
-    
+
     public View getCustomView() {
         if (onBindView == null) return null;
         return onBindView.getCustomView();
     }
-    
+
     public WaitDialog removeCustomView() {
         this.onBindView.clean();
         refreshUI();
         return this;
     }
-    
+
     public OnBackPressedListener getOnBackPressedListener() {
         return onBackPressedListener;
     }
-    
+
     public WaitDialog setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
         refreshUI();
         return this;
     }
-    
+
     public int getBackgroundColor() {
         return backgroundColor;
     }
-    
+
     public WaitDialog setBackgroundColor(@ColorInt int backgroundColor) {
         this.backgroundColor = backgroundColor;
         refreshUI();
         return this;
     }
-    
+
     public WaitDialog setBackgroundColorRes(@ColorRes int backgroundColorResId) {
         this.backgroundColor = getColor(backgroundColorResId);
         refreshUI();
         return this;
     }
-    
+
     public WaitDialog setMaskColor(@ColorInt int maskColor) {
         this.maskColor = maskColor;
         refreshUI();
         return this;
     }
-    
+
     public DialogLifecycleCallback<WaitDialog> getTipDialogLifecycleCallback() {
         return tipDialogLifecycleCallback == null ? new DialogLifecycleCallback<WaitDialog>() {
         } : tipDialogLifecycleCallback;
     }
-    
+
     public WaitDialog setTipDialogLifecycleCallback(DialogLifecycleCallback<WaitDialog> dialogLifecycleCallback) {
         this.tipDialogLifecycleCallback = dialogLifecycleCallback;
         return this;
     }
-    
+
     public WaitDialog setEnterAnimDuration(long enterAnimDuration) {
         this.enterAnimDuration = enterAnimDuration;
         return this;
     }
-    
+
     public long getExitAnimDuration() {
         return exitAnimDuration;
     }
-    
+
     public WaitDialog setExitAnimDuration(long exitAnimDuration) {
         this.exitAnimDuration = exitAnimDuration;
         return this;
     }
-    
+
     @Override
     public void onUIModeChange(Configuration newConfig) {
         refreshUI();

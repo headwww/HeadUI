@@ -74,6 +74,11 @@ public class TimePickerDialog extends BaseDialog {
         super();
     }
 
+    @Override
+    public String dialogKey() {
+        return getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")";
+    }
+
     public static TimePickerDialog show(OnTimeSelectListener timeSelectListener) {
         TimePickerDialog timePickerDialog = new TimePickerDialog( timeSelectListener);
         timePickerDialog.show();
@@ -89,7 +94,7 @@ public class TimePickerDialog extends BaseDialog {
         int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(dialogView);
 
     }
@@ -99,7 +104,7 @@ public class TimePickerDialog extends BaseDialog {
         int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
         dialogView = createView(layoutId);
         dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(getClass().getSimpleName() + "(" + Integer.toHexString(hashCode()) + ")");
+        dialogView.setTag(dialogKey());
         show(activity, dialogView);
     }
 
