@@ -107,7 +107,11 @@ public class HeadDialog {
     public enum THEME {
         LIGHT, DARK, AUTO
     }
-    
+
+    //是否自动在主线程执行
+    public static boolean autoRunOnUIThread = true;
+
+
     public static void init(Context context) {
         if (context == null) {
             error(ERROR_INIT_TIPS);

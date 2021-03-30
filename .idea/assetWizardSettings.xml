@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="8e8d92" />
-                            <entry key="outputName" value="ic_clear" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../Downloads/clear.svg" />
+                            <entry key="outputName" value="ic_design" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../Downloads/design.svg" />
                           </map>
                         </option>
                       </PersistentState>

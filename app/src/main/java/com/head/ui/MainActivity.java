@@ -484,12 +484,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
 
         } else if (view.getId() == R.id.btn_customDialog) {
-            CustomDialog.show(new OnBindView<CustomDialog>(R.layout.layout_custom_dialog) {
+            CustomDialog.build().setAlign(CustomDialog.ALIGN.BOTTOM).setCustomView(new OnBindView<CustomDialog>(R.layout.layout_custom_dialog) {
                 @Override
-                public void onBind(final CustomDialog dialog, View v) {
+                public void onBind(CustomDialog dialog, View v) {
+
                 }
-            }).setFullScreen(true)
-                    .setMaskColor(getResources().getColor(R.color.black30));
+            }).show();
+//            CustomDialog.show(new OnBindView<CustomDialog>(R.layout.layout_custom_dialog) {
+//                @Override
+//                public void onBind(final CustomDialog dialog, View v) {
+//                }
+//            }).setFullScreen(true)
+//                    .setMaskColor(getResources().getColor(R.color.black30));
 
         } else if (view.getId() == R.id.btn_fullScreenDialog_login) {
             FullScreenDialog.show(new OnBindView<FullScreenDialog>(R.layout.layout_custom_view) {

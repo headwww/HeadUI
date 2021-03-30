@@ -91,21 +91,34 @@ public class TimePickerDialog extends BaseDialog {
 
     public void show() {
         super.beforeShow();
-        int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
-        dialogView = createView(layoutId);
-        dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(dialogKey());
-        show(dialogView);
+        runOnMain(new Runnable() {
+            @Override
+            public void run() {
+                int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
+                dialogView = createView(layoutId);
+                dialogImpl = new DialogImpl(dialogView);
+                dialogView.setTag(dialogKey());
+                show(dialogView);
+            }
+        });
+
 
     }
 
-    public void show(Activity activity) {
+    public void show( final Activity activity) {
         super.beforeShow();
-        int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
-        dialogView = createView(layoutId);
-        dialogImpl = new DialogImpl(dialogView);
-        dialogView.setTag(dialogKey());
-        show(activity, dialogView);
+        runOnMain(new Runnable() {
+            @Override
+            public void run() {
+                int layoutId = isLightTheme() ? R.layout.layout_dialog_time_picker_material : R.layout.layout_dialog_time_picker_material_dark;
+                dialogView = createView(layoutId);
+                dialogImpl = new DialogImpl(dialogView);
+                dialogView.setTag(dialogKey());
+                show(activity, dialogView);
+            }
+        });
+
+
     }
 
     public void refreshUI() {

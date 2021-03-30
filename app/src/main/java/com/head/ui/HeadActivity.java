@@ -1,5 +1,6 @@
 package com.head.ui;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
@@ -55,9 +56,10 @@ public class HeadActivity extends AppCompatActivity {
         fragments.add(new ViewFragment());
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(), fragments));
 
+
         models.add(
                 new HeadTabBar.Model.Builder(
-                        getResources().getDrawable(R.mipmap.tab_product_gray),
+                        getResources().getDrawable(R.mipmap.tab_logistics_gray),
                         Color.TRANSPARENT)
                         .selectedIcon(getResources().getDrawable(R.mipmap.tab_product_blue))
                         .title("生产")

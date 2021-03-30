@@ -272,7 +272,6 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
             // 参数5 = 时间单位
             Observable.intervalRange(1, 10, 1000, 300, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-
                     .subscribe(new Observer<Long>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -449,7 +448,7 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onBind(final CustomDialog dialog, View v) {
                 }
-            }).setFullScreen(true)
+            }, CustomDialog.ALIGN.BOTTOM).setFullScreen(true)
                     .setMaskColor(getResources().getColor(R.color.black30));
 
         } else if (view.getId() == R.id.btn_fullScreenDialog_login) {

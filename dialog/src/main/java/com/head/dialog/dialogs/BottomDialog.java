@@ -285,8 +285,6 @@ public class BottomDialog extends BaseDialog {
 
                     onDialogInit(dialogImpl);
 
-                    if (onBindView != null) onBindView.onBind(me, onBindView.getCustomView());
-
                     if (style.messageDialogBlurSettings() != null && style.messageDialogBlurSettings().blurBackground() && boxBody != null && boxCancel != null) {
                         int blurFrontColor = getResources().getColor(style.messageDialogBlurSettings().blurForwardColorRes(isLightTheme()));
                         blurView = new BlurView(bkg.getContext(), null);
@@ -459,15 +457,8 @@ public class BottomDialog extends BaseDialog {
 
             if (maskColor != -1) boxRoot.setBackgroundColor(maskColor);
 
-            if (onBindView != null) {
-                if (onBindView.getCustomView() != null) {
-                    boxCustom.removeView(onBindView.getCustomView());
-                    ViewGroup.LayoutParams lp = boxCustom.getLayoutParams();
-                    if (lp == null) {
-                        lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    }
-                    boxCustom.addView(onBindView.getCustomView(), lp);
-                }
+            if (onBindView != null && onBindView.getCustomView() != null) {
+                onBindView.bindParent(boxCustom, me);
             }
 
             if (isAllowInterceptTouch() && isCancelable()) {
@@ -477,6 +468,7 @@ public class BottomDialog extends BaseDialog {
             }
 
             bottomDialogTouchEventInterceptor.refresh(me, this);
+
 
             if (imgSplit != null) {
                 if (txtDialogTitle.getVisibility() == View.VISIBLE || txtDialogTip.getVisibility() == View.VISIBLE) {
@@ -537,8 +529,7 @@ public class BottomDialog extends BaseDialog {
     }
 
     public void refreshUI() {
-        if (getRootFrameLayout() == null) return;
-        getRootFrameLayout().post(new Runnable() {
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 if (dialogImpl != null) dialogImpl.refreshView();

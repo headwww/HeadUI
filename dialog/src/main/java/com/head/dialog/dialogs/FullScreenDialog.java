@@ -118,7 +118,6 @@ public class FullScreenDialog extends BaseDialog {
 
                     getDialogLifecycleCallback().onShow(me);
 
-                    if (onBindView != null) onBindView.onBind(me, onBindView.getCustomView());
                 }
 
                 @Override
@@ -203,17 +202,9 @@ public class FullScreenDialog extends BaseDialog {
                 boxRoot.setOnClickListener(null);
             }
 
-            if (onBindView != null) {
-                if (onBindView.getCustomView() != null) {
-                    boxCustom.removeView(onBindView.getCustomView());
-                    ViewGroup.LayoutParams lp = onBindView.getCustomView().getLayoutParams();
-                    if (lp == null) {
-                        lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    }
-                    boxCustom.addView(onBindView.getCustomView(), lp);
-                }
+            if (onBindView != null && onBindView.getCustomView() != null){
+                onBindView.bindParent(boxCustom, me);
             }
-
             fullScreenDialogTouchEventInterceptor.refresh(me, this);
         }
 
@@ -254,8 +245,7 @@ public class FullScreenDialog extends BaseDialog {
     }
 
     public void refreshUI() {
-        if (getRootFrameLayout() == null) return;
-        getRootFrameLayout().post(new Runnable() {
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 if (dialogImpl != null) dialogImpl.refreshView();

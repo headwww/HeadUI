@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -119,7 +120,6 @@ public class CustomDialog extends BaseDialog {
                     isShow = true;
                     getDialogLifecycleCallback().onShow(me);
                     boxCustom.setVisibility(View.GONE);
-                    if (onBindView != null) onBindView.onBind(me, onBindView.getCustomView());
                 }
 
                 @Override
@@ -226,17 +226,18 @@ public class CustomDialog extends BaseDialog {
             }
 
             boxRoot.setBackgroundColor(maskColor);
-
-            if (onBindView != null) {
-                if (onBindView.getCustomView() != null) {
+            if (onBindView != null&&onBindView.getCustomView() != null) {
                     boxCustom.removeView(onBindView.getCustomView());
-                    ViewGroup.LayoutParams lp = onBindView.getCustomView().getLayoutParams();
+                    ViewGroup.LayoutParams lp =  onBindView.getCustomView().getLayoutParams();
                     if (lp == null) {
                         lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     }
                     boxCustom.addView(onBindView.getCustomView(), lp);
-                }
             }
+
+//            if (onBindView != null && onBindView.getCustomView() != null) {
+//                onBindView.bindParent(boxCustom, me);
+//            }
         }
 
         @Override
@@ -273,8 +274,7 @@ public class CustomDialog extends BaseDialog {
     }
 
     public void refreshUI() {
-        if (getRootFrameLayout() == null) return;
-        getRootFrameLayout().post(new Runnable() {
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 if (dialogImpl != null) dialogImpl.refreshView();

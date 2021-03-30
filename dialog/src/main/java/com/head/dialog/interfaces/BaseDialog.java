@@ -67,7 +67,7 @@ public abstract class BaseDialog {
         if (rootFrameLayout == null || view == null || rootFrameLayout.get() == null) return;
         log(view.getTag() + ".show");
 
-        getMainHandler().post(new Runnable() {
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 rootFrameLayout.get().addView(view);
@@ -77,10 +77,16 @@ public abstract class BaseDialog {
 
     protected static void show(Activity activity, final View view) {
         if (activity == null || view == null) return;
+        if (activity.isDestroyed()) {
+            error(view.getTag() + ".show ERROR: activity is Destroyed.");
+            return;
+        }
         log(view.getTag() + ".show");
         final FrameLayout activityRootView = (FrameLayout) activity.getWindow().getDecorView();
-        if (activityRootView == null) return;
-        getMainHandler().post(new Runnable() {
+        if (activityRootView == null) {
+            return;
+        }
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 activityRootView.addView(view);
@@ -91,7 +97,7 @@ public abstract class BaseDialog {
     protected static void dismiss(final View dialogView) {
         log(dialogView.getTag() + ".dismiss");
         if (rootFrameLayout == null || dialogView == null) return;
-        getMainHandler().post(new Runnable() {
+        runOnMain(new Runnable() {
             @Override
             public void run() {
                 if (dialogView.getParent() == null || !(dialogView.getParent() instanceof ViewGroup)) {
@@ -259,6 +265,18 @@ public abstract class BaseDialog {
 
     public enum BOOLEAN {
         TRUE, FALSE
+    }
+
+    protected static void runOnMain(Runnable runnable) {
+        if (!HeadDialog.autoRunOnUIThread){
+            runnable.run();
+            return;
+        }
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            runnable.run();
+        } else {
+            new Handler(Looper.getMainLooper()).post(runnable);
+        }
     }
 
     public abstract String dialogKey();
