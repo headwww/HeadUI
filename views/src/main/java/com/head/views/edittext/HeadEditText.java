@@ -143,7 +143,7 @@ public class HeadEditText extends AppCompatEditText {
 
                 }
                 Drawable drawableLeft = leftDrawables;
-                if (drawableLeft != null && event.getRawX() <= (getLeft() + drawableLeft.getBounds().width())) {
+                if (drawableLeft != null && event.getX() <= (getLeft()+ drawableLeft.getBounds().width())) {
                     if (onEditTextClickListener != null) {
                         onEditTextClickListener.left();
                     }

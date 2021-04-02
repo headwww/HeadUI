@@ -173,6 +173,7 @@
             app:leftDrawables="@mipmap/tab_equipment_blue"
             app:rightDrawablesVisibility="true" />
 
+
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
