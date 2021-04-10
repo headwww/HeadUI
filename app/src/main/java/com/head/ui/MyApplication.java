@@ -3,6 +3,7 @@ package com.head.ui;
 import android.app.Application;
 
 import com.head.dialog.HeadDialog;
+import com.head.dialog.style.MaterialStyle;
 
 import me.jessyan.autosize.AutoSizeConfig;
 import me.jessyan.autosize.unit.Subunits;
@@ -11,8 +12,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         HeadDialog.init(this);
+
 
         AutoSizeConfig.getInstance()
                 .getUnitsManager()

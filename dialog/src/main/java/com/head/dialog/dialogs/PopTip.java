@@ -489,6 +489,8 @@ public class PopTip extends BaseDialog {
             } else {
                 boxCustom.setVisibility(View.GONE);
             }
+
+
             showText(txtDialogxPopText, message);
             showText(txtDialogxButton, buttonText);
 
@@ -608,6 +610,7 @@ public class PopTip extends BaseDialog {
 
     public PopTip setDialogLifecycleCallback(DialogLifecycleCallback<PopTip> dialogLifecycleCallback) {
         this.dialogLifecycleCallback = dialogLifecycleCallback;
+        if (isShow) dialogLifecycleCallback.onShow(me);
         return this;
     }
 

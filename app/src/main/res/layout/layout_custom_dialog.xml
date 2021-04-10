@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -11,7 +11,7 @@
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/img_custom_dialog_bkg" />
 
         <ImageView
             android:id="@+id/btn_ok"
@@ -20,8 +20,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/img_custom_dialog_button" />
 
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -5,16 +5,14 @@ import android.content.Context;
 import com.head.dialog.interfaces.ProgressViewInterface;
 
 public interface DialogStyle {
-
     int styleVer = 2;
-
     int BUTTON_OK = 1;
     int BUTTON_CANCEL = 2;
     int BUTTON_OTHER = 3;
     int SPACE = 4;
     int SPLIT = 5;
 
-    int layout(boolean light);
+    int layout(boolean var1);
 
     int enterAnimResId();
 
@@ -26,101 +24,98 @@ public interface DialogStyle {
 
     int splitWidthPx();
 
-    int splitColorRes(boolean light);
+    int splitColorRes(boolean var1);
 
-    BlurBackgroundSetting messageDialogBlurSettings();
+    DialogStyle.BlurBackgroundSetting messageDialogBlurSettings();
 
-    HorizontalButtonRes overrideHorizontalButtonRes();
+    DialogStyle.HorizontalButtonRes overrideHorizontalButtonRes();
 
-    VerticalButtonRes overrideVerticalButtonRes();
+    DialogStyle.VerticalButtonRes overrideVerticalButtonRes();
 
-    WaitTipRes overrideWaitTipRes();
+    DialogStyle.WaitTipRes overrideWaitTipRes();
 
-    BottomDialogRes overrideBottomDialogRes();
+    DialogStyle.BottomDialogRes overrideBottomDialogRes();
 
-    PopTipSettings popTipSettings();
+    DialogStyle.PopTipSettings popTipSettings();
 
-    interface BlurBackgroundSetting {
+    public interface PopTipSettings {
+        int layout(boolean var1);
 
-        boolean blurBackground();
+        DialogStyle.PopTipSettings.ALIGN align();
 
-        int blurForwardColorRes(boolean light);
+        int enterAnimResId(boolean var1);
 
-        int blurBackgroundRoundRadiusPx();
+        int exitAnimResId(boolean var1);
+
+        public static enum ALIGN {
+            CENTER,
+            TOP,
+            BOTTOM,
+            TOP_INSIDE,
+            BOTTOM_INSIDE;
+
+            private ALIGN() {
+            }
+        }
     }
 
-    interface HorizontalButtonRes {
+    public interface BottomDialogRes {
+        boolean touchSlide();
 
-        int overrideHorizontalOkButtonBackgroundRes(int visibleButtonCount, boolean light);
+        int overrideDialogLayout(boolean var1);
 
-        int overrideHorizontalCancelButtonBackgroundRes(int visibleButtonCount, boolean light);
+        int overrideMenuDividerDrawableRes(boolean var1);
 
-        int overrideHorizontalOtherButtonBackgroundRes(int visibleButtonCount, boolean light);
+        int overrideMenuDividerHeight(boolean var1);
+
+        int overrideMenuTextColor(boolean var1);
+
+        float overrideBottomDialogMaxHeight();
+
+        int overrideMenuItemLayout(boolean var1, int var2, int var3, boolean var4);
+
+        int overrideSelectionMenuBackgroundColor(boolean var1);
+
+        boolean selectionImageTint(boolean var1);
+
+        int overrideSelectionImage(boolean var1, boolean var2);
     }
 
-    interface VerticalButtonRes {
-
-        int overrideVerticalOkButtonBackgroundRes(int visibleButtonCount, boolean light);
-
-        int overrideVerticalCancelButtonBackgroundRes(int visibleButtonCount, boolean light);
-
-        int overrideVerticalOtherButtonBackgroundRes(int visibleButtonCount, boolean light);
-    }
-
-    interface WaitTipRes {
-
-        int overrideWaitLayout(boolean light);
+    public interface WaitTipRes {
+        int overrideWaitLayout(boolean var1);
 
         int overrideRadiusPx();
 
         boolean blurBackground();
 
-        int overrideBackgroundColorRes(boolean light);
+        int overrideBackgroundColorRes(boolean var1);
 
-        int overrideTextColorRes(boolean light);
+        int overrideTextColorRes(boolean var1);
 
-        ProgressViewInterface overrideWaitView(Context context, boolean light);
+        ProgressViewInterface overrideWaitView(Context var1, boolean var2);
     }
 
-    interface BottomDialogRes {
+    public interface VerticalButtonRes {
+        int overrideVerticalOkButtonBackgroundRes(int var1, boolean var2);
 
-        boolean touchSlide();
+        int overrideVerticalCancelButtonBackgroundRes(int var1, boolean var2);
 
-        int overrideDialogLayout(boolean light);
-
-        int overrideMenuDividerDrawableRes(boolean light);
-
-        int overrideMenuDividerHeight(boolean light);
-
-        int overrideMenuTextColor(boolean light);
-
-        float overrideBottomDialogMaxHeight();
-
-        int overrideMenuItemLayout(boolean light, int index, int count, boolean isContentVisibility);
-
-        int overrideSelectionMenuBackgroundColor(boolean light);
-
-        boolean selectionImageTint(boolean light);
-
-        int overrideSelectionImage(boolean light, boolean isSelected);
+        int overrideVerticalOtherButtonBackgroundRes(int var1, boolean var2);
     }
 
-    interface PopTipSettings {
+    public interface HorizontalButtonRes {
+        int overrideHorizontalOkButtonBackgroundRes(int var1, boolean var2);
 
-        int layout(boolean light);
+        int overrideHorizontalCancelButtonBackgroundRes(int var1, boolean var2);
 
-        ALIGN align();
+        int overrideHorizontalOtherButtonBackgroundRes(int var1, boolean var2);
+    }
 
-        enum ALIGN {
-            CENTER,
-            TOP,
-            BOTTOM,
-            TOP_INSIDE,
-            BOTTOM_INSIDE
-        }
+    public interface BlurBackgroundSetting {
+        boolean blurBackground();
 
-        int enterAnimResId(boolean light);
+        int blurForwardColorRes(boolean var1);
 
-        int exitAnimResId(boolean light);
+        int blurBackgroundRoundRadiusPx();
     }
 }

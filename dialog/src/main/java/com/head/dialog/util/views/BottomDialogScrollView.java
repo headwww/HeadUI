@@ -15,29 +15,29 @@ import android.widget.ScrollView;
 * @version
 */
 public class BottomDialogScrollView extends ScrollView {
-    
+
     public BottomDialogScrollView(Context context) {
         super(context);
     }
-    
+
     public BottomDialogScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    
+
     public BottomDialogScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-    
+
     public BottomDialogScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
-    
+
     boolean lockScroll;
-    
+
     public void lockScroll(boolean lockScroll) {
         this.lockScroll = lockScroll;
     }
-    
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (lockScroll) {
@@ -45,8 +45,8 @@ public class BottomDialogScrollView extends ScrollView {
         }
         return super.onTouchEvent(ev);
     }
-    
-    
+
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         return super.dispatchTouchEvent(ev);

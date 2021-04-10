@@ -9,10 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.renderscript.Allocation;
-import android.renderscript.Element;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -21,6 +17,10 @@ import android.view.ViewTreeObserver;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
+import androidx.renderscript.Allocation;
+import androidx.renderscript.Element;
+import androidx.renderscript.RenderScript;
+import androidx.renderscript.ScriptIntrinsicBlur;
 
 import com.head.dialog.HeadDialog;
 import com.head.dialog.R;
@@ -340,7 +340,7 @@ public class BlurView extends View {
         if (!useBlur) {
             Paint cutPaint = new Paint();
             cutPaint.setAntiAlias(true);
-            cutPaint.setColor(removeAlphaColor(mOverlayColor));
+            cutPaint.setColor(mOverlayColor);
             mRectF.right = getWidth();
             mRectF.bottom = getHeight();
             canvas.drawRoundRect(mRectF, mRadius, mRadius, cutPaint);

@@ -26,43 +26,43 @@ import com.head.dialog.interfaces.BaseDialog;
 * @version
 */
 public class ActivityScreenShotImageView extends AppCompatImageView {
-    
+
     float width, height, mRadius;
-    
+
     public ActivityScreenShotImageView(Context context) {
         super(context);
         init(null);
     }
-    
+
     public ActivityScreenShotImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
-    
+
     public ActivityScreenShotImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
-    
+
     private void init(AttributeSet attrs) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             setLayerType(LAYER_TYPE_HARDWARE, null);
         }
     }
-    
+
     public void setRadius(float mRadius) {
         this.mRadius = mRadius;
         invalidate();
     }
-    
-    
+
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         width = getWidth();
         height = getHeight();
     }
-    
+
     @Override
     protected void onDraw(Canvas canvas) {
         if (width >= mRadius && height > mRadius) {
@@ -76,7 +76,7 @@ public class ActivityScreenShotImageView extends AppCompatImageView {
             path.quadTo(0, height, 0, height - mRadius);
             path.lineTo(0, mRadius);
             path.quadTo(0, 0, mRadius, 0);
-            
+
             canvas.clipPath(path);
         }
         try {
@@ -84,16 +84,16 @@ public class ActivityScreenShotImageView extends AppCompatImageView {
         } catch (Exception e) {
         }
     }
-    
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        
+
         refreshImage();
     }
-    
+
     private int screenWidth, screenHeight;
-    
+
     private void refreshImage() {
         if (screenWidth != getMeasuredWidth() || screenHeight != getMeasuredHeight()) {
             screenWidth = getMeasuredWidth();
@@ -101,7 +101,7 @@ public class ActivityScreenShotImageView extends AppCompatImageView {
             doScreenshotActivityAndZoom();
         }
     }
-    
+
     private void doScreenshotActivityAndZoom() {
         if (BaseDialog.getRootFrameLayout() == null) return;
         final View view = BaseDialog.getRootFrameLayout().getChildAt(0);
@@ -115,7 +115,7 @@ public class ActivityScreenShotImageView extends AppCompatImageView {
             }
         });
     }
-    
+
     private void drawViewImage(View view) {
         view.destroyDrawingCache();
         view.setDrawingCacheEnabled(true);

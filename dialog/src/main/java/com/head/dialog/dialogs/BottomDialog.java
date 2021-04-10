@@ -45,6 +45,8 @@ import com.head.dialog.util.views.MaxRelativeLayout;
  */
 public class BottomDialog extends BaseDialog {
 
+    public static int overrideEnterDuration = -1;
+    public static int overrideExitDuration = -1;
     public static BOOLEAN overrideCancelable;
     protected OnBindView<BottomDialog> onBindView;
     protected CharSequence title;
@@ -298,7 +300,6 @@ public class BottomDialog extends BaseDialog {
                         RelativeLayout.LayoutParams cancelButtonLp = new RelativeLayout.LayoutParams(boxCancel.getWidth(), boxCancel.getHeight());
                         cancelBlurView.setOverlayColor(backgroundColor == -1 ? blurFrontColor : backgroundColor);
                         cancelBlurView.setTag("blurView");
-                        cancelBlurView.setUseBlur(false);
                         cancelBlurView.setRadiusPx(style.messageDialogBlurSettings().blurBackgroundRoundRadiusPx());
                         boxCancel.addView(cancelBlurView, 0, cancelButtonLp);
                     }
@@ -384,20 +385,47 @@ public class BottomDialog extends BaseDialog {
             boxRoot.post(new Runnable() {
                 @Override
                 public void run() {
+                    if (style.overrideBottomDialogRes()!=null && style.overrideBottomDialogRes().touchSlide()){
+                        bkg.setY(boxRoot.getHeight());
+                        bkg.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                bkg.setY(bkgEnterAimY);
+
+                                Animation enterAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_dialog_bottom_enter);
+                                long enterAnimDurationTemp = enterAnim.getDuration();
+                                if (overrideEnterDuration >= 0) {
+                                    enterAnimDurationTemp = overrideEnterDuration;
+                                }
+                                if (enterAnimDuration >= 0) {
+                                    enterAnimDurationTemp = enterAnimDuration;
+                                }
+                                enterAnim.setDuration(enterAnimDurationTemp);
+                                enterAnim.setInterpolator(new DecelerateInterpolator(2f));
+                                bkg.startAnimation(enterAnim);
+                            }
+                        });
+                    }else{
+                        Animation enterAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_dialog_bottom_enter);
+                        long enterAnimDurationTemp = enterAnim.getDuration();
+                        if (overrideEnterDuration >= 0) {
+                            enterAnimDurationTemp = overrideEnterDuration;
+                        }
+                        if (enterAnimDuration >= 0) {
+                            enterAnimDurationTemp = enterAnimDuration;
+                        }
+                        enterAnim.setDuration(enterAnimDurationTemp);
+                        enterAnim.setInterpolator(new DecelerateInterpolator(2f));
+                        bkg.startAnimation(enterAnim);
+
+                        bkg.setY(bkgEnterAimY);
+                    }
+
                     boxRoot.animate()
-                            .setDuration(enterAnimDuration == -1 ? 300 : enterAnimDuration)
+                            .setDuration(300)
                             .alpha(1f)
                             .setInterpolator(new DecelerateInterpolator())
                             .setListener(null);
-
-                    Animation enterAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_dialog_bottom_enter);
-                    if (enterAnimDuration != -1) {
-                        enterAnim.setDuration(enterAnimDuration);
-                    }
-                    enterAnim.setInterpolator(new DecelerateInterpolator(2f));
-                    bkg.startAnimation(enterAnim);
-
-                    bkg.setY(bkgEnterAimY);
                 }
             });
         }
@@ -469,7 +497,6 @@ public class BottomDialog extends BaseDialog {
 
             bottomDialogTouchEventInterceptor.refresh(me, this);
 
-
             if (imgSplit != null) {
                 if (txtDialogTitle.getVisibility() == View.VISIBLE || txtDialogTip.getVisibility() == View.VISIBLE) {
                     imgSplit.setVisibility(View.VISIBLE);
@@ -499,13 +526,20 @@ public class BottomDialog extends BaseDialog {
                 boxContent.getViewTreeObserver().removeOnGlobalLayoutListener(onContentViewLayoutChangeListener);
 
             ObjectAnimator exitAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), boxBkg.getHeight());
-            exitAnim.setDuration(exitAnimDuration == -1 ? 300 : exitAnimDuration);
+            long exitAnimDurationTemp = 300;
+            if (overrideExitDuration >= 0) {
+                exitAnimDurationTemp = overrideExitDuration;
+            }
+            if (exitAnimDuration >= 0) {
+                exitAnimDurationTemp = exitAnimDuration;
+            }
+            exitAnim.setDuration(exitAnimDurationTemp);
             exitAnim.start();
 
             boxRoot.animate()
                     .alpha(0f)
                     .setInterpolator(new AccelerateInterpolator())
-                    .setDuration(exitAnim.getDuration())
+                    .setDuration(exitAnimDurationTemp)
                     .setListener(new AnimatorListenerEndCallBack() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
@@ -518,9 +552,16 @@ public class BottomDialog extends BaseDialog {
             if (isCancelable()) {
                 doDismiss(boxRoot);
             } else {
-                ObjectAnimator enterAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), bkgEnterAimY);
-                enterAnim.setDuration(exitAnimDuration == -1 ? 300 : exitAnimDuration);
-                enterAnim.start();
+                long exitAnimDurationTemp = 300;
+                if (overrideExitDuration >= 0) {
+                    exitAnimDurationTemp = overrideExitDuration;
+                }
+                if (exitAnimDuration >= 0) {
+                    exitAnimDurationTemp = exitAnimDuration;
+                }
+                ObjectAnimator exitAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), bkgEnterAimY);
+                exitAnim.setDuration(exitAnimDurationTemp);
+                exitAnim.start();
             }
         }
     }
@@ -549,6 +590,7 @@ public class BottomDialog extends BaseDialog {
 
     public BottomDialog setDialogLifecycleCallback(DialogLifecycleCallback<BottomDialog> dialogLifecycleCallback) {
         this.dialogLifecycleCallback = dialogLifecycleCallback;
+        if (isShow) dialogLifecycleCallback.onShow(me);
         return this;
     }
 
@@ -648,12 +690,14 @@ public class BottomDialog extends BaseDialog {
     public BottomDialog setCancelButton(CharSequence cancelText, OnDialogButtonClickListener<BottomDialog> cancelButtonClickListener) {
         this.cancelText = cancelText;
         this.cancelButtonClickListener = cancelButtonClickListener;
+        refreshUI();
         return this;
     }
 
     public BottomDialog setCancelButton(int cancelTextResId, OnDialogButtonClickListener<BottomDialog> cancelButtonClickListener) {
         this.cancelText = getString(cancelTextResId);
         this.cancelButtonClickListener = cancelButtonClickListener;
+        refreshUI();
         return this;
     }
 
@@ -694,7 +738,6 @@ public class BottomDialog extends BaseDialog {
 
     public BottomDialog setCancelButtonClickListener(OnDialogButtonClickListener<BottomDialog> cancelButtonClickListener) {
         this.cancelButtonClickListener = cancelButtonClickListener;
-        refreshUI();
         return this;
     }
 
@@ -768,12 +811,14 @@ public class BottomDialog extends BaseDialog {
     public BottomDialog setOkButton(CharSequence OkText, OnDialogButtonClickListener<BottomDialog> OkButtonClickListener) {
         this.okText = OkText;
         this.okButtonClickListener = OkButtonClickListener;
+        refreshUI();
         return this;
     }
 
     public BottomDialog setOkButton(int OkTextResId, OnDialogButtonClickListener<BottomDialog> OkButtonClickListener) {
         this.okText = getString(OkTextResId);
         this.okButtonClickListener = OkButtonClickListener;
+        refreshUI();
         return this;
     }
 
@@ -801,12 +846,14 @@ public class BottomDialog extends BaseDialog {
     public BottomDialog setOtherButton(CharSequence OtherText, OnDialogButtonClickListener<BottomDialog> OtherButtonClickListener) {
         this.otherText = OtherText;
         this.otherButtonClickListener = OtherButtonClickListener;
+        refreshUI();
         return this;
     }
 
     public BottomDialog setOtherButton(int OtherTextResId, OnDialogButtonClickListener<BottomDialog> OtherButtonClickListener) {
         this.otherText = getString(OtherTextResId);
         this.otherButtonClickListener = OtherButtonClickListener;
+        refreshUI();
         return this;
     }
 

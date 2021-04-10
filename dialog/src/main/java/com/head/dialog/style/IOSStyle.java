@@ -5,7 +5,7 @@ import android.content.res.Resources;
 
 import com.head.dialog.R;
 import com.head.dialog.interfaces.ProgressViewInterface;
-import com.head.dialog.util.views.IosProgressView;
+import com.head.dialog.util.views.IOSProgressView;
 
 /**   
 *
@@ -155,7 +155,7 @@ public class IOSStyle implements DialogStyle {
 
             @Override
             public ProgressViewInterface overrideWaitView(Context context, boolean light) {
-                return new IosProgressView(context).setLightMode(light);
+                return new IOSProgressView(context).setLightMode(light);
             }
         };
     }

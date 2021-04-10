@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -230,14 +231,14 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                     PopTip.show("按下返回");
                     return false;
                 }
-            });
+            }).setCancelable(true);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     WaitDialog.dismiss();
                 }
-            }, 2000);
+            }, 5000);
 
         } else if (view.getId() == R.id.btn_waitAndTipDialog) {
             WaitDialog.show("Please Wait!").setOnBackPressedListener(new OnBackPressedListener() {
@@ -447,8 +448,17 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
             CustomDialog.show(new OnBindView<CustomDialog>(R.layout.layout_custom_dialog) {
                 @Override
                 public void onBind(final CustomDialog dialog, View v) {
+                    ImageView btnOk;
+                    btnOk = v.findViewById(R.id.btn_ok);
+                    btnOk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
                 }
-            }, CustomDialog.ALIGN.BOTTOM).setFullScreen(true)
+            })
+                    .setAlign(CustomDialog.ALIGN.CENTER)
                     .setMaskColor(getResources().getColor(R.color.black30));
 
         } else if (view.getId() == R.id.btn_fullScreenDialog_login) {

@@ -111,8 +111,6 @@ public class InputDialog extends MessageDialog {
         this.otherText = otherText;
     }
 
-
-
     public InputDialog(int titleResId, int messageResId, int okTextResId, int cancelTextResId, int otherTextResId) {
         cancelable = HeadDialog.cancelable;
         this.title = getString(titleResId);

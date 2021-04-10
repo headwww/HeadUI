@@ -172,7 +172,7 @@ public abstract class BaseDialog {
 
     protected void showText(TextView textView, CharSequence text) {
         if (textView == null) return;
-        if (text == null) {
+        if (isNull(text)) {
             textView.setVisibility(View.GONE);
             textView.setText("");
         } else {
@@ -240,7 +240,7 @@ public abstract class BaseDialog {
 
     protected void beforeShow() {
         if (getContext() == null) {
-            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context);\n\n另外建议您前往查看 Dialog 的文档进行使用：https://github.com/kongzue/Dialog");
+            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context)");
         }
         if (style.styleVer != DialogStyle.styleVer) {
             error("Dialog 所引用的 Style 不符合当前适用版本：" + DialogStyle.styleVer + " 引入的 Style(" + style.getClass().getSimpleName() + ") 版本" + style.styleVer);
@@ -249,7 +249,7 @@ public abstract class BaseDialog {
 
     protected String getString(int titleResId) {
         if (getContext() == null) {
-            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context);\n\n另外建议您前往查看 Dialog 的文档进行使用：https://github.com/kongzue/Dialog");
+            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context)");
             return null;
         }
         return getContext().getString(titleResId);
@@ -257,31 +257,20 @@ public abstract class BaseDialog {
 
     protected int getColor(int backgroundRes) {
         if (getContext() == null) {
-            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context);\n\n另外建议您前往查看 Dialog 的文档进行使用：https://github.com/kongzue/Dialog");
+            error("Dialog 未初始化。\n请检查是否在启动对话框前进行初始化操作，使用以下代码进行初始化：\nDialog.init(context)");
             return Color.BLACK;
         }
-        return getContext().getResources().getColor(backgroundRes);
+        return getResources().getColor(backgroundRes);
     }
 
     public enum BOOLEAN {
         TRUE, FALSE
     }
 
-    protected static void runOnMain(Runnable runnable) {
-        if (!HeadDialog.autoRunOnUIThread){
-            runnable.run();
-            return;
-        }
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            runnable.run();
-        } else {
-            new Handler(Looper.getMainLooper()).post(runnable);
-        }
-    }
-
     public abstract String dialogKey();
 
-    protected static Handler getMainHandler(){
-        return new Handler(Looper.getMainLooper());
+    protected static void runOnMain(Runnable runnable) {
+        if (!HeadDialog.autoRunOnUIThread) runnable.run();
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 }

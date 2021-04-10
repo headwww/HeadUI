@@ -17,7 +17,7 @@ import com.head.dialog.dialogs.FullScreenDialog;
 * @version
 */
 public class FullScreenDialogTouchEventInterceptor {
-    
+
     /**
      * 下边三个值用于判断触控过程，
      * isBkgTouched：标记是否已按下
@@ -28,16 +28,16 @@ public class FullScreenDialogTouchEventInterceptor {
     private boolean isBkgTouched = false;
     private float bkgTouchDownY;
     private float bkgOldY;
-    
+
     public FullScreenDialogTouchEventInterceptor(FullScreenDialog me, FullScreenDialog.DialogImpl impl) {
         refresh(me, impl);
     }
-    
+
     public void refresh(final FullScreenDialog me, final FullScreenDialog.DialogImpl impl) {
         if (me == null || impl == null || impl.bkg == null) {
             return;
         }
-        
+
         impl.boxCustom.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -90,7 +90,7 @@ public class FullScreenDialogTouchEventInterceptor {
             }
         });
     }
-    
+
     private int dip2px(float dpValue) {
         final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);

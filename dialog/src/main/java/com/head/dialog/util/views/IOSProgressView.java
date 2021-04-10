@@ -30,7 +30,7 @@ import com.head.dialog.interfaces.ProgressViewInterface;
 * 创建时间：3/9/21 1:50 PM <br/>
 * @version
 */
-public class IosProgressView extends View implements ProgressViewInterface {
+public class IOSProgressView extends View implements ProgressViewInterface {
 
     public static final int STATUS_LOADING = 0;
     public static final int STATUS_SUCCESS = 1;
@@ -45,22 +45,22 @@ public class IosProgressView extends View implements ProgressViewInterface {
     private int width = dip2px(2);
     private int color = Color.WHITE;
 
-    public IosProgressView(Context context) {
+    public IOSProgressView(Context context) {
         super(context);
         init(null);
     }
 
-    public IosProgressView(Context context, AttributeSet attrs) {
+    public IOSProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public IosProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public IOSProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
-    public IosProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public IOSProgressView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
@@ -69,7 +69,7 @@ public class IosProgressView extends View implements ProgressViewInterface {
         return isLightMode;
     }
 
-    public IosProgressView setLightMode(boolean lightMode) {
+    public IOSProgressView setLightMode(boolean lightMode) {
         isLightMode = lightMode;
         return this;
     }
@@ -91,7 +91,7 @@ public class IosProgressView extends View implements ProgressViewInterface {
     private boolean isInited = false;
 
     private void init(AttributeSet attrs) {
-        synchronized (IosProgressView.class) {
+        synchronized (IOSProgressView.class) {
             if (isInited) {
                 return;
             }
@@ -383,7 +383,7 @@ public class IosProgressView extends View implements ProgressViewInterface {
 
     private Runnable tickShowRunnable;
 
-    public IosProgressView whenShowTick(Runnable runnable) {
+    public IOSProgressView whenShowTick(Runnable runnable) {
         tickShowRunnable = runnable;
         return this;
     }
@@ -422,7 +422,7 @@ public class IosProgressView extends View implements ProgressViewInterface {
         return width;
     }
 
-    public IosProgressView setStrokeWidth(int width) {
+    public IOSProgressView setStrokeWidth(int width) {
         this.width = width;
         if (mPaint != null) mPaint.setStrokeWidth(width);
         return this;
@@ -432,7 +432,7 @@ public class IosProgressView extends View implements ProgressViewInterface {
         return color;
     }
 
-    public IosProgressView setColor(int color) {
+    public IOSProgressView setColor(int color) {
         this.color = color;
         if (mPaint != null) mPaint.setColor(color);
         return this;

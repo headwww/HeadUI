@@ -27,45 +27,45 @@ import java.util.List;
 * @version
 */
 public class NormalMenuArrayAdapter extends BaseAdapter {
-    
+
     private BottomMenu bottomMenu;
     public List<CharSequence> objects;
     public Context context;
-    
+
     public NormalMenuArrayAdapter(BottomMenu bottomMenu, Context context, List<CharSequence> objects) {
         this.objects = objects;
         this.context = context;
         this.bottomMenu = bottomMenu;
     }
-    
+
     class ViewHolder {
-        ImageView imgDialogMenuIcon;
-        TextView txtDialogMenuText;
-        ImageView imgDialogMenuSelection;
+        ImageView imgDialogxMenuIcon;
+        TextView txtDialogxMenuText;
+        ImageView imgDialogxMenuSelection;
     }
-    
+
     @Override
     public int getCount() {
         return objects.size();
     }
-    
+
     @Override
     public CharSequence getItem(int position) {
         return objects.get(position);
     }
-    
+
     @Override
     public long getItemId(int position) {
         return position;
     }
-    
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater mInflater = LayoutInflater.from(context);
-            
+
             int resourceId = R.layout.item_dialog_material_bottom_menu_normal_text;
             int overrideSelectionBackgroundColorRes = 0;
             if (bottomMenu.getStyle().overrideBottomDialogRes() != null) {
@@ -81,35 +81,35 @@ public class NormalMenuArrayAdapter extends BaseAdapter {
                         }
                     }
                 }
-                
+
                 overrideSelectionBackgroundColorRes = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionMenuBackgroundColor(bottomMenu.isLightTheme());
             }
             convertView = mInflater.inflate(resourceId, null);
-            
-            viewHolder.imgDialogMenuIcon = convertView.findViewById(R.id.img_dialogmenu_icon);
-            viewHolder.txtDialogMenuText = convertView.findViewById(R.id.txt_dialogmenu_text);
-            viewHolder.imgDialogMenuSelection = convertView.findViewById(R.id.img_dialogmenu_selection);
-            
+
+            viewHolder.imgDialogxMenuIcon = convertView.findViewById(R.id.img_dialog_menu_icon);
+            viewHolder.txtDialogxMenuText = convertView.findViewById(R.id.txt_dialog_menu_text);
+            viewHolder.imgDialogxMenuSelection = convertView.findViewById(R.id.img_dialog_menu_selection);
+
             if (bottomMenu.getSelection() >= 0) {
-                if (viewHolder.imgDialogMenuSelection != null) {
+                if (viewHolder.imgDialogxMenuSelection != null) {
                     if (bottomMenu.getSelection() == position) {
-                        viewHolder.imgDialogMenuSelection.setVisibility(View.VISIBLE);
+                        viewHolder.imgDialogxMenuSelection.setVisibility(View.VISIBLE);
                         int overrideSelectionImageResId = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionImage(bottomMenu.isLightTheme(), true);
                         if (overrideSelectionImageResId != 0) {
-                            viewHolder.imgDialogMenuSelection.setImageResource(overrideSelectionImageResId);
+                            viewHolder.imgDialogxMenuSelection.setImageResource(overrideSelectionImageResId);
                         }
                     } else {
                         int overrideSelectionImageResId = bottomMenu.getStyle().overrideBottomDialogRes().overrideSelectionImage(bottomMenu.isLightTheme(), false);
                         if (overrideSelectionImageResId != 0) {
-                            viewHolder.imgDialogMenuSelection.setVisibility(View.VISIBLE);
-                            viewHolder.imgDialogMenuSelection.setImageResource(overrideSelectionImageResId);
+                            viewHolder.imgDialogxMenuSelection.setVisibility(View.VISIBLE);
+                            viewHolder.imgDialogxMenuSelection.setImageResource(overrideSelectionImageResId);
                         }else{
-                            viewHolder.imgDialogMenuSelection.setVisibility(View.INVISIBLE);
+                            viewHolder.imgDialogxMenuSelection.setVisibility(View.INVISIBLE);
                         }
                     }
                 }
             } else {
-                viewHolder.imgDialogMenuSelection.setVisibility(View.GONE);
+                viewHolder.imgDialogxMenuSelection.setVisibility(View.GONE);
             }
             if (bottomMenu.getSelection() == position) {
                 if (overrideSelectionBackgroundColorRes != 0) {
@@ -125,56 +125,56 @@ public class NormalMenuArrayAdapter extends BaseAdapter {
             } else {
                 convertView.setBackgroundTintList(null);
             }
-            
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         CharSequence text = objects.get(position);
-        
+
         int textColor = bottomMenu.isLightTheme() ? R.color.black90 : R.color.white90;
         if (bottomMenu.getStyle().overrideBottomDialogRes() != null) {
             if (bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuTextColor(bottomMenu.isLightTheme()) != 0) {
                 textColor = bottomMenu.getStyle().overrideBottomDialogRes().overrideMenuTextColor(bottomMenu.isLightTheme());
             }
         }
-        
+
         if (null != text) {
-            viewHolder.txtDialogMenuText.setText(text);
-            viewHolder.txtDialogMenuText.setTextColor(context.getResources().getColor(textColor));
+            viewHolder.txtDialogxMenuText.setText(text);
+            viewHolder.txtDialogxMenuText.setTextColor(context.getResources().getColor(textColor));
             if (HeadDialog.menuTextInfo != null) {
-                useTextInfo(viewHolder.txtDialogMenuText, HeadDialog.menuTextInfo);
+                useTextInfo(viewHolder.txtDialogxMenuText, HeadDialog.menuTextInfo);
             }
-            if (viewHolder.imgDialogMenuSelection != null) {
+            if (viewHolder.imgDialogxMenuSelection != null) {
                 if (bottomMenu.getStyle().overrideBottomDialogRes() != null && bottomMenu.getStyle().overrideBottomDialogRes().selectionImageTint(bottomMenu.isLightTheme())) {
-                    viewHolder.imgDialogMenuSelection.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
+                    viewHolder.imgDialogxMenuSelection.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
                 } else {
-                    viewHolder.imgDialogMenuSelection.setImageTintList(null);
+                    viewHolder.imgDialogxMenuSelection.setImageTintList(null);
                 }
             }
-            
+
             if (bottomMenu.getOnIconChangeCallBack() != null) {
                 int resId = bottomMenu.getOnIconChangeCallBack().getIcon(bottomMenu, position, text.toString());
                 boolean autoTintIconInLightOrDarkMode = bottomMenu.getOnIconChangeCallBack().isAutoTintIconInLightOrDarkMode();
-                
+
                 if (resId != 0) {
-                    viewHolder.imgDialogMenuIcon.setVisibility(View.VISIBLE);
-                    viewHolder.imgDialogMenuIcon.setImageResource(resId);
-                    
+                    viewHolder.imgDialogxMenuIcon.setVisibility(View.VISIBLE);
+                    viewHolder.imgDialogxMenuIcon.setImageResource(resId);
+
                     if (autoTintIconInLightOrDarkMode) {
-                        viewHolder.imgDialogMenuIcon.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
+                        viewHolder.imgDialogxMenuIcon.setImageTintList(ColorStateList.valueOf(context.getResources().getColor(textColor)));
                     }
                 } else {
-                    viewHolder.imgDialogMenuIcon.setVisibility(View.GONE);
+                    viewHolder.imgDialogxMenuIcon.setVisibility(View.GONE);
                 }
             } else {
-                viewHolder.imgDialogMenuIcon.setVisibility(View.GONE);
+                viewHolder.imgDialogxMenuIcon.setVisibility(View.GONE);
             }
         }
-        
+
         return convertView;
     }
-    
+
     protected void useTextInfo(TextView textView, TextInfo textInfo) {
         if (textInfo == null) return;
         if (textView == null) return;

@@ -39,7 +39,10 @@ import com.head.dialog.util.views.DialogBaseRelativeLayout;
 */
 public class FullScreenDialog extends BaseDialog {
 
+    public static int overrideEnterDuration = -1;
+    public static int overrideExitDuration = -1;
     public static BOOLEAN overrideCancelable;
+
     protected OnBindView<FullScreenDialog> onBindView;
     protected BOOLEAN privateCancelable;
 
@@ -85,7 +88,7 @@ public class FullScreenDialog extends BaseDialog {
 
     protected DialogImpl dialogImpl;
 
-    public class DialogImpl implements DialogConvertViewInterface  {
+    public class DialogImpl implements DialogConvertViewInterface {
 
         private FullScreenDialogTouchEventInterceptor fullScreenDialogTouchEventInterceptor;
 
@@ -106,6 +109,7 @@ public class FullScreenDialog extends BaseDialog {
         }
 
         public float bkgEnterAimY = -1;
+        private long enterAnimDurationTemp = 300;
 
         @Override
         public void init() {
@@ -117,7 +121,6 @@ public class FullScreenDialog extends BaseDialog {
                     boxRoot.setAlpha(0f);
 
                     getDialogLifecycleCallback().onShow(me);
-
                 }
 
                 @Override
@@ -143,20 +146,27 @@ public class FullScreenDialog extends BaseDialog {
 
             fullScreenDialogTouchEventInterceptor = new FullScreenDialogTouchEventInterceptor(me, dialogImpl);
 
+            enterAnimDurationTemp = 300;
+            if (overrideEnterDuration >= 0) {
+                enterAnimDurationTemp = overrideEnterDuration;
+            }
+            if (enterAnimDuration >= 0) {
+                enterAnimDurationTemp = enterAnimDuration;
+            }
+
             boxRoot.post(new Runnable() {
                 @Override
                 public void run() {
                     bkgEnterAimY = boxRoot.getSafeHeight() - boxCustom.getHeight();
                     if (bkgEnterAimY < 0) bkgEnterAimY = 0;
-
                     boxRoot.animate()
-                            .setDuration(enterAnimDuration == -1 ? 300 : enterAnimDuration)
+                            .setDuration(enterAnimDurationTemp)
                             .alpha(1f)
                             .setInterpolator(new DecelerateInterpolator())
                             .setListener(null);
 
                     ObjectAnimator exitAnim = ObjectAnimator.ofFloat(bkg, "y", boxRoot.getHeight(), bkgEnterAimY);
-                    exitAnim.setDuration(enterAnimDuration == -1 ? 300 : enterAnimDuration);
+                    exitAnim.setDuration(enterAnimDurationTemp);
                     exitAnim.start();
                 }
             });
@@ -178,7 +188,7 @@ public class FullScreenDialog extends BaseDialog {
                 public void onChange(Rect unsafeRect) {
                     if (unsafeRect.bottom > dip2px(100)) {
                         ObjectAnimator enterAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), 0);
-                        enterAnim.setDuration(enterAnimDuration == -1 ? 300 : enterAnimDuration);
+                        enterAnim.setDuration(enterAnimDurationTemp);
                         enterAnim.start();
                     }
                 }
@@ -202,9 +212,10 @@ public class FullScreenDialog extends BaseDialog {
                 boxRoot.setOnClickListener(null);
             }
 
-            if (onBindView != null && onBindView.getCustomView() != null){
+            if (onBindView != null && onBindView.getCustomView() != null) {
                 onBindView.bindParent(boxCustom, me);
             }
+
             fullScreenDialogTouchEventInterceptor.refresh(me, this);
         }
 
@@ -212,14 +223,22 @@ public class FullScreenDialog extends BaseDialog {
         public void doDismiss(View v) {
             if (v != null) v.setEnabled(false);
 
+            long exitAnimDurationTemp = 300;
+            if (overrideExitDuration >= 0) {
+                exitAnimDurationTemp = overrideExitDuration;
+            }
+            if (exitAnimDuration >= 0) {
+                exitAnimDurationTemp = exitAnimDuration;
+            }
+
             ObjectAnimator exitAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), boxBkg.getHeight());
-            exitAnim.setDuration(exitAnimDuration == -1 ? 300 : exitAnimDuration);
+            exitAnim.setDuration(exitAnimDurationTemp);
             exitAnim.start();
 
             boxRoot.animate()
                     .alpha(0f)
                     .setInterpolator(new AccelerateInterpolator())
-                    .setDuration(exitAnim.getDuration())
+                    .setDuration(exitAnimDurationTemp)
                     .setListener(new AnimatorListenerEndCallBack() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
@@ -232,8 +251,16 @@ public class FullScreenDialog extends BaseDialog {
             if (isCancelable()) {
                 doDismiss(boxRoot);
             } else {
+                long exitAnimDurationTemp = 300;
+                if (overrideExitDuration >= 0) {
+                    exitAnimDurationTemp = overrideExitDuration;
+                }
+                if (exitAnimDuration >= 0) {
+                    exitAnimDurationTemp = exitAnimDuration;
+                }
+
                 ObjectAnimator enterAnim = ObjectAnimator.ofFloat(bkg, "y", bkg.getY(), bkgEnterAimY);
-                enterAnim.setDuration(exitAnimDuration == -1 ? 300 : exitAnimDuration);
+                enterAnim.setDuration(exitAnimDurationTemp);
                 enterAnim.start();
             }
         }
@@ -265,6 +292,7 @@ public class FullScreenDialog extends BaseDialog {
 
     public FullScreenDialog setDialogLifecycleCallback(DialogLifecycleCallback<FullScreenDialog> dialogLifecycleCallback) {
         this.dialogLifecycleCallback = dialogLifecycleCallback;
+        if (isShow) dialogLifecycleCallback.onShow(me);
         return this;
     }
 
@@ -364,7 +392,7 @@ public class FullScreenDialog extends BaseDialog {
         if (dialogView != null) {
             dismiss(dialogView);
         }
-        if (getDialogImpl().boxCustom!=null){
+        if (getDialogImpl().boxCustom != null) {
             getDialogImpl().boxCustom.removeAllViews();
         }
         enterAnimDuration = 0;

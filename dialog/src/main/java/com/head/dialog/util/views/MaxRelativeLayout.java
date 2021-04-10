@@ -27,6 +27,8 @@ public class MaxRelativeLayout extends RelativeLayout {
 
     private int maxWidth;
     private int maxHeight;
+    private int minWidth;
+    private int minHeight;
     private boolean lockWidth;
     private boolean interceptTouch = true;
 
@@ -57,6 +59,8 @@ public class MaxRelativeLayout extends RelativeLayout {
 
             a.recycle();
         }
+        minWidth = getMinimumWidth();
+        minHeight = getMinimumHeight();
 
         if (!isInEditMode()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -108,11 +112,25 @@ public class MaxRelativeLayout extends RelativeLayout {
         }
 
         View blurView = findViewWithTag("blurView");
-        if (blurView != null) {
-            LayoutParams lp = (LayoutParams) blurView.getLayoutParams();
-            lp.width = getMeasuredWidth();
-            lp.height = getMeasuredHeight();
-            blurView.setLayoutParams(lp);
+        View contentView = findViewWithoutTag("blurView");
+        if (contentView != null) {
+            int widthTemp = contentView.getMeasuredWidth() == 0 ? getMeasuredWidth() : contentView.getMeasuredWidth();
+            int heightTemp = contentView.getMeasuredHeight() == 0 ? getMeasuredHeight() : contentView.getMeasuredHeight();
+            if (widthTemp < minWidth) widthTemp = minWidth;
+            if (heightTemp < minHeight) heightTemp = minHeight;
+            if (blurView != null) {
+                LayoutParams lp = (LayoutParams) blurView.getLayoutParams();
+                lp.width = widthTemp;
+                lp.height = heightTemp;
+                blurView.setLayoutParams(lp);
+            }
+        } else {
+            if (blurView != null) {
+                LayoutParams lp = (LayoutParams) blurView.getLayoutParams();
+                lp.width = getMeasuredWidth();
+                lp.height = getMeasuredHeight();
+                blurView.setLayoutParams(lp);
+            }
         }
 
         int maxHeightMeasureSpec = MeasureSpec.makeMeasureSpec(heightSize, heightMode);
@@ -120,6 +138,15 @@ public class MaxRelativeLayout extends RelativeLayout {
         super.onMeasure(maxWidthMeasureSpec, maxHeightMeasureSpec);
 
         childScrollView = findViewById(R.id.scrollView);
+    }
+
+    private View findViewWithoutTag(String tag) {
+        for (int i = 0; i < getChildCount(); i++) {
+            if (!tag.equals(getChildAt(i).getTag())) {
+                return getChildAt(i);
+            }
+        }
+        return null;
     }
 
     public boolean isChildScrollViewCanScroll() {
