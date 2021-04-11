@@ -9,6 +9,8 @@
         <attr name="isEnabled" format="boolean" />
         <!--是否是密码框-->
         <attr name="isPassword" format="boolean" />
+        <attr name="edBackgroundColor" format="color|reference" />
+
     </declare-styleable>
 
 

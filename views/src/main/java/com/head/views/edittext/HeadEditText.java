@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -41,6 +42,7 @@ public class HeadEditText extends AppCompatEditText {
     private int leftDrawablesID;
 
     private Drawable leftDrawables;
+    private int normalBackgroundColor = 0;
 
 
     private boolean isEnabled;
@@ -48,6 +50,8 @@ public class HeadEditText extends AppCompatEditText {
     private boolean isPassword = false;
     private int screenHeight;
     private int screenWidth;
+    private GradientDrawable normalBackground;
+
 
     public HeadEditText(Context context) {
         this(context, null);
@@ -65,10 +69,17 @@ public class HeadEditText extends AppCompatEditText {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HeadEditTexts);
+        normalBackground = new GradientDrawable();
+
         DisplayMetrics dm = getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
         try {
+            //背景颜色
+            normalBackgroundColor = typedArray.getResourceId(R.styleable.HeadEditTexts_edBackgroundColor, R.color.default_edit);
+            setBackgroundResource(normalBackgroundColor);
+
+
             //删除按钮
             int rightDrawablesID = R.drawable.ic_clear;
             rightDrawables = getResources().getDrawable(rightDrawablesID);
@@ -186,11 +197,11 @@ public class HeadEditText extends AppCompatEditText {
         invalidate();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        setBackground(getResources().getDrawable(R.drawable.editbox_light));
-    }
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
+//        setBackground(getResources().getDrawable(R.drawable.editbox_light));
+//    }
 
     public void setOnEditTextClickListener(OnEditTextClickListener onEditTextClickListener) {
         this.onEditTextClickListener = onEditTextClickListener;

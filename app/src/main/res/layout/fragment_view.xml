@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
+        <com.head.views.button.HeadButton
+            android:id="@+id/different_radius_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="different_radius"
+            android:textColor="@android:color/white"
+            app:normalBackgroundColor="@color/colorPrimary"
+            app:pressedBackgroundColor="@color/colorPrimaryDark"
+            app:unableBackgroundColor="@android:color/holo_red_light"/>
 
         <com.head.views.progressbar.HeadProgressBar
             android:id="@+id/pb"
@@ -159,7 +171,8 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:inputType="textPassword"
-            app:rightDrawablesVisibility="false" />
+            app:rightDrawablesVisibility="false"
+            app:edBackgroundColor="@drawable/editbox_light"/>
 
         <com.head.views.edittext.HeadEditText
             android:id="@+id/edit"
@@ -228,8 +241,6 @@
             app:pressedBackgroundColor="#B9B04A"
             app:pressedTextColor="#000"
             app:round="true" />
-
-
 
     </LinearLayout>
 </ScrollView>
