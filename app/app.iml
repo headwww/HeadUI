@@ -181,5 +181,9 @@
     <orderEntry type="module" module-name="views" />
     <orderEntry type="module" module-name="dialog" />
     <orderEntry type="module" module-name="tabbar" />
+    <orderEntry type="module" module-name="titlebar" />
+    <orderEntry type="module" module-name="views" />
+    <orderEntry type="module" module-name="dialog" />
+    <orderEntry type="module" module-name="tabbar" />
   </component>
 </module>

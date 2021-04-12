@@ -166,16 +166,18 @@
             android:max="100"
             android:progress="0" />
         <com.head.views.edittext.HeadEditText
-            android:layout_width="300dp"
             android:id="@+id/ed"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:gravity="center"
-            android:text="qqqqq"
-
-            app:rightDrawablesVisibility="true"
+            android:layout_marginRight="8dp"
+            android:gravity="right|center_vertical"
+            android:hint="请输入"
+            android:paddingHorizontal="15dp"
+            android:textSize="14sp"
+            android:text="1111是1"
             app:isEnabled="false"
-            app:edBackgroundColor="@drawable/editbox_light"/>
+            app:rightDrawablesVisibility="true" />
+
 
         <com.head.views.edittext.HeadEditText
             android:id="@+id/edit"

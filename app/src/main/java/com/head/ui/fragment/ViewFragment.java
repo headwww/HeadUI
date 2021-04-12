@@ -114,9 +114,9 @@ public class ViewFragment extends Fragment  {
         });
         differentRadiusTest = (HeadButton) rootView.findViewById(R.id.different_radius_test);
         ed = (HeadEditText) rootView.findViewById(R.id.ed);
-        ed.setClickListener(new View.OnClickListener() {
+        ed.setOnCenterClickListener(new HeadEditText.OnCenterClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick() {
                 InputDialog.build()
                         .setTitle("输入人员编号")
                         .setInputText(
