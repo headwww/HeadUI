@@ -388,24 +388,24 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                     .setSelection(selectMenuIndex);
 
         }else if (view.getId() == R.id.btn_bottom_mu_select_menu){
-//            BottomMenu.show(new String[]{"拒绝", "询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问", "始终允许", "仅在使用中允许"})
-//                    .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
-//                    .setTitle("获得权限标题")
-//                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
-//                        @Override
-//                        public void onMultiItemSelect(BottomMenu dialog, CharSequence[] text, int[] index) {
-//                            PopTip.show("已选择：" +text);
-//                            selectMenuIndexArray=index;
-//                        }
-//                    })
-//                    .setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
-//                        @Override
-//                        public boolean onClick(BottomDialog baseDialog, View v) {
-//                            PopTip.show("已选择：" );
-//                            return false;
-//                        }
-//                    })
-//                    .setSelection(selectMenuIndexArray);
+            BottomMenu.show(new String[]{"拒绝", "询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问", "始终允许", "仅在使用中允许"})
+                    .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
+                    .setTitle("获得权限标题")
+                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
+                        @Override
+                        public void onMultiItemSelect(BottomMenu dialog, CharSequence[] text, int[] index) {
+                            PopTip.show("已选择：" +text);
+                            selectMenuIndexArray=index;
+                        }
+                    })
+                    .setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
+                        @Override
+                        public boolean onClick(BottomDialog baseDialog, View v) {
+                            PopTip.show("已选择：" );
+                            return false;
+                        }
+                    })
+                    .setSelection(selectMenuIndexArray);
         }
 
         else if (view.getId() == R.id.btn_customMessageDialog) {
