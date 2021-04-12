@@ -3,6 +3,7 @@ package com.head.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -329,47 +330,14 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
 
         } else if (view.getId() == R.id.btn_bottom_menu) {
             String[] strings = new String[]{"添加\nssss", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐", "添加", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐"};
-            BottomMenu.build().setStyle(MaterialStyle.style()).setMenuList(strings)
-//                    .setOnIconChangeCallBack(new OnIconChangeCallBack(true) {
-//                        @Override
-//                        public int getIcon(BottomMenu bottomMenu, int index, String menuText) {
-//                            return R.mipmap.ic_launcher;
-////                            switch (menuText) {
-////                                case "添加":
-////                                    return R.mipmap.img_dialogx_demo_add;
-////                                case "查看":
-////                                    return R.mipmap.img_dialogx_demo_view;
-////                                case "编辑":
-////                                    return R.mipmap.img_dialogx_demo_edit;
-////                                case "删除":
-////                                    return R.mipmap.img_dialogx_demo_delete;
-////                                case "分享":
-////                                    return R.mipmap.img_dialogx_demo_share;
-////                                case "评论":
-////                                    return R.mipmap.img_dialogx_demo_comment;
-////                                case "下载":
-////                                    return R.mipmap.img_dialogx_demo_download;
-////                                case "收藏":
-////                                    return R.mipmap.img_dialogx_demo_favorite;
-////                                case "赞！":
-////                                    return R.mipmap.img_dialogx_demo_good;
-////                                case "不喜欢":
-////                                    return R.mipmap.img_dialogx_demo_dislike;
-////                                case "所属专辑":
-////                                    return R.mipmap.img_dialogx_demo_album;
-////                                case "复制链接":
-////                                    return R.mipmap.img_dialogx_demo_link;
-////                                case "类似推荐":
-////                                    return R.mipmap.img_dialogx_demo_recommend;
-////                            }
-////                            return 0;
-//                        }
-//                    })
+            BottomMenu.build()
+                    .setMenuList(strings)
                     .setCancelButton("取消")
                     .setOnMenuItemClickListener(new OnMenuItemClickListener<BottomMenu>() {
                         @Override
                         public boolean onClick(BottomMenu dialog, CharSequence text, int index) {
                             PopTip.show(text);
+                            Log.e("====",text.toString());
                             return false;
                         }
                     }).show();
@@ -420,24 +388,24 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                     .setSelection(selectMenuIndex);
 
         }else if (view.getId() == R.id.btn_bottom_mu_select_menu){
-            BottomMenu.show(new String[]{"拒绝", "询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问", "始终允许", "仅在使用中允许"})
-                    .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
-                    .setTitle("获得权限标题")
-                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
-                        @Override
-                        public void onMultiItemSelect(BottomMenu dialog, CharSequence[] text, int[] index) {
-                            PopTip.show("已选择：" +text);
-                            selectMenuIndexArray=index;
-                        }
-                    })
-                    .setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
-                        @Override
-                        public boolean onClick(BottomDialog baseDialog, View v) {
-                            PopTip.show("已选择：" );
-                            return false;
-                        }
-                    })
-                    .setSelection(selectMenuIndexArray);
+//            BottomMenu.show(new String[]{"拒绝", "询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问", "始终允许", "仅在使用中允许"})
+//                    .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
+//                    .setTitle("获得权限标题")
+//                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
+//                        @Override
+//                        public void onMultiItemSelect(BottomMenu dialog, CharSequence[] text, int[] index) {
+//                            PopTip.show("已选择：" +text);
+//                            selectMenuIndexArray=index;
+//                        }
+//                    })
+//                    .setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
+//                        @Override
+//                        public boolean onClick(BottomDialog baseDialog, View v) {
+//                            PopTip.show("已选择：" );
+//                            return false;
+//                        }
+//                    })
+//                    .setSelection(selectMenuIndexArray);
         }
 
         else if (view.getId() == R.id.btn_customMessageDialog) {

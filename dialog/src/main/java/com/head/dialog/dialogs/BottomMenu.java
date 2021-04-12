@@ -1,5 +1,6 @@
 package com.head.dialog.dialogs;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +40,16 @@ import static android.view.View.OVER_SCROLL_NEVER;
 * 创建时间：3/8/21 9:16 PM <br/>
 * @version
 */
-public class BottomMenu extends BottomDialog {
+public class BottomMenu extends BottomDialog  {
 
     public enum SELECT_MODE {
         NONE,
         SINGLE,
         MULTIPLE
     }
+    public static final int DELAY = 100;
+    private long lastClickTime = 0;
+
 
     protected BottomMenu me = this;
     protected int selectionIndex = -1;
@@ -508,12 +512,17 @@ public class BottomMenu extends BottomDialog {
                     }
                     switch (selectMode) {
                         case NONE:
-                            if (onMenuItemClickListener != null) {
-                                if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
+                            long currentTime = System.currentTimeMillis();
+                            Log.d("BottomMenu","触发");
+                            if (currentTime - lastClickTime > DELAY) {
+                                lastClickTime = currentTime;
+                                if (onMenuItemClickListener != null) {
+                                    if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
+                                        dismiss();
+                                    }
+                                } else {
                                     dismiss();
                                 }
-                            } else {
-                                dismiss();
                             }
                             break;
                         case SINGLE:
