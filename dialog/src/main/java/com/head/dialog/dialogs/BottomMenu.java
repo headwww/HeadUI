@@ -513,7 +513,6 @@ public class BottomMenu extends BottomDialog  {
                     switch (selectMode) {
                         case NONE:
                             long currentTime = System.currentTimeMillis();
-                            Log.d("BottomMenu","触发");
                             if (currentTime - lastClickTime > DELAY) {
                                 lastClickTime = currentTime;
                                 if (onMenuItemClickListener != null) {
