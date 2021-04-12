@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.head.dialog.dialogs.InputDialog;
 import com.head.dialog.dialogs.PopTip;
+import com.head.dialog.interfaces.OnInputDialogButtonClickListener;
 import com.head.ui.R;
 import com.head.views.button.HeadButton;
 import com.head.views.edittext.HeadEditText;
@@ -115,6 +117,20 @@ public class ViewFragment extends Fragment  {
         ed.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputDialog.build()
+                        .setTitle("输入人员编号")
+                        .setInputText(
+                                ed.getText().toString()+"")
+                        .setCancelButton("关闭")
+                        .setOkButton("验证一下").setOkButton(new OnInputDialogButtonClickListener<InputDialog>() {
+                    @Override
+                    public boolean onClick(InputDialog baseDialog, View v, String inputStr) {
+                        ed.setText("=====");
+                        return false;
+                    }
+                })
+                        .show();
+
                 PopTip.show("====");
             }
         });

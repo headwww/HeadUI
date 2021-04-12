@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -139,7 +140,12 @@ public class HeadEditText extends AppCompatEditText {
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         if (rightDrawablesVisibility) {
-            setDeleteIconVisible(hasFocus() && text.length() > 0, leftDrawablesID != -1);
+            if (isEnabled) {
+                setDeleteIconVisible(hasFocus() && text.length() > 0, leftDrawablesID != -1);
+            }else {
+                setDeleteIconVisible(  text.length() > 0, leftDrawablesID != -1);
+
+            }
         }
     }
 
@@ -147,17 +153,24 @@ public class HeadEditText extends AppCompatEditText {
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
         this.focused = focused;
-        setDeleteIconVisible(rightDrawablesVisibility && focused && length() > 0, leftDrawablesID != -1);
+        if (isEnabled){
+            setDeleteIconVisible(rightDrawablesVisibility && focused && length() > 0, leftDrawablesID != -1);
+        }else {
+            setDeleteIconVisible(rightDrawablesVisibility && length() > 0, leftDrawablesID != -1);
+
+        }
     }
 
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(final MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
-                Drawable drawableRight = rightDrawables;
+                final Drawable drawableRight = rightDrawables;
+
                 if (drawableRight != null && event.getX() <= (getWidth() - getPaddingRight())
                         && event.getX() >= (getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
+
                     if (rightDrawablesVisibility && focused) {
                         setText("");
                     }
@@ -167,13 +180,12 @@ public class HeadEditText extends AppCompatEditText {
                     if (rightDrawablesVisibility && onEditTextClickListener != null) {
                         onEditTextClickListener.right();
                     }
-                    invalidate();
 
                 } else {
                     setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (clickListener != null) {
+                            if (clickListener != null&&event.getX()<(getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
                                 clickListener.onClick(view);
                             }
                         }
@@ -200,6 +212,8 @@ public class HeadEditText extends AppCompatEditText {
                         }
                     }
                 }
+                invalidate();
+
                 break;
         }
         return super.onTouchEvent(event);
@@ -223,11 +237,6 @@ public class HeadEditText extends AppCompatEditText {
         invalidate();
     }
 
-//    @Override
-//    protected void onDraw(Canvas canvas) {
-//        super.onDraw(canvas);
-//        setBackground(getResources().getDrawable(R.drawable.editbox_light));
-//    }
 
     public void setOnEditTextClickListener(OnEditTextClickListener onEditTextClickListener) {
         this.onEditTextClickListener = onEditTextClickListener;

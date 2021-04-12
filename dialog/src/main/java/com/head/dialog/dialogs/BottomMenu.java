@@ -47,9 +47,6 @@ public class BottomMenu extends BottomDialog  {
         SINGLE,
         MULTIPLE
     }
-    public static final int DELAY = 100;
-    private long lastClickTime = 0;
-
 
     protected BottomMenu me = this;
     protected int selectionIndex = -1;
@@ -469,6 +466,9 @@ public class BottomMenu extends BottomDialog  {
 
     private float touchDownY;
 
+    public static final int ITEM_CLICK_DELAY = 100;
+    private long lastClickTime = 0;
+
     @Override
     protected void onDialogInit(final DialogImpl dialog) {
         if (dialog != null) {
@@ -506,15 +506,15 @@ public class BottomMenu extends BottomDialog  {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    float deltaY = Math.abs(touchDownY - dialog.bkg.getY());
-                    if (deltaY > dip2px(15)) {
-                        return;
-                    }
-                    switch (selectMode) {
-                        case NONE:
-                            long currentTime = System.currentTimeMillis();
-                            if (currentTime - lastClickTime > DELAY) {
-                                lastClickTime = currentTime;
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastClickTime > ITEM_CLICK_DELAY) {
+                        lastClickTime = currentTime;
+                        float deltaY = Math.abs(touchDownY - dialog.bkg.getY());
+                        if (deltaY > dip2px(15)) {
+                            return;
+                        }
+                        switch (selectMode) {
+                            case NONE:
                                 if (onMenuItemClickListener != null) {
                                     if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
                                         dismiss();
@@ -522,66 +522,66 @@ public class BottomMenu extends BottomDialog  {
                                 } else {
                                     dismiss();
                                 }
-                            }
-                            break;
-                        case SINGLE:
-                            if (onMenuItemClickListener instanceof OnMenuItemSelectListener) {
-                                OnMenuItemSelectListener<BottomMenu> onMenuItemSelectListener = (OnMenuItemSelectListener<BottomMenu>) onMenuItemClickListener;
-                                if (!onMenuItemSelectListener.onClick(me, menuList.get(position), position)) {
-                                    dismiss();
-                                } else {
-                                    boolean select = false;
-                                    if (selectionIndex == position) {
-                                        selectionIndex = -1;
+                                break;
+                            case SINGLE:
+                                if (onMenuItemClickListener instanceof OnMenuItemSelectListener) {
+                                    OnMenuItemSelectListener<BottomMenu> onMenuItemSelectListener = (OnMenuItemSelectListener<BottomMenu>) onMenuItemClickListener;
+                                    if (!onMenuItemSelectListener.onClick(me, menuList.get(position), position)) {
+                                        dismiss();
                                     } else {
-                                        selectionIndex = position;
-                                        select = true;
-                                    }
-                                    menuListAdapter.notifyDataSetInvalidated();
-                                    menuListAdapter.notifyDataSetChanged();
-                                    onMenuItemSelectListener.onOneItemSelect(me, menuList.get(position), position, select);
-                                }
-                            } else {
-                                if (onMenuItemClickListener != null) {
-                                    if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
-                                        dismiss();
+                                        boolean select = false;
+                                        if (selectionIndex == position) {
+                                            selectionIndex = -1;
+                                        } else {
+                                            selectionIndex = position;
+                                            select = true;
+                                        }
+                                        menuListAdapter.notifyDataSetInvalidated();
+                                        menuListAdapter.notifyDataSetChanged();
+                                        onMenuItemSelectListener.onOneItemSelect(me, menuList.get(position), position, select);
                                     }
                                 } else {
-                                    dismiss();
-                                }
-                            }
-                            break;
-                        case MULTIPLE:
-                            if (onMenuItemClickListener instanceof OnMenuItemSelectListener) {
-                                OnMenuItemSelectListener<BottomMenu> onMenuItemSelectListener = (OnMenuItemSelectListener<BottomMenu>) onMenuItemClickListener;
-                                if (!onMenuItemSelectListener.onClick(me, menuList.get(position), position)) {
-                                    dismiss();
-                                } else {
-                                    if (selectionItems.contains(position)) {
-                                        selectionItems.remove(new Integer(position));
+                                    if (onMenuItemClickListener != null) {
+                                        if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
+                                            dismiss();
+                                        }
                                     } else {
-                                        selectionItems.add(position);
-                                    }
-                                    menuListAdapter.notifyDataSetInvalidated();
-                                    menuListAdapter.notifyDataSetChanged();
-                                    int[] resultArray = new int[selectionItems.size()];
-                                    CharSequence[] selectTextArray = new CharSequence[selectionItems.size()];
-                                    for (int i = 0; i < selectionItems.size(); i++) {
-                                        resultArray[i] = selectionItems.get(i);
-                                        selectTextArray[i] = menuList.get(resultArray[i]);
-                                    }
-                                    onMenuItemSelectListener.onMultiItemSelect(me, selectTextArray, resultArray);
-                                }
-                            } else {
-                                if (onMenuItemClickListener != null) {
-                                    if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
                                         dismiss();
                                     }
-                                } else {
-                                    dismiss();
                                 }
-                            }
-                            break;
+                                break;
+                            case MULTIPLE:
+                                if (onMenuItemClickListener instanceof OnMenuItemSelectListener) {
+                                    OnMenuItemSelectListener<BottomMenu> onMenuItemSelectListener = (OnMenuItemSelectListener<BottomMenu>) onMenuItemClickListener;
+                                    if (!onMenuItemSelectListener.onClick(me, menuList.get(position), position)) {
+                                        dismiss();
+                                    } else {
+                                        if (selectionItems.contains(position)) {
+                                            selectionItems.remove(new Integer(position));
+                                        } else {
+                                            selectionItems.add(position);
+                                        }
+                                        menuListAdapter.notifyDataSetInvalidated();
+                                        menuListAdapter.notifyDataSetChanged();
+                                        int[] resultArray = new int[selectionItems.size()];
+                                        CharSequence[] selectTextArray = new CharSequence[selectionItems.size()];
+                                        for (int i = 0; i < selectionItems.size(); i++) {
+                                            resultArray[i] = selectionItems.get(i);
+                                            selectTextArray[i] = menuList.get(resultArray[i]);
+                                        }
+                                        onMenuItemSelectListener.onMultiItemSelect(me, selectTextArray, resultArray);
+                                    }
+                                } else {
+                                    if (onMenuItemClickListener != null) {
+                                        if (!onMenuItemClickListener.onClick(me, menuList.get(position), position)) {
+                                            dismiss();
+                                        }
+                                    } else {
+                                        dismiss();
+                                    }
+                                }
+                                break;
+                        }
                     }
                 }
             });
