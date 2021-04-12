@@ -181,6 +181,10 @@ public class MaterialStyle implements DialogStyle {
             public int overrideSelectionImage(boolean light, boolean isSelected) {
                 return isSelected ? R.mipmap.img_dialog_bottom_menu_material_item_selection : R.mipmap.img_dialog_bottom_menu_material_item_non_select;
             }
+            @Override
+            public int overrideMultiSelectionImage(boolean light, boolean isSelected) {
+                return isSelected ? R.mipmap.img_dialog_bottom_menu_material_item_multi_selection : R.mipmap.img_dialog_bottom_menu_material_item_non_multi_select;
+            }
 
         };
     }

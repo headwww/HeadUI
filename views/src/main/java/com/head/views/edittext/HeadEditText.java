@@ -2,7 +2,6 @@ package com.head.views.edittext;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -10,6 +9,7 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -51,6 +51,16 @@ public class HeadEditText extends AppCompatEditText {
     private int screenHeight;
     private int screenWidth;
     private GradientDrawable normalBackground;
+
+    public OnClickListener getClickListener() {
+        return clickListener;
+    }
+
+    public void setClickListener(OnClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    private OnClickListener clickListener;
 
 
     public HeadEditText(Context context) {
@@ -109,9 +119,15 @@ public class HeadEditText extends AppCompatEditText {
 
             //是否开启文本编辑功能
             isEnabled = typedArray.getBoolean(R.styleable.HeadEditTexts_isEnabled, true);
-            super.setEnabled(isEnabled);
+            if (isEnabled == false) {
+                setClickable(true);
+                setFocusableInTouchMode(false);
+            } else {
+                setEnabled(true);
+            }
 
-            setDeleteIconVisible(isEnabled == false && rightDrawablesVisibility && super.getText().toString().length() > 0, leftDrawablesID != -1);
+//            setDeleteIconVisible(isEnabled == false && rightDrawablesVisibility && super.getText().toString().length() > 0, leftDrawablesID != -1);
+            setDeleteIconVisible(rightDrawablesVisibility && super.getText().toString().length() > 0, leftDrawablesID != -1);
 
         } finally {
             typedArray.recycle();
@@ -134,6 +150,7 @@ public class HeadEditText extends AppCompatEditText {
         setDeleteIconVisible(rightDrawablesVisibility && focused && length() > 0, leftDrawablesID != -1);
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -152,9 +169,18 @@ public class HeadEditText extends AppCompatEditText {
                     }
                     invalidate();
 
+                } else {
+                    setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (clickListener != null) {
+                                clickListener.onClick(view);
+                            }
+                        }
+                    });
                 }
                 Drawable drawableLeft = leftDrawables;
-                if (drawableLeft != null && event.getX() <= (getLeft()+ drawableLeft.getBounds().width())) {
+                if (drawableLeft != null && event.getX() <= (getLeft() + drawableLeft.getBounds().width())) {
                     if (onEditTextClickListener != null) {
                         onEditTextClickListener.left();
                     }

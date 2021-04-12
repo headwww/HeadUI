@@ -34,6 +34,7 @@ import com.head.dialog.interfaces.OnBindView;
 import com.head.dialog.interfaces.OnDialogButtonClickListener;
 import com.head.dialog.interfaces.OnInputDialogButtonClickListener;
 import com.head.dialog.interfaces.OnMenuItemClickListener;
+import com.head.dialog.interfaces.OnMenuItemSelectListener;
 import com.head.dialog.interfaces.OnTimeSelectChangeListener;
 import com.head.dialog.interfaces.OnTimeSelectListener;
 import com.head.dialog.style.IOSStyle;
@@ -79,10 +80,12 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
     protected TextView btnCustomInputDialog;
     protected TextView btnCustomBottomMenu;
     protected TextView btnCustomDialog;
-    protected TextView btnFullScreenDialogLogin;
+    protected TextView btnFullScreenDialogLogin,btn_bottom_mu_select_menu;
     protected TextView btnTime;
+
     float progress;
     private int selectMenuIndex;
+    int[] selectMenuIndexArray;
 
     private TextView btnReplyCommit;
     private EditText editReplyCommit;
@@ -188,6 +191,8 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
         btnFullScreenDialogLogin.setOnClickListener(DialogFragment.this);
         btnTime = (TextView) rootView.findViewById(R.id.btn_Time);
         btnTime.setOnClickListener(DialogFragment.this);
+        btn_bottom_mu_select_menu = (TextView) rootView.findViewById(R.id.btn_bottom_mu_select_menu);
+        btn_bottom_mu_select_menu.setOnClickListener(DialogFragment.this);
     }
 
     @Override
@@ -399,17 +404,43 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
             BottomMenu.show(new String[]{"拒绝", "询问", "始终允许", "仅在使用中允许"})
                     .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
                     .setTitle("获得权限标题")
-                    .setOnMenuItemClickListener(new OnMenuItemClickListener<BottomMenu>() {
+                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
                         @Override
-                        public boolean onClick(BottomMenu dialog, CharSequence text, int index) {
+                        public void onOneItemSelect(BottomMenu dialog, CharSequence text, int index, boolean select) {
                             selectMenuIndex = index;
                             PopTip.show(text);
+                        }
+                    }).setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
+                @Override
+                public boolean onClick(BottomDialog baseDialog, View v) {
+                    PopTip.show("已选择：");
+                    return false;
+                }
+            })
+                    .setSelection(selectMenuIndex);
+
+        }else if (view.getId() == R.id.btn_bottom_mu_select_menu){
+            BottomMenu.show(new String[]{"拒绝", "询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问","询问", "始终允许", "仅在使用中允许"})
+                    .setMessage("这里是权限确认的文本说明，这是一个演示菜单")
+                    .setTitle("获得权限标题")
+                    .setOnMenuItemClickListener(new OnMenuItemSelectListener<BottomMenu>() {
+                        @Override
+                        public void onMultiItemSelect(BottomMenu dialog, CharSequence[] text, int[] index) {
+                            PopTip.show("已选择：" +text);
+                            selectMenuIndexArray=index;
+                        }
+                    })
+                    .setOkButton("确定", new OnDialogButtonClickListener<BottomDialog>() {
+                        @Override
+                        public boolean onClick(BottomDialog baseDialog, View v) {
+                            PopTip.show("已选择：" );
                             return false;
                         }
                     })
-                    .setSelection(selectMenuIndex);
+                    .setSelection(selectMenuIndexArray);
+        }
 
-        } else if (view.getId() == R.id.btn_customMessageDialog) {
+        else if (view.getId() == R.id.btn_customMessageDialog) {
             MessageDialog.show("这里是标题", "此对话框演示的是自定义对话框内部布局的效果", "确定", "取消")
                     .setCustomView(new OnBindView<MessageDialog>(R.layout.layout_custom_view) {
                         @Override

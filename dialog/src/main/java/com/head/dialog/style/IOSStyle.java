@@ -7,14 +7,12 @@ import com.head.dialog.R;
 import com.head.dialog.interfaces.ProgressViewInterface;
 import com.head.dialog.util.views.IOSProgressView;
 
-/**   
-*
-* 类名称：IOSStyle.java <br/>
-* 类描述：IOS风格<br/>
-* 创建人：舒文 <br/>
-* 创建时间：3/9/21 1:56 PM <br/>
-* @version 
-*/
+/**
+ * 类名称：IOSStyle.java <br/>
+ * 类描述：IOS风格<br/>
+ * 创建人：舒文 <br/>
+ * 创建时间：3/9/21 1:56 PM <br/>
+ */
 public class IOSStyle implements DialogStyle {
 
     public static IOSStyle style() {
@@ -228,6 +226,11 @@ public class IOSStyle implements DialogStyle {
 
             @Override
             public int overrideSelectionImage(boolean light, boolean isSelected) {
+                return 0;
+            }
+
+            @Override
+            public int overrideMultiSelectionImage(boolean light, boolean isSelected) {
                 return 0;
             }
         };

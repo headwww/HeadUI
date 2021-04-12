@@ -167,11 +167,14 @@
             android:progress="0" />
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
+            android:id="@+id/ed"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:gravity="center"
-            android:inputType="textPassword"
-            app:rightDrawablesVisibility="false"
+            android:text="qqqqq"
+
+            app:rightDrawablesVisibility="true"
+            app:isEnabled="false"
             app:edBackgroundColor="@drawable/editbox_light"/>
 
         <com.head.views.edittext.HeadEditText
@@ -191,6 +194,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:paddingHorizontal="50dp"
             app:isPassword="true"
             app:rightDrawablesVisibility="true" />
 

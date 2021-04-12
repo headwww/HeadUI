@@ -5,7 +5,7 @@ import android.content.Context;
 import com.head.dialog.interfaces.ProgressViewInterface;
 
 public interface DialogStyle {
-    int styleVer = 2;
+    int styleVer = 3;
     int BUTTON_OK = 1;
     int BUTTON_CANCEL = 2;
     int BUTTON_OTHER = 3;
@@ -79,6 +79,8 @@ public interface DialogStyle {
         boolean selectionImageTint(boolean var1);
 
         int overrideSelectionImage(boolean var1, boolean var2);
+        int overrideMultiSelectionImage(boolean light, boolean isSelected);
+
     }
 
     public interface WaitTipRes {

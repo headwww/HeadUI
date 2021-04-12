@@ -7,17 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.head.dialog.dialogs.PopTip;
 import com.head.ui.R;
+import com.head.views.button.HeadButton;
 import com.head.views.edittext.HeadEditText;
 import com.head.views.edittext.OnEditTextClickListener;
 import com.head.views.progressbar.HeadProgressBar;
 
-public class ViewFragment extends Fragment {
+public class ViewFragment extends Fragment  {
 
 
     protected View rootView;
@@ -31,6 +34,8 @@ public class ViewFragment extends Fragment {
     protected HeadProgressBar pb6;
     protected TextView tvProgress;
     protected SeekBar seekbar;
+    protected HeadButton differentRadiusTest;
+    protected HeadEditText ed;
 
     @Nullable
     @Override
@@ -97,7 +102,7 @@ public class ViewFragment extends Fragment {
         pb4.setOnProgressChangedListener(new HeadProgressBar.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(HeadProgressBar progressBar, int max, int progress) {
-                tvProgress.setText("prgress = " + progress + ", max = " + max);
+                tvProgress.setText("progress = " + progress + ", max = " + max);
             }
 
             @Override
@@ -105,6 +110,15 @@ public class ViewFragment extends Fragment {
 
             }
         });
+        differentRadiusTest = (HeadButton) rootView.findViewById(R.id.different_radius_test);
+        ed = (HeadEditText) rootView.findViewById(R.id.ed);
+        ed.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopTip.show("====");
+            }
+        });
 
     }
+
 }
