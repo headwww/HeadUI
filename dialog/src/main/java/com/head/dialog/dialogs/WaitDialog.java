@@ -308,6 +308,7 @@ public class WaitDialog extends BaseDialog {
             boxCustomView = convertView.findViewById(R.id.box_customView);
             txtInfo = convertView.findViewById(R.id.txt_info);
             init();
+            dialogImpl = this;
             refreshView();
         }
 

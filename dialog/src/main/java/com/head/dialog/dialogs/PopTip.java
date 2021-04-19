@@ -373,6 +373,8 @@ public class PopTip extends BaseDialog {
             txtDialogxButton = convertView.findViewById(R.id.txt_dialog_button);
 
             init();
+            dialogImpl = this;
+
             refreshView();
         }
 

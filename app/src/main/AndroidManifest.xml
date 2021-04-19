@@ -9,7 +9,7 @@
         android:name=".MyApplication"
         android:roundIcon="@drawable/ic_design"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/MyAppTheme">
         <meta-data
             android:name="design_width_in_dp"
             android:value="360"/>

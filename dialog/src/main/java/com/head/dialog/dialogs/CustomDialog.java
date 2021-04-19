@@ -114,6 +114,8 @@ public class CustomDialog extends BaseDialog {
             boxCustom = convertView.findViewById(R.id.box_custom);
 
             init();
+            dialogImpl = this;
+
             refreshView();
         }
 

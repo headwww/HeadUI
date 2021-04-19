@@ -257,6 +257,7 @@ public class MessageDialog extends BaseDialog {
             btnSelectNegative = convertView.findViewById(R.id.btn_selectNegative);
             btnSelectPositive = convertView.findViewById(R.id.btn_selectPositive);
             init();
+            dialogImpl = this;
             refreshView();
         }
 
