@@ -1,9 +1,10 @@
 package com.head.dialog.dialogs;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,7 +23,6 @@ import androidx.annotation.ColorRes;
 
 import com.head.dialog.HeadDialog;
 import com.head.dialog.R;
-import com.head.dialog.impl.AnimatorListenerEndCallBack;
 import com.head.dialog.interfaces.BaseDialog;
 import com.head.dialog.interfaces.DialogConvertViewInterface;
 import com.head.dialog.interfaces.DialogLifecycleCallback;
@@ -386,7 +386,7 @@ public class BottomDialog extends BaseDialog {
             boxRoot.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (style.overrideBottomDialogRes()!=null && style.overrideBottomDialogRes().touchSlide()){
+                    if (style.overrideBottomDialogRes() != null && style.overrideBottomDialogRes().touchSlide()) {
                         bkg.setY(boxRoot.getHeight());
                         bkg.post(new Runnable() {
                             @Override
@@ -406,7 +406,7 @@ public class BottomDialog extends BaseDialog {
                                 bkg.startAnimation(enterAnim);
                             }
                         });
-                    }else{
+                    } else {
                         Animation enterAnim = AnimationUtils.loadAnimation(getContext(), R.anim.anim_dialog_bottom_enter);
                         long enterAnimDurationTemp = enterAnim.getDuration();
                         if (overrideEnterDuration >= 0) {
@@ -540,13 +540,13 @@ public class BottomDialog extends BaseDialog {
             boxRoot.animate()
                     .alpha(0f)
                     .setInterpolator(new AccelerateInterpolator())
-                    .setDuration(exitAnimDurationTemp)
-                    .setListener(new AnimatorListenerEndCallBack() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            dismiss(dialogView);
-                        }
-                    });
+                    .setDuration(exitAnimDurationTemp);
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dismiss(dialogView);
+                }
+            }, exitAnimDurationTemp);
         }
 
         public void preDismiss() {

@@ -326,12 +326,16 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                         public void onBind(BottomDialog dialog, View v) {
 
                         }
-                    }).setCancelButton("取消").show();
+                    })
+//                    .setCancelButton("取消")
+                    .show();
 
         } else if (view.getId() == R.id.btn_bottom_menu) {
-            String[] strings = new String[]{"添加\nssss", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐", "添加", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐"};
+            String[] strings = new String[]{"添加\nssss\nssss\nssss\nssss\nssss\nssss\nssss\nssss\nssss\nssss\nssss\nssss", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐", "添加", "查看", "编辑", "删除", "分享", "评论", "下载", "收藏", "赞！", "不喜欢", "所属专辑", "复制链接", "类似推荐"};
             BottomMenu.build()
                     .setMenuList(strings)
+                    .setStyle(new MaterialStyle())
+
                     .setCancelButton("取消")
                     .setOnMenuItemClickListener(new OnMenuItemClickListener<BottomMenu>() {
                         @Override

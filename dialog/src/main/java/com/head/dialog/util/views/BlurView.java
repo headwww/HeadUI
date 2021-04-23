@@ -88,6 +88,7 @@ public class BlurView extends View {
                     R.styleable.RealtimeBlurView_realtimeBlurRadius,
                     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 35, context.getResources().getDisplayMetrics())
             );
+
             mDownsampleFactor = a.getFloat(R.styleable.RealtimeBlurView_realtimeDownsampleFactor, 4);
             mOverlayColor = a.getColor(R.styleable.RealtimeBlurView_realtimeOverlayColor, 0x00ffffff);
 
@@ -353,7 +354,9 @@ public class BlurView extends View {
             } else {
                 if (mRadius != 0) {
                     Rect rect = new Rect();
-                    getLocalVisibleRect(rect);
+//                    getLocalVisibleRect(rect);
+                    rect.right=getWidth();
+                    rect.bottom=getBottom();
                     mBoundPath = caculateRoundRectPath(rect);
                     canvas.clipPath(mBoundPath);
                 }

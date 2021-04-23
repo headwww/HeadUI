@@ -1,12 +1,12 @@
 package com.head.dialog.dialogs;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -15,28 +15,25 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 
 import com.head.dialog.HeadDialog;
-import com.head.dialog.style.DialogStyle;
-import com.head.dialog.util.views.MaxRelativeLayout;
 import com.head.dialog.R;
-import com.head.dialog.impl.AnimatorListenerEndCallBack;
 import com.head.dialog.interfaces.BaseDialog;
 import com.head.dialog.interfaces.DialogConvertViewInterface;
 import com.head.dialog.interfaces.DialogLifecycleCallback;
 import com.head.dialog.interfaces.OnBackPressedListener;
 import com.head.dialog.interfaces.OnBindView;
 import com.head.dialog.interfaces.OnSafeInsetsChangeListener;
+import com.head.dialog.style.DialogStyle;
 import com.head.dialog.util.FullScreenDialogTouchEventInterceptor;
 import com.head.dialog.util.views.ActivityScreenShotImageView;
 import com.head.dialog.util.views.DialogBaseRelativeLayout;
+import com.head.dialog.util.views.MaxRelativeLayout;
 
 /**
-*
-* 类名称：FullScreenDialog.java <br/>
-* 类描述：自定义抽屉式弹窗<br/>
-* 创建人：舒文 <br/>
-* 创建时间：3/8/21 11:30 PM <br/>
-* @version 
-*/
+ * 类名称：FullScreenDialog.java <br/>
+ * 类描述：自定义抽屉式弹窗<br/>
+ * 创建人：舒文 <br/>
+ * 创建时间：3/8/21 11:30 PM <br/>
+ */
 public class FullScreenDialog extends BaseDialog {
 
     public static int overrideEnterDuration = -1;
@@ -239,13 +236,14 @@ public class FullScreenDialog extends BaseDialog {
             boxRoot.animate()
                     .alpha(0f)
                     .setInterpolator(new AccelerateInterpolator())
-                    .setDuration(exitAnimDurationTemp)
-                    .setListener(new AnimatorListenerEndCallBack() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            dismiss(dialogView);
-                        }
-                    });
+                    .setDuration(exitAnimDurationTemp);
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dismiss(dialogView);
+                }
+            }, exitAnimDurationTemp);
         }
 
         public void preDismiss() {

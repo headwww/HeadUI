@@ -14,6 +14,8 @@ import android.widget.ScrollView;
 
 import com.head.dialog.R;
 
+import static android.view.View.MeasureSpec.EXACTLY;
+
 
 /**
 *
@@ -110,7 +112,6 @@ public class MaxRelativeLayout extends RelativeLayout {
         if (maxWidth > 0) {
             widthSize = Math.min(widthSize, maxWidth);
         }
-
         View blurView = findViewWithTag("blurView");
         View contentView = findViewWithoutTag("blurView");
         if (contentView != null) {
@@ -119,6 +120,12 @@ public class MaxRelativeLayout extends RelativeLayout {
             if (widthTemp < minWidth) widthTemp = minWidth;
             if (heightTemp < minHeight) heightTemp = minHeight;
             if (blurView != null) {
+                if (heightMode == EXACTLY){
+                    heightTemp = getMeasuredHeight();
+                }
+                if (widthMode == EXACTLY){
+                    widthTemp = getMeasuredWidth();
+                }
                 LayoutParams lp = (LayoutParams) blurView.getLayoutParams();
                 lp.width = widthTemp;
                 lp.height = heightTemp;
