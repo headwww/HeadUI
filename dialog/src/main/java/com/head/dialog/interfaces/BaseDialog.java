@@ -101,6 +101,7 @@ public abstract class BaseDialog {
             @Override
             public void run() {
                 if (dialogView.getParent() == null || !(dialogView.getParent() instanceof ViewGroup)) {
+                    if (rootFrameLayout == null) return;
                     rootFrameLayout.get().removeView(dialogView);
                 } else {
                     ((ViewGroup) dialogView.getParent()).removeView(dialogView);

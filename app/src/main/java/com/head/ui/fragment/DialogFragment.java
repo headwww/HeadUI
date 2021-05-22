@@ -417,7 +417,6 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                     .setCustomView(new OnBindView<MessageDialog>(R.layout.layout_custom_view) {
                         @Override
                         public void onBind(MessageDialog dialog, View v) {
-
                         }
                     });
 

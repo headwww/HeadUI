@@ -176,7 +176,6 @@ public class HeadEditText extends AppCompatEditText {
                 Drawable drawableLeft = leftDrawables;
                 //删除
                 if (drawableRight != null && event.getRawX() > event.getRawX() - event.getX() + getWidth() - getPaddingRight() - drawableRight.getBounds().width()) {
-                    Log.e("=====", "右边");
                     if (rightDrawablesVisibility && focused) {
                         setText("");
                     }
@@ -190,7 +189,6 @@ public class HeadEditText extends AppCompatEditText {
                 }
                 //左边边的按钮
                 else if (drawableLeft != null && event.getX() <= (getLeft() + drawableLeft.getBounds().width())) {
-                    Log.e("====","左边");
                     if (onEditTextClickListener != null) {
                         onEditTextClickListener.left();
                     }
@@ -210,7 +208,6 @@ public class HeadEditText extends AppCompatEditText {
                         }
                     }
                 } else {
-                    Log.e("====","中间");
                     if (onCenterClickListener != null && event.getX() < (getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
                         onCenterClickListener.onClick();
                     }

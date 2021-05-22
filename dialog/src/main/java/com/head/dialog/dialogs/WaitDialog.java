@@ -27,9 +27,11 @@ import com.head.dialog.interfaces.DialogLifecycleCallback;
 import com.head.dialog.interfaces.OnBackPressedListener;
 import com.head.dialog.interfaces.OnBindView;
 import com.head.dialog.interfaces.ProgressViewInterface;
+import com.head.dialog.style.MaterialStyle;
 import com.head.dialog.util.TextInfo;
 import com.head.dialog.util.views.BlurView;
 import com.head.dialog.util.views.DialogBaseRelativeLayout;
+import com.head.dialog.util.views.IOSProgressView;
 import com.head.dialog.util.views.MaterialProgressView;
 import com.head.dialog.util.views.MaxRelativeLayout;
 
@@ -250,16 +252,16 @@ public class WaitDialog extends BaseDialog {
 
     public WaitDialog show() {
         super.beforeShow();
+        int layoutResId = R.layout.layout_dialog_wait;
+        if (style.overrideWaitTipRes() != null && style.overrideWaitTipRes().overrideWaitLayout(isLightTheme()) != 0) {
+            layoutResId = style.overrideWaitTipRes().overrideWaitLayout(isLightTheme());
+        }
+        dialogImpl = new DialogImpl(layoutResId);
         runOnMain(new Runnable() {
             @Override
             public void run() {
-                int layoutResId = R.layout.layout_dialog_wait;
-                if (style.overrideWaitTipRes() != null && style.overrideWaitTipRes().overrideWaitLayout(isLightTheme()) != 0) {
-                    layoutResId = style.overrideWaitTipRes().overrideWaitLayout(isLightTheme());
-                }
-                dialogView = createView(layoutResId);
-                dialogImpl = new DialogImpl(dialogView);
-                dialogView.setTag(dialogKey());
+                dialogImpl.lazyCreate();
+                dialogView.setTag(me.get());
                 show(dialogView);
             }
         });
@@ -268,23 +270,21 @@ public class WaitDialog extends BaseDialog {
 
     public WaitDialog show(final Activity activity) {
         super.beforeShow();
+        int layoutResId = R.layout.layout_dialog_wait;
+        if (style.overrideWaitTipRes() != null && style.overrideWaitTipRes().overrideWaitLayout(isLightTheme()) != 0) {
+            layoutResId = style.overrideWaitTipRes().overrideWaitLayout(isLightTheme());
+        }
+        dialogImpl = new DialogImpl(layoutResId);
         runOnMain(new Runnable() {
             @Override
             public void run() {
-                int layoutResId = R.layout.layout_dialog_wait;
-                if (style.overrideWaitTipRes() != null && style.overrideWaitTipRes().overrideWaitLayout(isLightTheme()) != 0) {
-                    layoutResId = style.overrideWaitTipRes().overrideWaitLayout(isLightTheme());
-                }
-                dialogView = createView(layoutResId);
-                dialogImpl = new DialogImpl(dialogView);
-                dialogView.setTag(dialogKey());
+                dialogImpl.lazyCreate();
+                dialogView.setTag(me.get());
                 show(activity, dialogView);
             }
         });
-
         return this;
     }
-
     protected DialogImpl dialogImpl;
 
     public class DialogImpl implements DialogConvertViewInterface {
@@ -295,6 +295,34 @@ public class WaitDialog extends BaseDialog {
         public ProgressViewInterface progressView;
         public RelativeLayout boxCustomView;
         public TextView txtInfo;
+
+        private int layoutResId;
+        public void lazyCreate(){
+            dialogView = createView(layoutResId);
+            boxRoot = dialogView.findViewById(R.id.box_root);
+            bkg = dialogView.findViewById(R.id.bkg);
+            blurView = dialogView.findViewById(R.id.blurView);
+            boxProgress = dialogView.findViewById(R.id.box_progress);
+            View progressViewCache = (View) style.overrideWaitTipRes().overrideWaitView(getContext(), isLightTheme());
+            if (progressViewCache == null) {
+                if (HeadDialog.globalStyle==new MaterialStyle()){
+                    progressViewCache = new MaterialProgressView(getContext());
+                }else {
+                    progressViewCache = new IOSProgressView(getContext());
+                }
+            }
+            progressView = (ProgressViewInterface) progressViewCache;
+            boxProgress.addView(progressViewCache, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            boxCustomView = dialogView.findViewById(R.id.box_customView);
+            txtInfo = dialogView.findViewById(R.id.txt_info);
+            init();
+            dialogImpl = this;
+            refreshView();
+        }
+
+        public DialogImpl(int layoutResId) {
+            this.layoutResId = layoutResId;
+        }
 
         public DialogImpl(View convertView) {
             boxRoot = convertView.findViewById(R.id.box_root);

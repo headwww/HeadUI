@@ -8,6 +8,23 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
+        <EditText
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/editbox_dialog_ios_light"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textColor="@color/black90"
+            android:textSize="14dp"
+            android:theme="@style/AppTheme" />
 
         <TextView
             android:id="@+id/btn_cancel"
