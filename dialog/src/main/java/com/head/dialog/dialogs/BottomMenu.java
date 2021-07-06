@@ -494,7 +494,7 @@ public class BottomMenu extends BottomDialog  {
             listView = new BottomDialogListView(dialog, getContext());
             listView.setOverScrollMode(OVER_SCROLL_NEVER);
             listView.setDivider(getResources().getDrawable(dividerDrawableResId));
-            listView.setDividerHeight(dividerHeight);
+            listView.setDividerHeight((int) getResources().getDimension(R.dimen.view_normal_margin));
 
             listView.setBottomMenuListViewTouchEvent(new BottomMenuListViewTouchEvent() {
                 @Override
