@@ -9,6 +9,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -194,8 +195,7 @@ public class HeadEditText extends AppCompatEditText {
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
                 final Drawable drawableRight = rightDrawables;
-//                Drawable drawableLeft = leftDrawables;
-                Drawable drawableLeft = getCompoundDrawables()[0];
+                Drawable drawableLeft = leftDrawables;
                 //删除
                 if (drawableRight != null && event.getRawX() > event.getRawX() - event.getX() + getWidth() - getPaddingRight() - drawableRight.getBounds().width()) {
                     if (rightDrawablesVisibility && focused) {
@@ -210,7 +210,8 @@ public class HeadEditText extends AppCompatEditText {
                     invalidate();
                 }
                 //左边边的按钮
-                else if (drawableLeft != null && event.getRawX() <= (getLeft() + drawableLeft.getBounds().width())) {
+                else if (drawableLeft != null && event.getRawX() <= (event.getRawX()-event.getX() + drawableLeft.getBounds().width()+this.getPaddingLeft())) {
+
                     if (onEditTextClickListener != null) {
                         onEditTextClickListener.left();
                     }
@@ -229,7 +230,8 @@ public class HeadEditText extends AppCompatEditText {
                             setDeleteIconVisible(rightDrawablesVisibility && focused && length() > 0, leftDrawablesID != -1);
                         }
                     }
-                } else {
+                }
+                else {
                     if (onCenterClickListener != null && event.getX() < (getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
                         onCenterClickListener.onClick();
                     }

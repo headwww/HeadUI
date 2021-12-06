@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
         <com.head.views.button.HeadButton
             android:id="@+id/different_radius_test"
@@ -189,20 +188,23 @@
             app:isEnabled="true"
             app:leftDrawables="@mipmap/tab_equipment_blue"
             app:rightDrawablesVisibility="true" />
-        <com.head.views.edittext.HeadEditText
-            android:id="@+id/ed_password"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:hint="请输入密码"
-            android:paddingHorizontal="10dp"
-            android:textSize="14dp"
-            app:edBackgroundColor="@drawable/editbox_light"
-            app:isPassword="true"
-            app:rightDrawablesVisibility="true" />
+            android:layout_height="wrap_content">
+            <com.head.views.edittext.HeadEditText
+                android:id="@+id/ed_password"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingHorizontal="100dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:hint="请输入密码"
+                android:textSize="14dp"
+                app:edBackgroundColor="@drawable/editbox_light"
+                app:isPassword="true"
+                app:rightDrawablesVisibility="true" />
+
+        </LinearLayout>
 
 
         <com.head.views.edittext.HeadEditText
