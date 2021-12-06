@@ -223,6 +223,7 @@ public class HeadEditText extends AppCompatEditText {
                             leftDrawablesID = R.drawable.ic_visibility_black_24dp;
                             setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                         }
+
                         leftDrawables = getResources().getDrawable(leftDrawablesID);
                         leftDrawables.setBounds(0, 0, 40 * (screenHeight / screenWidth), 40 * (screenHeight / screenWidth));
                         setSelection(getText().length());
