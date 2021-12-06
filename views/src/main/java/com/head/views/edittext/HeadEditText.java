@@ -1,6 +1,7 @@
 package com.head.views.edittext;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -8,7 +9,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.appcompat.widget.AppCompatEditText;
@@ -82,13 +82,34 @@ public class HeadEditText extends AppCompatEditText {
         init(context, attrs);
     }
 
+    private boolean isScreenChange() {
+
+        Configuration mConfiguration = this.getResources().getConfiguration(); //获取设置的配置信息
+        int ori = mConfiguration.orientation; //获取屏幕方向
+
+        if (ori == mConfiguration.ORIENTATION_LANDSCAPE) {
+
+            //横屏
+            return true;
+        } else if (ori == mConfiguration.ORIENTATION_PORTRAIT) {
+
+            //竖屏
+            return false;
+        }
+        return false;
+    }
+
     private void init(Context context, AttributeSet attrs) {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HeadEditTexts);
         normalBackground = new GradientDrawable();
-
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        screenWidth = dm.widthPixels;
-        screenHeight = dm.heightPixels;
+        if (!isScreenChange()) {
+            screenWidth = dm.widthPixels;
+            screenHeight = dm.heightPixels;
+        }else {
+            screenWidth = dm.heightPixels;
+            screenHeight = dm.widthPixels;
+        }
         try {
             //背景颜色
             normalBackgroundColor = typedArray.getResourceId(R.styleable.HeadEditTexts_edBackgroundColor, R.color.default_edit);
@@ -173,7 +194,8 @@ public class HeadEditText extends AppCompatEditText {
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
                 final Drawable drawableRight = rightDrawables;
-                Drawable drawableLeft = leftDrawables;
+//                Drawable drawableLeft = leftDrawables;
+                Drawable drawableLeft = getCompoundDrawables()[0];
                 //删除
                 if (drawableRight != null && event.getRawX() > event.getRawX() - event.getX() + getWidth() - getPaddingRight() - drawableRight.getBounds().width()) {
                     if (rightDrawablesVisibility && focused) {
@@ -188,7 +210,7 @@ public class HeadEditText extends AppCompatEditText {
                     invalidate();
                 }
                 //左边边的按钮
-                else if (drawableLeft != null && event.getX() <= (getLeft() + drawableLeft.getBounds().width())) {
+                else if (drawableLeft != null && event.getRawX() <= (getLeft() + drawableLeft.getBounds().width())) {
                     if (onEditTextClickListener != null) {
                         onEditTextClickListener.left();
                     }
@@ -212,62 +234,9 @@ public class HeadEditText extends AppCompatEditText {
                         onCenterClickListener.onClick();
                     }
 
-//                    setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (clickListener != null && event.getX() < (getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
-//                                clickListener.onClick(view);
-//                            }
-//                        }
-//                    });
                 }
 
 
-//                if (drawableRight != null && event.getX() <= (getWidth() - getPaddingRight())
-//                        && event.getX() >= (getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
-//
-//                    if (rightDrawablesVisibility && focused) {
-//                        setText("");
-//                    }
-//                    if (rightDrawablesVisibility && isEnabled == false) {
-//                        setText("");
-//                    }
-//                    if (rightDrawablesVisibility && onEditTextClickListener != null) {
-//                        onEditTextClickListener.right();
-//                    }
-//                    Log.e("TAG", drawableRight.getBounds().width()+"onTouchEvent1: "+event.getX() );
-//                } else {
-//                    Log.e("TAG", "onTouchEvent2: "+event.getX() );
-//                    setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (clickListener != null&&event.getX()<(getWidth() - getPaddingRight() - drawableRight.getBounds().width())) {
-//                                clickListener.onClick(view);
-//                            }
-//                        }
-//                    });
-//                }
-//                Drawable drawableLeft = leftDrawables;
-//                if (drawableLeft != null && event.getX() <= (getLeft() + drawableLeft.getBounds().width())) {
-//                    if (onEditTextClickListener != null) {
-//                        onEditTextClickListener.left();
-//                    }
-//                    if (isPassword) {
-//                        if (leftDrawablesID == R.drawable.ic_visibility_black_24dp) {
-//                            leftDrawablesID = R.drawable.ic_visibility_off_black_24dp;
-//                            setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//                        } else {
-//                            leftDrawablesID = R.drawable.ic_visibility_black_24dp;
-//                            setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//                        }
-//                        leftDrawables = getResources().getDrawable(leftDrawablesID);
-//                        leftDrawables.setBounds(0, 0, 40 * (screenHeight / screenWidth), 40 * (screenHeight / screenWidth));
-//                        setSelection(getText().length());
-//                        if (focused) {
-//                            setDeleteIconVisible(rightDrawablesVisibility && focused && length() > 0, leftDrawablesID != -1);
-//                        }
-//                    }
-//                }
                 invalidate();
 
                 break;

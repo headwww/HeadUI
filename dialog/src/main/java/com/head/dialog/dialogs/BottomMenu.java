@@ -34,12 +34,12 @@ import java.util.List;
 import static android.view.View.OVER_SCROLL_NEVER;
 
 /**
-*
-* 类名称：BottomMenu.java <br/>
-* 创建人：舒文 <br/>
-* 创建时间：3/8/21 9:16 PM <br/>
-* @version
-*/
+ *
+ * 类名称：BottomMenu.java <br/>
+ * 创建人：舒文 <br/>
+ * 创建时间：3/8/21 9:16 PM <br/>
+ * @version
+ */
 public class BottomMenu extends BottomDialog  {
 
     public enum SELECT_MODE {
@@ -494,7 +494,7 @@ public class BottomMenu extends BottomDialog  {
             listView = new BottomDialogListView(dialog, getContext());
             listView.setOverScrollMode(OVER_SCROLL_NEVER);
             listView.setDivider(getResources().getDrawable(dividerDrawableResId));
-            listView.setDividerHeight((int) getResources().getDimension(R.dimen.view_normal_margin));
+            listView.setDividerHeight(dividerHeight);
 
             listView.setBottomMenuListViewTouchEvent(new BottomMenuListViewTouchEvent() {
                 @Override

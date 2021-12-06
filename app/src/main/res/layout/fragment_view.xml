@@ -180,7 +180,6 @@
 
 
         <com.head.views.edittext.HeadEditText
-            android:id="@+id/edit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -190,13 +189,28 @@
             app:isEnabled="true"
             app:leftDrawables="@mipmap/tab_equipment_blue"
             app:rightDrawablesVisibility="true" />
+        <com.head.views.edittext.HeadEditText
+            android:id="@+id/ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:hint="请输入密码"
+            android:paddingHorizontal="10dp"
+            android:textSize="14dp"
+            app:edBackgroundColor="@drawable/editbox_light"
+            app:isPassword="true"
+            app:rightDrawablesVisibility="true" />
 
 
         <com.head.views.edittext.HeadEditText
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:paddingVertical="5dp"
+            android:id="@+id/edit"
             android:layout_margin="5dp"
-            android:paddingHorizontal="50dp"
             app:isPassword="true"
             app:rightDrawablesVisibility="true" />
 

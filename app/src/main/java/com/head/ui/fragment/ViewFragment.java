@@ -22,6 +22,8 @@ import com.head.views.edittext.HeadEditText;
 import com.head.views.edittext.OnEditTextClickListener;
 import com.head.views.progressbar.HeadProgressBar;
 
+import static android.content.ContentValues.TAG;
+
 public class ViewFragment extends Fragment  {
 
 
@@ -49,6 +51,12 @@ public class ViewFragment extends Fragment  {
 
     private void initView(View rootView) {
         edit = (HeadEditText) rootView.findViewById(R.id.edit);
+        edit.setOnCenterClickListener(new HeadEditText.OnCenterClickListener() {
+            @Override
+            public void onClick() {
+                Log.e(TAG, "onClick: " );
+            }
+        });
         edit.setOnEditTextClickListener(new OnEditTextClickListener() {
             @Override
             public void right() {
