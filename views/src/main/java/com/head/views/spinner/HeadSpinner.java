@@ -56,6 +56,7 @@ public class HeadSpinner extends AppCompatTextView {
 
     private boolean isArrowHidden;
     private int textColor;
+    private float textSize;
     private int backgroundSelector;
     private int arrowDrawableTint;
     private int displayHeight;
@@ -133,7 +134,10 @@ public class HeadSpinner extends AppCompatTextView {
         backgroundSelector = typedArray.getResourceId(R.styleable.HeadSpinner_backgroundSelector, R.drawable.selector);
         setBackgroundResource(backgroundSelector);
         textColor = typedArray.getColor(R.styleable.HeadSpinner_textTint, getDefaultTextColor(context));
+
+        textSize = typedArray.getDimension(R.styleable.HeadSpinner_textTintSize, getTextSize());
         setTextColor(textColor);
+        setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         popupWindow = new ListPopupWindow(context);
         popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -330,12 +334,12 @@ public class HeadSpinner extends AppCompatTextView {
     }
 
     public <T> void attachDataSource(@NonNull List<T> list) {
-        adapter = new HeadSpinnerAdapter<>(getContext(), list, textColor, backgroundSelector, spinnerTextFormatter, horizontalAlignment);
+        adapter = new HeadSpinnerAdapter<>(getContext(), list, textColor, textSize,backgroundSelector, spinnerTextFormatter, horizontalAlignment);
         setAdapterInternal(adapter);
     }
 
     public void setAdapter(ListAdapter adapter) {
-        this.adapter = new HeadSpinnerAdapterWrapper(getContext(), adapter, textColor, backgroundSelector,
+        this.adapter = new HeadSpinnerAdapterWrapper(getContext(), adapter, textColor,textSize,backgroundSelector,
                 spinnerTextFormatter, horizontalAlignment);
         setAdapterInternal(this.adapter);
     }

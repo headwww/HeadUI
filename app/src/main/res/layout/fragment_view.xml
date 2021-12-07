@@ -155,6 +155,19 @@
             android:layout_marginTop="10dp"
             android:text="拖动试试?" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="1231"
+            android:textSize="8dp"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <com.head.views.spinner.HeadSpinner
+            android:layout_width="match_parent"
+            app:textTintSize="8dp"
+            app:entries="@array/textDeo"
+            android:layout_height="wrap_content"/>
         <SeekBar
             android:id="@+id/seekbar"
             android:layout_width="match_parent"

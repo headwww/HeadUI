@@ -43,7 +43,9 @@ import com.head.dialog.style.MaterialStyle;
 import com.head.dialog.util.InputInfo;
 import com.head.ui.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -488,9 +490,24 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
                             new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     PopTip.show(format1.format(date));
                 }
-            })
+            }).setDate(transformationDate("2021-06-13"));
             ;
 
         }
     }
+    public static Calendar transformationDate(String time){
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+
+        Date date= null;
+        try {
+            date = format.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
 }

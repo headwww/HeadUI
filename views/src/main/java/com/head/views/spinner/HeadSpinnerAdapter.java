@@ -12,11 +12,12 @@ public class HeadSpinnerAdapter<T> extends HeadSpinnerBaseAdapter {
             Context context,
             List<T> items,
             int textColor,
+            float textSize,
             int backgroundSelector,
             SpinnerTextFormatter spinnerTextFormatter,
             PopUpTextAlignment horizontalAlignment
     ) {
-        super(context, textColor, backgroundSelector, spinnerTextFormatter, horizontalAlignment);
+        super(context, textColor, textSize, backgroundSelector, spinnerTextFormatter, horizontalAlignment);
         this.items = items;
     }
 

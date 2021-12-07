@@ -2,6 +2,7 @@ package com.head.views.spinner;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
 
     private final PopUpTextAlignment horizontalAlignment;
     private final SpinnerTextFormatter spinnerTextFormatter;
+    private final float textSize;
 
     private int textColor;
     private int backgroundSelector;
@@ -27,6 +29,7 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
     HeadSpinnerBaseAdapter(
             Context context,
             int textColor,
+            float textSize,
             int backgroundSelector,
             SpinnerTextFormatter spinnerTextFormatter,
             PopUpTextAlignment horizontalAlignment
@@ -34,6 +37,7 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
         this.spinnerTextFormatter = spinnerTextFormatter;
         this.backgroundSelector = backgroundSelector;
         this.textColor = textColor;
+        this.textSize=textSize;
         this.horizontalAlignment = horizontalAlignment;
     }
 
@@ -53,7 +57,7 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
         } else {
             textView = ((ViewHolder) convertView.getTag()).textView;
         }
-
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         textView.setText(spinnerTextFormatter.format(getItem(position)));
         textView.setTextColor(textColor);
 
