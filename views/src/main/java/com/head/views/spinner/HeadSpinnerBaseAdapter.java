@@ -49,7 +49,6 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.spinner_list_item, null);
             textView = convertView.findViewById(R.id.text_view_spinner);
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 textView.setBackground(ContextCompat.getDrawable(context, backgroundSelector));
             }
@@ -57,7 +56,7 @@ public abstract class HeadSpinnerBaseAdapter<T> extends BaseAdapter {
         } else {
             textView = ((ViewHolder) convertView.getTag()).textView;
         }
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,textSize);
         textView.setText(spinnerTextFormatter.format(getItem(position)));
         textView.setTextColor(textColor);
 
