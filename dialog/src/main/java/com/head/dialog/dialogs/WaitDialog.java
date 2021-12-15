@@ -275,14 +275,14 @@ public class WaitDialog extends BaseDialog {
             layoutResId = style.overrideWaitTipRes().overrideWaitLayout(isLightTheme());
         }
         dialogImpl = new DialogImpl(layoutResId);
-        runOnMain(new Runnable() {
-            @Override
-            public void run() {
+//        runOnMain(new Runnable() {
+//            @Override
+//            public void run() {
                 dialogImpl.lazyCreate();
                 dialogView.setTag(me.get());
                 show(activity, dialogView);
-            }
-        });
+//            }
+//        });
         return this;
     }
     protected DialogImpl dialogImpl;

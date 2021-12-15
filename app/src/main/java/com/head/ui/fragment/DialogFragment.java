@@ -201,7 +201,6 @@ public class DialogFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btMessageDialog) {
-
             MessageDialog.show("标题", "这里是正文内容。", "确定").setOkButton(new OnDialogButtonClickListener<MessageDialog>() {
                 @Override
                 public boolean onClick(MessageDialog baseDialog, View v) {
