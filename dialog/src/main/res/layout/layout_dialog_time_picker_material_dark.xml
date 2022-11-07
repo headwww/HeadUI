@@ -47,6 +47,7 @@
                         android:text="取消"
                         android:textColor="@color/colorAccent"
                         android:textSize="16dp" />
+
                     <TextView
                         android:id="@+id/tvTitle"
                         android:layout_width="wrap_content"
