@@ -1,5 +1,18 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.head.dialog'
+            artifactId = 'sample'
+            version = "0.9-SNAPSHOT"
 
+            pom {
+                description = 'A description of my library'
+            }
+        }
+    }
+}
 android {
     compileSdkVersion 30
     buildToolsVersion "29.0.2"
